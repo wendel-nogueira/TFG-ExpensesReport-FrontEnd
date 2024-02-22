@@ -1,0 +1,49 @@
+<ul class="w-full flex flex-col gap-1">
+  <li class="w-full" (click)="onMenuClick('dashboard', false)">
+    <expensesreport-menu-button
+      [selectedMenu]="selectedMenu === 'dashboard'"
+      [menuOpen]="menuOpen"
+      [useExpanded]="false"
+      [tooltip]="'dashboard'"
+    >
+      <expensesreport-icon [size]="24">
+        <expensesreport-dashboard />
+      </expensesreport-icon>
+      <expensesreport-menu-text [menuOpen]="menuOpen" [text]="'dashboard'" />
+    </expensesreport-menu-button>
+  </li>
+  <div class="w-full" *ngFor="let menuItem of menuItems">
+    <div class="w-full" *ngIf="menuItem.enabled">
+      <li class="w-full" (click)="onMenuClick(menuItem.title)">
+        <expensesreport-menu-button
+          [selectedMenu]="selectedMenu === menuItem.title"
+          [menuOpen]="menuOpen"
+          [tooltip]="menuItem.title"
+        >
+          <expensesreport-icon [size]="24">
+            <expensesreport-department *ngIf="menuItem.icon === 'department'" />
+            <expensesreport-file *ngIf="menuItem.icon === 'file'" />
+            <expensesreport-project *ngIf="menuItem.icon === 'project'" />
+            <expensesreport-user-group *ngIf="menuItem.icon === 'user-group'" />
+            <expensesreport-wallet *ngIf="menuItem.icon === 'wallet'" />
+          </expensesreport-icon>
+          <expensesreport-menu-text
+            [menuOpen]="menuOpen"
+            [text]="menuItem.title"
+          />
+        </expensesreport-menu-button>
+      </li>
+      <expensesreport-menu-expanded
+        [menuOpen]="menuOpen"
+        [selectedMenu]="selectedMenu === menuItem.title"
+        [quantity]="menuItem.itemsQuantity"
+      >
+        <div class="w-full" *ngFor="let item of menuItem.items">
+          <expensesreport-menu-link [href]="item.href" *ngIf="item.enabled">
+            <p class="w-full">{{ item.title }}</p>
+          </expensesreport-menu-link>
+        </div>
+      </expensesreport-menu-expanded>
+    </div>
+  </div>
+</ul>

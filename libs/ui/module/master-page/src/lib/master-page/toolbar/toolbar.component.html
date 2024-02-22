@@ -1,0 +1,21 @@
+<div class="absolute right-6 top-6 flex flex-col items-end gap-4">
+  <div
+    class="w-min h-min text-gray-500 dark:text-gray-300 bg-[--background] dark:bg-[--background] px-1 py-1 rounded shadow-sm cursor-pointer transition-all duration-300 hover:text-[--primary] dark:hover:text-[--primary] hover:bg-slate-100 dark:hover:bg-slate-800"
+    (click)="onOpenPreferences()"
+    pTooltip="preferences"
+  >
+    <expensesreport-icon [size]="20">
+      <expensesreport-preferences />
+    </expensesreport-icon>
+  </div>
+  <div
+    class="px-3 py-3 transition-all duration-300 rounded bg-slate-50 dark:bg-[--background] shadow-sm
+    {{
+      !menuOpen && openPreferences
+        ? 'opacity-100 visible'
+        : 'opacity-0 invisible'
+    }}"
+  >
+    <expensesreport-preferences-content />
+  </div>
+</div>

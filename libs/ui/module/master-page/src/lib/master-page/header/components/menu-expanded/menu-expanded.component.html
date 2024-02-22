@@ -1,0 +1,13 @@
+<div
+  class="w-full flex flex-col gap-1 pl-6 relative text-gray-500 dark:text-gray-400 text-sm overflow-hidden before:h-[60%] before:top-[20%] before:w-0.5 before:my-auto before:bg-blue-500 before:absolute before:left-3 before:transform before:rounded-full whitespace-nowrap transition-all duration-300 opacity-0
+  {{ menuOpen ? 'opacity-100' : '' }}
+  {{
+    selectedMenu && quantity === 2
+      ? 'h-[92px] py-2'
+      : selectedMenu && quantity === 1
+      ? 'h-[52px] py-2'
+      : 'h-0'
+  }}"
+>
+  <ng-content></ng-content>
+</div>
