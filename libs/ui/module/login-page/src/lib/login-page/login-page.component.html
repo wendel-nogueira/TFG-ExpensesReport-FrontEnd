@@ -1,0 +1,97 @@
+<div
+  class="w-full min-h-screen flex items-center justify-center px-2 max-sm:bg-[--background-secondary] max-sm:dark:bg-[--background-secondary]"
+>
+  <div
+    class="w-full max-w-96 px-4 py-10 bg-[--background-secondary] dark:bg-[--background-secondary] rounded-2xl sm:shadow-sm"
+  >
+    <h1 class="text-2xl font-bold text-gray-600 dark:text-gray-300 mb-10">
+      Log in
+    </h1>
+
+    <form [formGroup]="loginFormGroup" class="flex flex-col gap-3 w-full">
+      <div class="w-full flex flex-col gap-2">
+        <label for="email" class="text-gray-700 dark:text-gray-300 text-sm">
+          email
+        </label>
+        <input
+          id="email"
+          type="email"
+          pInputText
+          formControlName="email"
+          class="border border-gray-300 dark:border-gray-700 px-3 py-2.5 rounded-lg w-full text-sm"
+        />
+      </div>
+      <div class="w-full flex flex-col gap-2">
+        <label for="password" class="text-gray-700 dark:text-gray-300 text-sm">
+          password
+        </label>
+        <span class="p-input-icon-right w-full">
+          <i
+            class="pi {{
+              showPassword ? 'pi-eye-slash' : 'pi-eye'
+            }} cursor-pointer"
+            (click)="togglePasswordVisibility()"
+          ></i>
+          <input
+            id="password"
+            type="{{ showPassword ? 'text' : 'password' }}"
+            pInputText
+            formControlName="password"
+            class="border border-gray-300 dark:border-gray-700 px-3 py-2.5 pr-9 rounded-lg w-full text-sm"
+          />
+        </span>
+      </div>
+      <div class="w-full flex justify-between items-center mt-2 mb-4">
+        <div class="flex items-center gap-2">
+          <p-checkbox
+            formControlName="rememberMe"
+            value="true"
+            inputId="rememberMe"
+            class="border border-gray-300 dark:border-gray-700 rounded-md"
+          ></p-checkbox>
+          <label
+            for="rememberMe"
+            class="text-sm text-gray-600 dark:text-gray-300 cursor-pointer"
+          >
+            remember me
+          </label>
+        </div>
+        <a
+          routerLink="#"
+          class="text-gray-600 dark:text-gray-400 text-sm cursor-pointer transition-colors hover:text-blue-500 dark:hover:text-blue-300"
+        >
+          forgot password?
+        </a>
+      </div>
+
+      <button
+        type="submit"
+        label="Log in"
+        class="text-sm font-medium text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-700 px-3 py-2.5 rounded-lg w-full transition-colors duration-300 hover:bg-blue-500 dark:hover:bg-blue-400 hover:text-white dark:hover:text-white hover:border-transparent"
+      >
+        log in
+      </button>
+    </form>
+
+    <div
+      class="w-4/5 mx-auto my-6 relative before:absolute before:w-full before:h-0.5 before:top-1/2 before:bg-gray-200 dark:before:bg-gray-700"
+    >
+      <p
+        class="text-sm text-gray-400 dark:text-gray-300 text-center relative w-min px-2 m-auto bg-[--background-secondary] dark:bg-[--background-secondary]"
+      >
+        or
+      </p>
+    </div>
+
+    <div class="w-full flex flex-col gap-3">
+      <button
+        type="submit"
+        label="Log in with google"
+        class="text-sm font-medium flex items-center justify-center gap-2 text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-700 px-3 py-2.5 rounded-lg w-full transition-colors duration-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-300 hover:border-transparent"
+      >
+        <img src="assets/images/google.svg" alt="google" class="w-5 h-5" />
+        log in with google
+      </button>
+    </div>
+  </div>
+</div>
