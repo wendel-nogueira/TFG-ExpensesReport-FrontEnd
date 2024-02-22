@@ -1,0 +1,53 @@
+<div class="w-full md:flex min-h-screen" (window:resize)="onResize()">
+  <div>
+    <div
+      class="{{
+        isMobile
+          ? 'absolute w-full h-full top-0 left-0 bg-black z-10 transition-all duration-300'
+          : ''
+      }}{{
+        menuOpen && isMobile
+          ? 'block visible bg-opacity-20'
+          : 'hidden invisible bg-opacity-0'
+      }}"
+    ></div>
+    <div
+      class="z-20 max-w-60 h-screen transition-all duration-500 fixed flex
+      {{
+        !isMobile && menuOpen
+          ? 'w-64'
+          : !isMobile && !menuOpen
+          ? 'w-20'
+          : isMobile && menuOpen
+          ? 'w-64'
+          : 'w-0'
+      }}
+      {{ isMobile ? 'bg-[--background] dark:bg-[--background]' : '' }}"
+    >
+      <expensesreport-header
+        [menuOpen]="menuOpen"
+        [isMobile]="isMobile"
+        (openMenu)="onOpenMenu()"
+        class="w-full h-full"
+      />
+    </div>
+  </div>
+
+  <div
+    class="max-w-full min-h-screen md:min-h-full md:m-2 transition-all duration-500 {{
+      menuOpen && !isMobile
+        ? 'w-[calc(100%-240px)] md:ml-60'
+        : 'w-full md:ml-20'
+    }}"
+  >
+    <div
+      class="bg-[--background-secondary] dark:bg-[--background-secondary] md:border md:border-[--border] dark:border-transparent md:shadow-sm  p-3 md:p-6 md:rounded-2xl relative {{
+        isMobile ? 'min-h-screen' : 'h-full'
+      }}"
+    >
+      <expensesreport-toolbar [menuOpen]="menuOpen" />
+      <router-outlet></router-outlet>
+    </div>
+    <!-- <expensesreport-footer /> -->
+  </div>
+</div>

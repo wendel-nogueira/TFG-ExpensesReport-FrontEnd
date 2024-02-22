@@ -3,3 +3,57 @@
 @tailwind utilities;
 
 /* You can add global styles to this file, and also import other style files */
+
+:root {
+  --background: hsl(217.2 23% 97%);
+  --foreground: hsl(217.2 5% 10%);
+
+  --background-secondary: hsl(217.2 100% 100%);
+  --background-secondary-foreground: hsl(217.2 5% 10%);
+
+  --card: 217.2 50% 100%;
+  --card-foreground: 217.2 5% 15%;
+  --popover: 217.2 100% 100%;
+  --popover-foreground: 217.2 100% 10%;
+  --primary: hsl(217.2 91.2% 59.8%);
+  --primary-foreground: 0 0% 100%;
+  --secondary: 217.2 30% 90%;
+  --secondary-foreground: 0 0% 0%;
+  --muted: 179.2 30% 95%;
+  --muted-foreground: 217.2 5% 40%;
+  --accent: hsl(179.2 30% 90%);
+  --accent-foreground: 217.2 5% 15%;
+  --destructive: 0 100% 50%;
+  --destructive-foreground: 217.2 5% 100%;
+  --border: hsl(220, 14%, 96%);
+  --input: 217.2 30% 50%;
+  --ring: 217.2 91.2% 59.8%;
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: hsl(217.2 20% 10%);
+  --foreground: hsl(217.2 5% 15%);
+
+  --background-secondary: hsl(217.2 20% 12%);
+  --foreground-secondary-foreground: hsl(217.2 5% 100%);
+
+  --card: 217.2 50% 10%;
+  --card-foreground: 217.2 5% 100%;
+  --popover: 217.2 50% 5%;
+  --popover-foreground: 217.2 5% 100%;
+  --primary: hsl(217.2 91.2% 59.8%);
+  --primary-foreground: 0 0% 100%;
+  --secondary: 217.2 30% 20%;
+  --secondary-foreground: 0 0% 100%;
+  --muted: 179.2 30% 25%;
+  --muted-foreground: 217.2 5% 65%;
+  --accent: 179.2 30% 25%;
+  --accent-foreground: 217.2 5% 95%;
+  --destructive: 0 100% 50%;
+  --destructive-foreground: 217.2 5% 100%;
+  --border: hsl(220, 14%, 60%);
+  --input: 217.2 30% 50%;
+  --ring: 217.2 91.2% 59.8%;
+  --radius: 0.5rem;
+}

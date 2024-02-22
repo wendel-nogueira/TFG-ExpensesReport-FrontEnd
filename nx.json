@@ -25,6 +25,11 @@
       "cache": true,
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
+    },
+    "@nx/angular:ng-packagr-lite": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
     }
   },
   "plugins": [
@@ -48,12 +53,25 @@
       }
     }
   ],
+  "projects": {
+    "meuprojeto": {
+      "root": "apps/expensesreport"
+    }
+  },
+  "defaultProject": "expensesreport",
   "generators": {
     "@nx/angular:application": {
       "e2eTestRunner": "cypress",
       "linter": "eslint",
       "style": "css",
       "unitTestRunner": "jest"
+    },
+    "@nx/angular:library": {
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nx/angular:component": {
+      "style": "css"
     }
   },
   "nxCloudAccessToken": "MGVlZDI5ZTgtMzMwNy00OTAxLTk4NzItYzk4ZDY4MzMwMzFifHJlYWQtd3JpdGU="

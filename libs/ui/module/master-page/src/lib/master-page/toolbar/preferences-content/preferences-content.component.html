@@ -1,0 +1,15 @@
+<div
+  class="flex items-center justify-center gap-3 text-gray-500 dark:text-gray-300"
+>
+  <p class="text-sm">Theme:</p>
+
+  <div
+    class="px-1 py-1 cursor-pointer bg-[--background-secondary] dark:bg-[--background-secondary] rounded-md transition-colors duration-300 hover:text-blue-500 hover:shadow-sm"
+    (click)="toggleTheme()"
+  >
+    <expensesreport-icon [size]="20">
+      <expensesreport-sun *ngIf="lightTheme" />
+      <expensesreport-moon *ngIf="!lightTheme" />
+    </expensesreport-icon>
+  </div>
+</div>

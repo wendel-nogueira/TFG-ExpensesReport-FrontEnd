@@ -1,0 +1,7 @@
+#sign-out-button * {
+  transition: color 0.3s;
+}
+
+#sign-out-button:hover * {
+  color: #ef4444;
+}

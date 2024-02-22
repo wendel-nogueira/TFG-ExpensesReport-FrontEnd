@@ -1,0 +1,79 @@
+<div
+  class="w-full h-full py-11 pt-4 flex flex-col items-center justify-center gap-8 overflow-x-hidden transition-all duration-300 {{
+    !isMobile || (isMobile && menuOpen) ? 'px-4' : ''
+  }}"
+>
+  <div class="w-full flex items-center gap-5">
+    <expensesreport-menu-button
+      [useBackgroundHover]="false"
+      [menuOpen]="menuOpen"
+      [tooltip]="'menu'"
+      (click)="onOpenMenu()"
+      class="{{ isMobile ? 'fixed top-4 left-4 z-20' : '' }}"
+    >
+      <div
+        class="w-full h-full flex items-center justify-center transition-transform ease-in duration-300 {{
+          menuOpen ? 'transform rotate-180' : ''
+        }}"
+      >
+        <expensesreport-icon [size]="24">
+          <expensesreport-arrow-left />
+        </expensesreport-icon>
+      </div>
+    </expensesreport-menu-button>
+    <expensesreport-information
+      [menuOpen]="menuOpen"
+      [title]="'Expenses Report'"
+      [subTitle]="'Manage your expenses'"
+      class="{{ isMobile ? 'ml-16 h-12 flex items-center' : '' }}"
+    />
+  </div>
+
+  <span class="w-5/6 h-0.5 bg-slate-200 dark:bg-slate-600"></span>
+
+  <nav class="w-full mt-0 mb-auto">
+    <expensesreport-menu
+      [menuOpen]="menuOpen"
+      [changedSelectedMenu]="changedSelectedMenu"
+      (openMenu)="onOpenMenu()"
+    />
+  </nav>
+
+  <div class="w-full flex flex-col gap-1">
+    <div
+      class="w-full bg-[--background-secondary] dark:bg-[--background-secondary] rounded shadow-sm mb-5 flex items-center gap-3 py-2 px-3"
+    >
+      <expensesreport-icon [size]="24" class="text-gray-500 dark:text-gray-400">
+        <expensesreport-profile />
+      </expensesreport-icon>
+      <expensesreport-information
+        [menuOpen]="menuOpen"
+        [title]="name"
+        [subTitle]="roleName"
+      />
+    </div>
+
+    <a href="#" (click)="changeMenu('settings')">
+      <expensesreport-menu-button [menuOpen]="menuOpen" [tooltip]="'settings'">
+        <expensesreport-icon [size]="24">
+          <expensesreport-settings />
+        </expensesreport-icon>
+        <expensesreport-menu-text [menuOpen]="menuOpen" [text]="'settings'" />
+      </expensesreport-menu-button>
+    </a>
+
+    <a href="#" (click)="changeMenu('sign out')">
+      <expensesreport-menu-button
+        [color]="'red'"
+        [menuOpen]="menuOpen"
+        [tooltip]="'sign out'"
+        id="sign-out-button"
+      >
+        <expensesreport-icon [size]="24">
+          <expensesreport-logout />
+        </expensesreport-icon>
+        <expensesreport-menu-text [menuOpen]="menuOpen" [text]="'sign out'" />
+      </expensesreport-menu-button>
+    </a>
+  </div>
+</div>
