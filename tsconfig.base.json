@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@expensesreport/login-page": ["libs/ui/module/login-page/src/index.ts"],
       "@expensesreport/master-page": ["libs/ui/module/master-page/src/index.ts"]
     }
   },

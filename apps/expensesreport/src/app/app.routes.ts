@@ -6,4 +6,9 @@ export const appRoutes: Route[] = [
     loadChildren: () =>
       import('@expensesreport/master-page').then((m) => m.masterPageRoutes),
   },
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('@expensesreport/login-page').then((m) => m.loginPageRoutes),
+  },
 ];
