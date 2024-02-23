@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TooltipModule } from 'primeng/tooltip';
-import { IconComponent } from 'libs/ui/shared/icon/icon.component';
+import { IconComponent, DividerComponent } from '@expensesreport/ui';
 import { MenuTextComponent } from './components/menu-text/menu-text.component';
 import { InformationComponent } from './components/information/information.component';
 import { MenuButtonComponent } from './components/menu-button/menu-button.component';
@@ -12,7 +12,7 @@ import {
   LogoutComponent,
   ProfileComponent,
   SettingsComponent,
-} from 'libs/ui/shared/icons';
+} from '@expensesreport/icons';
 
 @Component({
   selector: 'expensesreport-header',
@@ -28,6 +28,7 @@ import {
     MenuTextComponent,
     MenuButtonComponent,
     MenuComponent,
+    DividerComponent,
     // Icons
     ArrowLeftComponent,
     ProfileComponent,

@@ -1,9 +1,25 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InputTextModule } from 'primeng/inputtext';
-import { PasswordModule } from 'primeng/password';
-import { CheckboxModule } from 'primeng/checkbox';
-import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  Validators,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import {
+  PageComponent,
+  PageContentComponent,
+  TitleComponent,
+  InputTextComponent,
+  InputPasswordComponent,
+  FormGroupComponent,
+  DividerComponent,
+  LabelComponent,
+  CheckboxComponent,
+  LinkComponent,
+  ButtonComponent,
+} from '@expensesreport/ui';
 
 @Component({
   selector: 'expensesreport-login-page',
@@ -13,16 +29,25 @@ import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } 
   imports: [
     CommonModule,
     // components
-    InputTextModule,
-    PasswordModule,
-    CheckboxModule,
     FormsModule,
     ReactiveFormsModule,
+    PageComponent,
+    PageContentComponent,
+    TitleComponent,
+    InputTextComponent,
+    InputPasswordComponent,
+    FormGroupComponent,
+    DividerComponent,
+    LabelComponent,
+    CheckboxComponent,
+    LinkComponent,
+    ButtonComponent,
   ],
 })
 export class LoginPageComponent {
   showPassword = false;
-
+  loading = false;
+  disabled = false;
   loginFormGroup = new FormGroup({
     email: new FormControl('', [
       Validators.required,
@@ -42,5 +67,6 @@ export class LoginPageComponent {
 
   onSubmit() {
     console.log(this.loginFormGroup.value);
+    this.loading = true;
   }
 }
