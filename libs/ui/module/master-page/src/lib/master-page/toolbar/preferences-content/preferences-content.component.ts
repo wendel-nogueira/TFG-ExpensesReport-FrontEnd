@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { IconComponent } from 'libs/ui/shared/icon/icon.component';
+import { IconComponent } from '@expensesreport/ui';
 
-import { SunComponent, MoonComponent } from 'libs/ui/shared/icons';
+import { SunComponent, MoonComponent } from '@expensesreport/icons';
 
 @Component({
   selector: 'expensesreport-preferences-content',

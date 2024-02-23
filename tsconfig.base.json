@@ -16,7 +16,9 @@
     "baseUrl": ".",
     "paths": {
       "@expensesreport/login-page": ["libs/ui/module/login-page/src/index.ts"],
-      "@expensesreport/master-page": ["libs/ui/module/master-page/src/index.ts"]
+      "@expensesreport/master-page": ["libs/ui/module/master-page/src/index.ts"],
+      "@expensesreport/ui": ["libs/ui/shared/index.ts"],
+      "@expensesreport/icons": ["libs/ui/shared/icons/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

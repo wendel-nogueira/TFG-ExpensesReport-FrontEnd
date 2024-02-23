@@ -11,7 +11,7 @@ import { MenuButtonComponent } from '../menu-button/menu-button.component';
 import { MenuLinkComponent } from '../menu-link/menu-link.component';
 import { MenuExpandedComponent } from '../menu-expanded/menu-expanded.component';
 import { MenuTextComponent } from '../menu-text/menu-text.component';
-import { IconComponent } from 'libs/ui/shared/icon/icon.component';
+import { IconComponent } from '@expensesreport/ui';
 
 import {
   DashboardComponent,
@@ -20,7 +20,7 @@ import {
   ProjectComponent,
   UserGroupComponent,
   WalletComponent,
-} from 'libs/ui/shared/icons';
+} from '@expensesreport/icons';
 import { CommonModule } from '@angular/common';
 
 export interface MenuItems {

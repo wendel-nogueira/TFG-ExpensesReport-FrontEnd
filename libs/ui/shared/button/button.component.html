@@ -1,0 +1,27 @@
+<button
+  type="{{ type }}"
+  class="{{ style }}"
+  [disabled]="loading || disabled"
+  (click)="onClickButton()"
+>
+  <ng-container *ngIf="loading; else showText">
+    <div class="flex justify-center items-center gap-2 text-sm">
+      <p-progressSpinner
+        class="spinner"
+        ariaLabel="loading"
+        strokeWidth="8"
+        [style]="{
+          width: '20px',
+          height: '20px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }"
+      ></p-progressSpinner>
+    </div>
+  </ng-container>
+  <ng-template #showText>
+    <ng-content></ng-content>
+    {{ label }}
+  </ng-template>
+</button>

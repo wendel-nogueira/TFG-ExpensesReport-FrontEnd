@@ -1,10 +1,10 @@
 import { Component, Input, OnChanges, SimpleChange } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IconComponent } from 'libs/ui/shared/icon/icon.component';
+import { IconComponent } from '@expensesreport/ui';
 import { TooltipModule } from 'primeng/tooltip';
 import { PreferencesContentComponent } from './preferences-content/preferences-content.component';
 
-import { PreferencesComponent } from 'libs/ui/shared/icons';
+import { PreferencesComponent } from '@expensesreport/icons';
 
 @Component({
   selector: 'expensesreport-toolbar',
