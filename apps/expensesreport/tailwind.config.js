@@ -5,6 +5,8 @@ const { join } = require('path');
 module.exports = {
   content: [
     join(__dirname, 'src/**/!(*.stories|*.spec).{ts,html}'),
+    join(__dirname, 'apps/**/src/**/!(*.stories|*.spec).{ts,html}'),
+    join(__dirname, '../../libs/**/!(*.stories|*.spec).{ts,html}'),
     ...createGlobPatternsForDependencies(__dirname),
   ],
   darkMode: 'class',
@@ -19,7 +21,8 @@ module.exports = {
         background: 'hsl(var(--background))',
         'background-foreground': 'hsl(var(--background-foreground))',
         'background-secondary': 'hsl(var(--background-secondary))',
-        'background-secondary-foreground': 'hsl(var(--background-secondary-foreground))',
+        'background-secondary-foreground':
+          'hsl(var(--background-secondary-foreground))',
         card: 'hsl(var(--card))',
         'card-foreground': 'hsl(var(--card-foreground))',
         popover: 'hsl(var(--popover))',
