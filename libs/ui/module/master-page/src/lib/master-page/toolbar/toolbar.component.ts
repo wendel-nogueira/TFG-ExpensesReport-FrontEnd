@@ -32,6 +32,5 @@ export class ToolbarComponent implements OnChanges {
 
   onOpenPreferences() {
     this.openPreferences = !this.openPreferences;
-    console.log('openPreferences', this.openPreferences);
   }
 }

@@ -11,4 +11,9 @@ export const appRoutes: Route[] = [
     loadChildren: () =>
       import('@expensesreport/login-page').then((m) => m.loginPageRoutes),
   },
+  {
+    path: 'change-password',
+    loadChildren: () =>
+      import('@expensesreport/change-password-page').then((m) => m.changePasswordPageRoutes),
+  },
 ];

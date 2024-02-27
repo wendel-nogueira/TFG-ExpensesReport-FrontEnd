@@ -15,10 +15,15 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@expensesreport/change-password-page": [
+        "libs/ui/module/change-password-page/src/index.ts"
+      ],
+      "@expensesreport/icons": ["libs/ui/shared/icons/index.ts"],
       "@expensesreport/login-page": ["libs/ui/module/login-page/src/index.ts"],
-      "@expensesreport/master-page": ["libs/ui/module/master-page/src/index.ts"],
-      "@expensesreport/ui": ["libs/ui/shared/index.ts"],
-      "@expensesreport/icons": ["libs/ui/shared/icons/index.ts"]
+      "@expensesreport/master-page": [
+        "libs/ui/module/master-page/src/index.ts"
+      ],
+      "@expensesreport/ui": ["libs/ui/shared/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

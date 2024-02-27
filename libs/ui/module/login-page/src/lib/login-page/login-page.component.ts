@@ -45,7 +45,6 @@ import {
   ],
 })
 export class LoginPageComponent {
-  showPassword = false;
   loading = false;
   disabled = false;
   loginFormGroup = new FormGroup({
@@ -61,12 +60,7 @@ export class LoginPageComponent {
     rememberMe: new FormControl(false),
   });
 
-  togglePasswordVisibility() {
-    this.showPassword = !this.showPassword;
-  }
-
   onSubmit() {
-    console.log(this.loginFormGroup.value);
     this.loading = true;
   }
 }
