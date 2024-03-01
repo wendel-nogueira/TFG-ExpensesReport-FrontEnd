@@ -14,6 +14,13 @@ export const appRoutes: Route[] = [
   {
     path: 'change-password',
     loadChildren: () =>
-      import('@expensesreport/change-password-page').then((m) => m.changePasswordPageRoutes),
+      import('@expensesreport/change-password-page').then(
+        (m) => m.changePasswordPageRoutes
+      ),
+  },
+  {
+    path: 'register',
+    loadChildren: () =>
+      import('@expensesreport/register-page').then((m) => m.registerPageRoutes),
   },
 ];

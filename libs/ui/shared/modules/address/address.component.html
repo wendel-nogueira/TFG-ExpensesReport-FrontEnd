@@ -1,0 +1,61 @@
+<div class="w-full flex gap-3 flex-col">
+  <div class="w-full flex gap-3 flex-row max-[576px]:flex-col">
+    <expensesreport-form-group class="w-full">
+      <expensesreport-label [id]="'zip'" [label]="'zip'" />
+      <expensesreport-input-text
+        [id]="'zip'"
+        [type]="'number'"
+        [formControl]="addressFormGroupLocal.controls['zip']"
+        [useError]="true"
+        [errors]="zipErrors"
+      />
+    </expensesreport-form-group>
+
+    <expensesreport-form-group class="w-full">
+      <expensesreport-label [label]="'country'" />
+      <expensesreport-select
+        [options]="countries"
+        [placeholder]="'select a country'"
+        [formControl]="addressFormGroupLocal.controls['country']"
+        [label]="'country'"
+        [selectedValue]="country"
+        [useError]="true"
+      ></expensesreport-select>
+    </expensesreport-form-group>
+  </div>
+  <div class="w-full flex gap-3 flex-row max-[576px]:flex-col">
+    <expensesreport-form-group class="w-full">
+      <expensesreport-label [label]="'state'" />
+      <expensesreport-select
+        [options]="states"
+        [placeholder]="'select a state'"
+        [formControl]="addressFormGroupLocal.controls['state']"
+        [label]="'state'"
+        [selectedValue]="state"
+        [useError]="true"
+      ></expensesreport-select>
+    </expensesreport-form-group>
+    <expensesreport-form-group class="w-full">
+      <expensesreport-label [label]="'city'" />
+      <expensesreport-select
+        [options]="cities"
+        [placeholder]="'select a city'"
+        [formControl]="addressFormGroupLocal.controls['city']"
+        [label]="'city'"
+        [selectedValue]="city"
+        [useError]="true"
+      ></expensesreport-select>
+    </expensesreport-form-group>
+  </div>
+
+  <expensesreport-form-group class="w-full">
+    <expensesreport-label [id]="'address'" [label]="'address'" />
+    <expensesreport-input-text
+      [id]="'address'"
+      [type]="'text'"
+      [formControl]="addressFormGroupLocal.controls['address']"
+      [useError]="true"
+      [errors]="addressErrors"
+    />
+  </expensesreport-form-group>
+</div>

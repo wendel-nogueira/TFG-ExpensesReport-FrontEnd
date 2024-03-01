@@ -1,0 +1,23 @@
+<div class="w-full flex gap-3 flex-row max-[576px]:flex-col">
+  <expensesreport-form-group class="w-full">
+    <expensesreport-label [id]="'firstName'" [label]="'first name'" />
+    <expensesreport-input-text
+      [id]="'firstName'"
+      [type]="'text'"
+      [formControl]="personalFormGroupLocal.controls['firstName']"
+      [useError]="true"
+      [errors]="firstNameErrors"
+    />
+  </expensesreport-form-group>
+
+  <expensesreport-form-group class="w-full">
+    <expensesreport-label [id]="'lastName'" [label]="'last Name'" />
+    <expensesreport-input-text
+      [id]="'lastName'"
+      [type]="'text'"
+      [formControl]="personalFormGroupLocal.controls['lastName']"
+      [useError]="true"
+      [errors]="lastNameErrors"
+    />
+  </expensesreport-form-group>
+</div>

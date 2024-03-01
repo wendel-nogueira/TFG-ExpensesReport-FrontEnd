@@ -5,19 +5,10 @@ import {
   PageComponent,
   PageContentComponent,
   TitleComponent,
-  FormGroupComponent,
-  InputPasswordComponent,
-  LabelComponent,
   ButtonComponent,
 } from '@expensesreport/ui';
-import {
-  FormControl,
-  FormGroup,
-  Validators,
-  FormsModule,
-  ReactiveFormsModule,
-  AbstractControl,
-} from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { PasswordComponent } from '@expensesreport/ui';
 
 @Component({
   selector: 'expensesreport-change-password-page',
@@ -26,16 +17,13 @@ import {
   styleUrl: './change-password-page.component.css',
   imports: [
     CommonModule,
-    FormsModule,
     ReactiveFormsModule,
     PageComponent,
     PageContentComponent,
     TitleComponent,
-    FormGroupComponent,
-    InputPasswordComponent,
-    LabelComponent,
     ButtonComponent,
     ProgressSpinnerModule,
+    PasswordComponent,
   ],
 })
 export class ChangePasswordPageComponent {
@@ -43,45 +31,24 @@ export class ChangePasswordPageComponent {
   checkingToken = false;
   tokenValid = true;
   disabled = false;
+
   changePasswordFormGroup = new FormGroup({
-    password: new FormControl('', [
-      Validators.required,
-      Validators.minLength(8),
-      Validators.maxLength(16),
-      this.validatePassword.bind(this),
-    ]),
-    confirmPassword: new FormControl('', [
-      Validators.required,
-      Validators.minLength(8),
-      Validators.maxLength(16),
-      this.validatePasswordMatch.bind(this),
-    ]),
+    password: new FormControl(''),
+    confirmPassword: new FormControl(''),
   });
 
   onSubmit() {
+    if (this.changePasswordFormGroup.invalid) {
+      this.changePasswordFormGroup.setErrors({
+        invalid: true,
+      });
+
+      return;
+    }
+
+    console.log('submit');
+    console.log(this.changePasswordFormGroup.value);
+
     this.loading = true;
-  }
-
-  validatePassword(control: AbstractControl) {
-    const passwordRegex = new RegExp(
-      '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,16}$'
-    );
-
-    if (!passwordRegex.test(control.value)) {
-      return { passwordInvalid: true };
-    }
-
-    return null;
-  }
-
-  validatePasswordMatch(control: AbstractControl) {
-    if (
-      this.changePasswordFormGroup &&
-      control.value !== this.changePasswordFormGroup.get('password')?.value
-    ) {
-      return { passwordNotMatch: true };
-    }
-
-    return null;
   }
 }
