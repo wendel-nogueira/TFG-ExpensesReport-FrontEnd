@@ -1,0 +1,37 @@
+<input
+  id="{{ id }}"
+  type="{{ type }}"
+  pInputText
+  [formControl]="formControl"
+  [pKeyFilter]="type === 'email' ? 'email' : type === 'number' ? 'pint' : null"
+  (input)="checkErrors()"
+  class="border px-3 py-2.5 rounded-lg w-full text-sm {{
+    useError &&
+    formControl.invalid &&
+    errorMessage &&
+    errorMessage.length > 0 &&
+    (formControl.touched || formControl.dirty)
+      ? 'border-red-500'
+      : 'border-gray-300 dark:border-gray-700'
+  }}"
+  autocomplete="
+    {{
+    type === 'email'
+      ? 'email'
+      : type === 'password'
+      ? 'current-password'
+      : 'off'
+  }}"
+/>
+<p
+  class="text-red-500 text-xs mt-1"
+  *ngIf="
+    useError &&
+    formControl.invalid &&
+    errorMessage &&
+    errorMessage.length > 0 &&
+    (formControl.touched || formControl.dirty)
+  "
+>
+  {{ errorMessage }}
+</p>

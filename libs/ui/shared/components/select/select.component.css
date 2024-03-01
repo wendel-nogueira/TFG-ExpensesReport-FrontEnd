@@ -1,0 +1,18 @@
+:host ::ng-deep div.p-dropdown {
+  border: 1px;
+  border-radius: 0.5rem;
+  border-color: rgb(209 213 219);
+  border-style: solid;
+  width: 100%;
+}
+
+:host ::ng-deep .invalid-field div.p-dropdown {
+  border-color: rgb(239 68 68);
+}
+
+:host ::ng-deep span.p-inputtext {
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+  font-size: 0.875rem;
+  max-height: 40px;
+}

@@ -1,0 +1,15 @@
+<div
+  class="w-full min-h-80 max-md:min-h-80 max-sm:min-h-[484px] flex flex-col gap-6"
+>
+  <expensesreport-personal [name]="name" (personalFormGroup)="personalFormGroup = $event" />
+
+  <div class="w-full mt-auto flex items-center justify-between">
+    <expensesreport-button
+      class="ml-auto"
+      [label]="'next'"
+      [type]="'submit'"
+      [color]="'primary'"
+      (onClick)="nextPage()"
+    />
+  </div>
+</div>

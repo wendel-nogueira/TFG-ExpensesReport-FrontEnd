@@ -1,0 +1,53 @@
+<p-dropdown
+  [(ngModel)]="value"
+  optionLabel="label"
+  [options]="options"
+  [showClear]="true"
+  [placeholder]="placeholder"
+  (onChange)="onSelectionChange($event)"
+  class="{{
+    useError &&
+    formControl.invalid &&
+    errorMessage &&
+    errorMessage.length > 0 &&
+    (formControl.touched || formControl.dirty)
+      ? 'invalid-field'
+      : ''
+  }}"
+>
+  <ng-template pTemplate="selectedItem">
+    <div class="flex align-items-center gap-2" *ngIf="value">
+      <img
+        [src]="'assets/images/flags/' + value.value + '.svg'"
+        [alt]="value.label"
+        width="18"
+        *ngIf="label === 'country'"
+      />
+      <div>{{ value.label }}</div>
+    </div>
+  </ng-template>
+
+  <ng-template let-option pTemplate="item">
+    <div class="text-sm flex items-center gap-2">
+      <img
+        [src]="'assets/images/flags/' + option.value + '.svg'"
+        [alt]="option.label"
+        width="18"
+        *ngIf="label === 'country'"
+      />
+      <div>{{ option.label }}</div>
+    </div>
+  </ng-template>
+</p-dropdown>
+<p
+  class="text-red-500 text-xs mt-1"
+  *ngIf="
+    useError &&
+    formControl.invalid &&
+    errorMessage &&
+    errorMessage.length > 0 &&
+    (formControl.touched || formControl.dirty)
+  "
+>
+  {{ errorMessage }}
+</p>
