@@ -6,9 +6,11 @@ import {
   PageContentComponent,
   TitleComponent,
   ButtonComponent,
+  ToastComponent,
 } from '@expensesreport/ui';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PasswordComponent } from '@expensesreport/ui';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'expensesreport-change-password-page',
@@ -24,7 +26,9 @@ import { PasswordComponent } from '@expensesreport/ui';
     ButtonComponent,
     ProgressSpinnerModule,
     PasswordComponent,
+    ToastComponent,
   ],
+  providers: [MessageService],
 })
 export class ChangePasswordPageComponent {
   loading = false;

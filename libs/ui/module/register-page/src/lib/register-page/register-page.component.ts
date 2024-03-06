@@ -7,8 +7,10 @@ import {
   PasswordComponent,
   AddressComponent,
   PersonalComponent,
+  ToastComponent,
 } from '@expensesreport/ui';
 import { MenuItem } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'expensesreport-register-page',
@@ -20,11 +22,12 @@ import { MenuItem } from 'primeng/api';
     PageComponent,
     PageContentComponent,
     StepsModule,
-
     PasswordComponent,
     AddressComponent,
     PersonalComponent,
+    ToastComponent,
   ],
+  providers: [MessageService],
 })
 export class RegisterPageComponent {
   steps: MenuItem[] = [

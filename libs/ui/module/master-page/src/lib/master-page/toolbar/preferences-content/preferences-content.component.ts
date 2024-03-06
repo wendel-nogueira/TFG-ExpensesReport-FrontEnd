@@ -21,10 +21,6 @@ import { SunComponent, MoonComponent } from '@expensesreport/icons';
 export class PreferencesContentComponent {
   lightTheme = true;
 
-  // constructor() {
-  //   // document.body.classList.add('dark');
-  // }
-
   toggleTheme() {
     this.lightTheme = !this.lightTheme;
 

@@ -4,6 +4,8 @@ import { HeaderComponent } from './header/header.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { RouterModule } from '@angular/router';
+import { ToastComponent } from '@expensesreport/ui';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'expensesreport-master-page',
@@ -16,7 +18,9 @@ import { RouterModule } from '@angular/router';
     ToolbarComponent,
     FooterComponent,
     RouterModule,
+    ToastComponent,
   ],
+  providers: [MessageService],
 })
 export class MasterPageComponent {
   menuOpen = false;

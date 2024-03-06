@@ -23,7 +23,7 @@ import { PreferencesComponent } from '@expensesreport/icons';
 })
 export class ToolbarComponent implements OnChanges {
   @Input() menuOpen = false;
-  openPreferences = true;
+  openPreferences = false;
 
   ngOnChanges(changes: { menuOpen: SimpleChange }) {
     if (changes.menuOpen && changes.menuOpen.currentValue)

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CheckboxModule } from 'primeng/checkbox';
 import {
   FormsModule,
@@ -25,6 +25,7 @@ import {
 export class CheckboxComponent implements ControlValueAccessor {
   @Input() id = '';
   @Input() value = false;
+  @Input() binary = false;
   @Input() formControl = new FormControl(false);
 
   checked = false;
