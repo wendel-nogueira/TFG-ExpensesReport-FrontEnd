@@ -29,7 +29,7 @@
     />
   </div>
 
-  <expensesreport-divider class="w-full"/>
+  <expensesreport-divider class="w-full" />
 
   <nav class="w-full mt-0 mb-auto">
     <expensesreport-menu
@@ -62,18 +62,17 @@
       </expensesreport-menu-button>
     </a>
 
-    <a href="#" (click)="changeMenu('sign out')">
-      <expensesreport-menu-button
-        [color]="'red'"
-        [menuOpen]="menuOpen"
-        [tooltip]="'sign out'"
-        id="sign-out-button"
-      >
-        <expensesreport-icon [size]="24">
-          <expensesreport-logout />
-        </expensesreport-icon>
-        <expensesreport-menu-text [menuOpen]="menuOpen" [text]="'sign out'" />
-      </expensesreport-menu-button>
-    </a>
+    <expensesreport-menu-button
+      [color]="'red'"
+      [menuOpen]="menuOpen"
+      [tooltip]="'sign out'"
+      id="sign-out-button"
+      (click)="onSignOut()"
+    >
+      <expensesreport-icon [size]="24">
+        <expensesreport-logout />
+      </expensesreport-icon>
+      <expensesreport-menu-text [menuOpen]="menuOpen" [text]="'sign out'" />
+    </expensesreport-menu-button>
   </div>
 </div>

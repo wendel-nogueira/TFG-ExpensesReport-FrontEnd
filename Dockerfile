@@ -12,7 +12,7 @@ RUN npm ci
 RUN npm install -g nx
 
 ENV NX_DAEMON=false
-RUN nx run expensesreport:build
+RUN nx run expensesreport:build:production
 
 
 # Runtime image

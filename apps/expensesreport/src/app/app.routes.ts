@@ -23,4 +23,11 @@ export const appRoutes: Route[] = [
     loadChildren: () =>
       import('@expensesreport/register-page').then((m) => m.registerPageRoutes),
   },
+  {
+    path: '**',
+    loadChildren: () =>
+      import('@expensesreport/not-found-page').then(
+        (m) => m.notFoundPageRoutes
+      ),
+  },
 ];

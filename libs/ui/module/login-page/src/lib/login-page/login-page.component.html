@@ -9,6 +9,8 @@
           [id]="'email'"
           [type]="'email'"
           [formControl]="loginFormGroup.controls['email']"
+          [useError]="true"
+          [errors]="emailErrors"
         />
       </expensesreport-form-group>
 
@@ -17,6 +19,7 @@
         <expensesreport-input-password
           [id]="'password'"
           [formControl]="loginFormGroup.controls['password']"
+          [useError]="true"
         />
       </expensesreport-form-group>
 
@@ -26,10 +29,16 @@
             [id]="'rememberMe'"
             [value]="true"
             [formControl]="loginFormGroup.controls['rememberMe']"
+            [binary]="true"
           />
           <expensesreport-label [id]="'rememberMe'" [label]="'remember me'" />
         </expensesreport-form-group>
-        <expensesreport-link [href]="'#'" [text]="'forgot password?'" />
+        <p
+          class="text-gray-600 dark:text-gray-400 text-sm cursor-pointer transition-colors hover:text-blue-500 dark:hover:text-blue-300"
+          (click)="showRecoveryPass()"
+        >
+          forgot password?
+        </p>
       </div>
 
       <expensesreport-button
@@ -57,3 +66,9 @@
     </div>
   </expensesreport-page-content>
 </expensesreport-page>
+<expensesreport-toast />
+<expensesreport-recovery-pass
+  [recoveryPass]="recoveryPass"
+  (closeRecoveryPass)="closeRecoveryPass()"
+  (emailSent)="emailSent($event)"
+/>

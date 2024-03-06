@@ -11,3 +11,7 @@ export * from './settings/settings.component';
 export * from './sun/sun.component';
 export * from './user-group/user-group.component';
 export * from './wallet/wallet.component';
+export * from './info/info.component';
+export * from './error/error.component';
+export * from './warning/warning.component';
+export * from './success/success.component';

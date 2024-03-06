@@ -18,16 +18,25 @@
       "@expensesreport/change-password-page": [
         "libs/ui/module/change-password-page/src/index.ts"
       ],
+      "@expensesreport/guards": [
+        "libs/core/guards/index.ts"
+      ],
       "@expensesreport/icons": ["libs/ui/shared/components/icons/index.ts"],
       "@expensesreport/login-page": ["libs/ui/module/login-page/src/index.ts"],
       "@expensesreport/master-page": [
         "libs/ui/module/master-page/src/index.ts"
       ],
       "@expensesreport/models": ["libs/core/models/index.ts"],
+      "@expensesreport/not-found-page": [
+        "libs/ui/module/not-found-page/src/index.ts"
+      ],
       "@expensesreport/register-page": [
         "libs/ui/module/register-page/src/index.ts"
       ],
-      "@expensesreport/ui": ["libs/ui/shared/index.ts"]
+      "@expensesreport/services": [
+        "libs/core/services/index.ts"
+      ],
+      "@expensesreport/ui": ["libs/ui/shared/index.ts"],
     }
   },
   "exclude": ["node_modules", "tmp"]

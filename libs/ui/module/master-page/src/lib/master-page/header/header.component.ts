@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TooltipModule } from 'primeng/tooltip';
 import { IconComponent, DividerComponent } from '@expensesreport/ui';
@@ -6,6 +6,7 @@ import { MenuTextComponent } from './components/menu-text/menu-text.component';
 import { InformationComponent } from './components/information/information.component';
 import { MenuButtonComponent } from './components/menu-button/menu-button.component';
 import { MenuComponent } from './components/menu/menu.component';
+import { AuthService } from '@expensesreport/services';
 
 import {
   ArrowLeftComponent,
@@ -36,7 +37,7 @@ import {
     LogoutComponent,
   ],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   @Input() menuOpen = false;
   @Input() isMobile = false;
   @Output() openMenu = new EventEmitter<void>();
@@ -46,6 +47,19 @@ export class HeaderComponent {
   name = 'Wendel Nogueira';
   roleName = 'Field Staff';
 
+  constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.changedSelectedMenu = 'dashboard';
+
+    const tokenData = this.authService.getSessionData();
+
+    if (tokenData) {
+      this.name = tokenData.name;
+      this.roleName = tokenData.role;
+    }
+  }
+
   onOpenMenu() {
     this.openMenu.emit();
   }
@@ -54,5 +68,9 @@ export class HeaderComponent {
     this.changedSelectedMenu = menu;
 
     if (this.menuOpen) this.openMenu.emit();
+  }
+
+  onSignOut() {
+    this.authService.logout();
   }
 }
