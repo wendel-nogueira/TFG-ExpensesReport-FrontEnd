@@ -10,6 +10,14 @@ export const masterPageRoutes: Route[] = [
       ),
     canActivate: [IsAuthGuard],
     data: { rolesAllowed: ['FieldStaff', 'Manager', 'Accountant'] },
-    children: [],
+    children: [
+      {
+        path: 'settings',
+        loadChildren: () =>
+          import('@expensesreport/settings-page').then(
+            (m) => m.settingsPageRoutes
+          ),
+      },
+    ],
   },
 ];

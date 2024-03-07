@@ -53,7 +53,7 @@
       />
     </div>
 
-    <a href="#" (click)="changeMenu('settings')">
+    <a [routerLink]="['/settings']" [routerLinkActive]="['active']" (click)="changeMenu('settings')">
       <expensesreport-menu-button [menuOpen]="menuOpen" [tooltip]="'settings'">
         <expensesreport-icon [size]="24">
           <expensesreport-settings />

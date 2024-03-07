@@ -1,0 +1,36 @@
+<div class="w-full h-full flex flex-col">
+  <div
+    class="flex items-center gap-2 ml-16 mt-1 md:ml-0 max-[479px]:min-h-12 mb-10 px-2 text-gray-500 dark:text-gray-400"
+  >
+    <div class="p-2 hidden min-[480px]:block">
+      <div class="w-8 h-8 flex">
+        <expensesreport-settings class="w-8 h-8 text-blue-500" />
+      </div>
+    </div>
+    <h2 class="text-2xl font-semibold">settings</h2>
+  </div>
+
+  <div
+    class="w-full h-full px-4 flex flex-col items-center min-[878px]:flex-row min-[878px]:items-start gap-6 min-[878px]:gap-16"
+  >
+    <div class="w-min min-[878px]:w-full max-w-80">
+      <expensesreport-container>
+        <div class="w-full flex min-[878px]:flex-col gap-1">
+          <expensesreport-menu-item
+            [href]="'account'"
+            [label]="'Account'"
+            [active]="selectedMenu === 'account'"
+            (click)="setSelectedMenu('account')"
+          />
+          <expensesreport-menu-item
+            [href]="'security'"
+            [label]="'Security'"
+            [active]="selectedMenu === 'security'"
+            (click)="setSelectedMenu('security')"
+          />
+        </div>
+      </expensesreport-container>
+    </div>
+    <router-outlet class="hidden"></router-outlet>
+  </div>
+</div>

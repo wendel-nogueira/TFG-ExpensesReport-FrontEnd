@@ -7,6 +7,7 @@ import { InformationComponent } from './components/information/information.compo
 import { MenuButtonComponent } from './components/menu-button/menu-button.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { AuthService } from '@expensesreport/services';
+import { RouterModule } from '@angular/router';
 
 import {
   ArrowLeftComponent,
@@ -22,7 +23,6 @@ import {
   styleUrl: './header.component.css',
   imports: [
     CommonModule,
-    // Components
     TooltipModule,
     IconComponent,
     InformationComponent,
@@ -30,7 +30,7 @@ import {
     MenuButtonComponent,
     MenuComponent,
     DividerComponent,
-    // Icons
+    RouterModule,
     ArrowLeftComponent,
     ProfileComponent,
     SettingsComponent,
