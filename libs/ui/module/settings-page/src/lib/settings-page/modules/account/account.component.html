@@ -1,0 +1,35 @@
+<expensesreport-page>
+  <expensesreport-container class="sm:min-w-[500px]">
+    <h3
+      class="text-2xl font-semibold text-gray-500 dark:text-gray-400 mb-10 mt-4"
+    >
+      Account information
+    </h3>
+
+    <div class="w-full max-w-3xl">
+      <div>
+        <expensesreport-personal
+          [name]="name"
+          (personalFormGroup)="personalFormGroup = $event"
+        />
+        <expensesreport-divider />
+
+        <expensesreport-address
+          [address]="address"
+          (addressFormGroup)="addressFormGroup = $event"
+        />
+      </div>
+
+      <div class="w-full max-w-60 ml-auto mt-14 mb-4">
+        <expensesreport-button
+          [label]="'save changes'"
+          [type]="'submit'"
+          [loading]="loading"
+          [disabled]="disabled"
+          [color]="'primary'"
+          (click)="onSubmit()"
+        />
+      </div>
+    </div>
+  </expensesreport-container>
+</expensesreport-page>
