@@ -1,16 +1,18 @@
 <ul class="w-full flex flex-col gap-1">
   <li class="w-full" (click)="onMenuClick('dashboard', false)">
-    <expensesreport-menu-button
-      [selectedMenu]="selectedMenu === 'dashboard'"
-      [menuOpen]="menuOpen"
-      [useExpanded]="false"
-      [tooltip]="'dashboard'"
-    >
-      <expensesreport-icon [size]="24">
-        <expensesreport-dashboard />
-      </expensesreport-icon>
-      <expensesreport-menu-text [menuOpen]="menuOpen" [text]="'dashboard'" />
-    </expensesreport-menu-button>
+    <a [routerLink]="['/']">
+      <expensesreport-menu-button
+        [selectedMenu]="selectedMenu === 'dashboard'"
+        [menuOpen]="menuOpen"
+        [useExpanded]="false"
+        [tooltip]="'dashboard'"
+      >
+        <expensesreport-icon [size]="24">
+          <expensesreport-dashboard />
+        </expensesreport-icon>
+        <expensesreport-menu-text [menuOpen]="menuOpen" [text]="'dashboard'" />
+      </expensesreport-menu-button>
+    </a>
   </li>
   <div class="w-full" *ngFor="let menuItem of menuItems">
     <div class="w-full" *ngIf="menuItem.enabled">

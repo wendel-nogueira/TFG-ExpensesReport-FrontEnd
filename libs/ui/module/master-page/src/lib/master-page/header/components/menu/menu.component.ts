@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -12,6 +13,7 @@ import { MenuLinkComponent } from '../menu-link/menu-link.component';
 import { MenuExpandedComponent } from '../menu-expanded/menu-expanded.component';
 import { MenuTextComponent } from '../menu-text/menu-text.component';
 import { IconComponent } from '@expensesreport/ui';
+import { RouterModule } from '@angular/router';
 
 import {
   DashboardComponent,
@@ -21,7 +23,6 @@ import {
   UserGroupComponent,
   WalletComponent,
 } from '@expensesreport/icons';
-import { CommonModule } from '@angular/common';
 
 export interface MenuItems {
   label: string;
@@ -50,13 +51,12 @@ export interface Permissions {
   styleUrl: './menu.component.css',
   imports: [
     CommonModule,
-    // Components
+    RouterModule,
     MenuButtonComponent,
     MenuLinkComponent,
     MenuExpandedComponent,
     MenuTextComponent,
     IconComponent,
-    // Icons
     DashboardComponent,
     DepartmentComponent,
     FileComponent,
@@ -159,12 +159,12 @@ const allMenuItems: MenuItems[] = [
       {
         title: 'create',
         enabled: true,
-        href: '#',
+        href: 'users/create',
       },
       {
         title: 'manage',
         enabled: true,
-        href: '#',
+        href: 'users',
       },
     ],
   },
@@ -178,12 +178,12 @@ const allMenuItems: MenuItems[] = [
       {
         title: 'create',
         enabled: true,
-        href: '#',
+        href: '/',
       },
       {
         title: 'manage',
         enabled: true,
-        href: '#',
+        href: '/',
       },
     ],
   },
@@ -197,12 +197,12 @@ const allMenuItems: MenuItems[] = [
       {
         title: 'create',
         enabled: true,
-        href: '#',
+        href: '/',
       },
       {
         title: 'manage',
         enabled: true,
-        href: '#',
+        href: '/',
       },
     ],
   },
@@ -216,12 +216,12 @@ const allMenuItems: MenuItems[] = [
       {
         title: 'create',
         enabled: true,
-        href: '#',
+        href: '/',
       },
       {
         title: 'manage',
         enabled: true,
-        href: '#',
+        href: '/',
       },
     ],
   },
@@ -235,12 +235,12 @@ const allMenuItems: MenuItems[] = [
       {
         title: 'create',
         enabled: true,
-        href: '#',
+        href: '/',
       },
       {
         title: 'manage',
         enabled: true,
-        href: '#',
+        href: '/',
       },
     ],
   },

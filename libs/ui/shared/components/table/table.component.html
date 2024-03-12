@@ -1,0 +1,174 @@
+<div
+  class="w-full flex max-[419px]:flex-col justify-between min-[420px]:items-center gap-2 mb-8"
+>
+  <div class="flex gap-2">
+    <expensesreport-button [type]="'export'" />
+    <expensesreport-button [type]="'filter'" (onClick)="openFilter()" />
+    <expensesreport-button [type]="'sort'" (onClick)="openSort()" />
+  </div>
+
+  <div>
+    <expensesreport-input-search [table]="table" />
+  </div>
+</div>
+<div class="w-full h-full flex">
+  <div
+    class="h-full bg-[--background] dark:bg-[--background-dark] rounded-md shadow-sm {{
+      showFilter || showSort
+        ? 'opacity-100 visible w-72 mr-4 px-4'
+        : 'opacity-0 invisible w-0'
+    }} transition-all duration-300 ease-in-out"
+  >
+    <expensesreport-filter
+      [table]="table"
+      [columns]="columns"
+      class="{{ showFilter ? 'block' : 'hidden' }}"
+    />
+    <expensesreport-sort
+      [table]="table"
+      [columns]="columns"
+      class="{{ showSort ? 'block' : 'hidden' }}"
+    />
+  </div>
+  <p-table
+    #table
+    [value]="data"
+    [paginator]="true"
+    [rows]="numberOfRows"
+    [showCurrentPageReport]="true"
+    [tableStyle]="{ 'min-width': '36.5rem' }"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    styleClass="p-datatable-striped"
+    class="table-custom w-full h-full {{
+      data.length === 0 ? 'empty' : ''
+    }} transition-all duration-300 ease-in-out"
+    [globalFilterFields]="['name', 'date', 'company', 'status']"
+  >
+    <ng-template pTemplate="header">
+      <tr class="bg-gray-100 dark:bg-gray-700">
+        <ng-container *ngFor="let column of columns">
+          <th
+            *ngIf="
+              column.field !== 'actions' &&
+              column.field !== 'more' &&
+              column.field !== 'isActive' &&
+              column.field !== 'isDeleted' &&
+              column.field !== 'status' &&
+              column.field !== 'date'
+            "
+            [style]="{ width: defaultSize + '%' }"
+            class="px-4 py-3 text-sm font-semibold text-gray-500 dark:text-gray-300 text-left"
+          >
+            {{ column.header }}
+          </th>
+          <th
+            *ngIf="column.field === 'date'"
+            [style]="{ width: sizeOfDate + '%' }"
+            class="px-4 py-3 text-sm font-semibold text-gray-500 dark:text-gray-300 text-left"
+          >
+            {{ column.header }}
+          </th>
+          <th
+            *ngIf="
+              column.field === 'isActive' ||
+              column.field === 'isDeleted' ||
+              column.field === 'status'
+            "
+            [style]="{ width: sizeOfTags + '%' }"
+            class="px-4 py-3 text-sm font-semibold text-gray-500 dark:text-gray-300 text-left"
+          >
+            {{ column.header }}
+          </th>
+          <th
+            *ngIf="column.field === 'actions' || column.field === 'more'"
+            [style]="{ width: sizeOfActions + '%' }"
+            class="px-4 py-3 text-sm font-semibold text-gray-500 dark:text-gray-300 text-left"
+          ></th>
+        </ng-container>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-data>
+      <tr>
+        <ng-container *ngFor="let column of columns">
+          <td
+            *ngIf="
+              column.field !== 'actions' &&
+              column.field !== 'more' &&
+              column.field !== 'isActive' &&
+              column.field !== 'isDeleted' &&
+              column.field !== 'status'
+            "
+            class="px-4 py-3 text-sm font-medium text-gray-400 dark:text-gray-300"
+          >
+            <span class="w-full h-6">
+              {{ data[column.field] }}
+            </span>
+          </td>
+
+          <td
+            *ngIf="
+              column.field === 'isActive' ||
+              column.field === 'isDeleted' ||
+              column.field === 'status'
+            "
+            class="px-4 py-3 text-sm font-medium text-gray-400 dark:text-gray-300"
+          >
+            <span class="w-full min-h-6 flex items-center justify-center">
+              <div class="min-h-6 w-full flex gap-2 flex-wrap">
+                <expensesreport-tag
+                  [text]="data[column.field].toLowerCase().replace(' ', '')"
+                >
+                  {{ data[column.field] }}
+                </expensesreport-tag>
+              </div>
+            </span>
+          </td>
+
+          <td *ngIf="column.field === 'actions' || column.field === 'more'">
+            <span class="h-6 flex items-center justify-center w-full">
+              <div
+                class="h-min w-6 cursor-pointer"
+                (click)="onClickMore($event, data)"
+              >
+                <expensesreport-more />
+              </div>
+            </span>
+          </td>
+        </ng-container>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <ng-container *ngIf="!loading">
+        <tr>
+          <td
+            class="px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-300"
+            colspan="10"
+          >
+            <span class="w-full h-6"> No records found </span>
+          </td>
+        </tr>
+        <tr *ngFor="let i of [].constructor(numberOfRows - 1)">
+          <td class="h-12" colspan="10"></td>
+        </tr>
+      </ng-container>
+
+      <ng-container *ngIf="loading">
+        <tr *ngFor="let i of [].constructor(numberOfRows)">
+          <td *ngFor="let column of columns" class="px-3 py-3">
+            <span class="w-full h-6 block items-center">
+              <p-skeleton
+                height="1.5rem"
+                borderRadius="0.375rem"
+                class="h-6"
+                *ngIf="column.field !== 'actions' && column.field !== 'more'"
+              />
+            </span>
+          </td>
+        </tr>
+      </ng-container>
+    </ng-template>
+  </p-table>
+</div>
+<ng-content></ng-content>

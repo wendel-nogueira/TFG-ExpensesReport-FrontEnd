@@ -1,0 +1,50 @@
+.tag {
+  background: #d0edfc;
+}
+
+.tag span,
+.tag p {
+  background: #01b2ff;
+  color: #01b2ff;
+  font-size: 10px;
+}
+
+.tag.green {
+  background: #d8ecda;
+}
+
+.tag.green span,
+.tag.green p {
+  background: #36b436;
+  color: #36b436;
+}
+
+.tag.orange {
+  background: #fcedcc;
+}
+
+.tag.orange span,
+.tag.orange p {
+  background: #ffb202;
+  color: #ffb202;
+}
+
+.tag.red {
+  background: #fcd0d0;
+}
+
+.tag.red span,
+.tag.red p {
+  background: #ff0202;
+  color: #ff0202;
+}
+
+.tag.purple {
+  background: #e8d0fc;
+}
+
+.tag.purple span,
+.tag.purple p {
+  background: #a02bff;
+  color: #a02bff;
+}

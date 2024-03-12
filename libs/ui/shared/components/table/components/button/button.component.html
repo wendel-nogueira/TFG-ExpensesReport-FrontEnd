@@ -1,0 +1,12 @@
+<button
+  class="flex gap-2 items-center text-gray-500 dark:text-gray-400 px-2 py-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-gray-50 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300 ease-in-out"
+  (click)="onClick.emit($event)"
+>
+  <expensesreport-export class="w-5 h-5" *ngIf="type === 'export'" />
+  <expensesreport-filter class="w-5 h-5" *ngIf="type === 'filter'" />
+  <expensesreport-sort-icon class="w-5 h-5" *ngIf="type === 'sort'" />
+
+  <span class="text-sm font-medium hidden min-[550px]:block">{{
+    type === 'export' ? 'Export' : type === 'filter' ? 'Filter' : 'Sort'
+  }}</span>
+</button>

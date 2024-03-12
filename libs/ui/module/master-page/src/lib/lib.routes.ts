@@ -12,6 +12,11 @@ export const masterPageRoutes: Route[] = [
     data: { rolesAllowed: ['FieldStaff', 'Manager', 'Accountant'] },
     children: [
       {
+        path: 'users',
+        loadChildren: () =>
+          import('@expensesreport/users-pages').then((m) => m.usersPagesRoutes),
+      },
+      {
         path: 'settings',
         loadChildren: () =>
           import('@expensesreport/settings-page').then(
