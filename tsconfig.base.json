@@ -35,7 +35,17 @@
       "@expensesreport/settings-page": [
         "libs/ui/module/settings-page/src/index.ts"
       ],
-      "@expensesreport/ui": ["libs/ui/shared/index.ts"]
+      "@expensesreport/ui": ["libs/ui/shared/index.ts"],
+      "@expensesreport/users-create-page": [
+        "libs/ui/module/users-pages/src/lib/users-pages/users-create-page/src/index.ts"
+      ],
+      "@expensesreport/users-edit-page": [
+        "libs/ui/module/users-pages/src/lib/users-pages/users-edit-page/src/index.ts"
+      ],
+      "@expensesreport/users-list-page": [
+        "libs/ui/module/users-pages/src/lib/users-pages/users-list-page/src/index.ts"
+      ],
+      "@expensesreport/users-pages": ["libs/ui/module/users-pages/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -1,5 +1,7 @@
 <div
-  class="w-full px-4 py-10 bg-[--background-secondary] dark:bg-[--background-secondary] rounded-2xl sm:shadow-sm"
+  class="w-full px-4 py-10 bg-[--background-secondary] dark:bg-[--background-secondary] rounded-2xl {{
+    useShadow ? 'sm:shadow-sm' : ''
+  }}"
 >
   <ng-content></ng-content>
 </div>

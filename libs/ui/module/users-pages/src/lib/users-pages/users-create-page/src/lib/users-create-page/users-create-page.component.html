@@ -1,0 +1,52 @@
+<div class="w-full h-full">
+  <expensesreport-page-content
+    [useShadow]="false"
+    class="w-full flex justify-center max-w-96 m-auto mt-20"
+  >
+    <p
+      class="text-center text-gray-600 dark:text-gray-400 text-sm font-medium mb-6"
+    >
+      use the form below to create a new user
+    </p>
+
+    <form [formGroup]="userFormGroup" class="w-full flex flex-col gap-3">
+      <expensesreport-form-group>
+        <expensesreport-label [id]="'email'" [label]="'email'" />
+        <expensesreport-input-text
+          [id]="'email'"
+          [type]="'email'"
+          [formControl]="userFormGroup.controls['email']"
+          [useError]="true"
+          [errors]="emailErrors"
+        />
+      </expensesreport-form-group>
+      <expensesreport-form-group class="w-full">
+        <expensesreport-label [label]="'role'" />
+        <expensesreport-select
+          [options]="roles"
+          [placeholder]="'select a role'"
+          [formControl]="userFormGroup.controls['role']"
+          [label]="'role'"
+          [useError]="true"
+        ></expensesreport-select>
+      </expensesreport-form-group>
+
+      <div class="mt-10 flex flex-col gap-6">
+        <expensesreport-button
+          [label]="'create user'"
+          [type]="'submit'"
+          [loading]="loading"
+          [disabled]="disabled"
+          [color]="'primary'"
+          (onClick)="onSubmit()"
+        />
+        <expensesreport-button
+          [label]="'back'"
+          [type]="'button'"
+          [color]="'danger'"
+          (onClick)="onBack()"
+        />
+      </div>
+    </form>
+  </expensesreport-page-content>
+</div>

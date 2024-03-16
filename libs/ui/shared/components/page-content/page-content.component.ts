@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'expensesreport-page-content',
@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './page-content.component.css'
 })
 export class PageContentComponent {
-
+  @Input() useShadow = true;
 }

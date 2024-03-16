@@ -12,6 +12,9 @@ export * from './components/link/link.component';
 export * from './components/button/button.component';
 export * from './components/select/select.component';
 export * from './components/toast/toast.component';
+export * from './components/page-title/page-title.component';
+export * from './components/tag/tag.component';
+export * from './components/table/table.component';
 
 export * from './modules/address/address.component';
 export * from './modules/password/password.component';
