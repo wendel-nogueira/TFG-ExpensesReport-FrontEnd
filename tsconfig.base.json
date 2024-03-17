@@ -18,6 +18,18 @@
       "@expensesreport/change-password-page": [
         "libs/ui/module/change-password-page/src/index.ts"
       ],
+      "@expensesreport/departments-create-page": [
+        "libs/ui/module/departments-pages/src/lib/departments-pages/departments-create-page/src/index.ts"
+      ],
+      "@expensesreport/departments-edit-page": [
+        "libs/ui/module/departments-pages/src/lib/departments-pages/departments-edit-page/src/index.ts"
+      ],
+      "@expensesreport/departments-list-page": [
+        "libs/ui/module/departments-pages/src/lib/departments-pages/departments-list-page/src/index.ts"
+      ],
+      "@expensesreport/departments-pages": [
+        "libs/ui/module/departments-pages/src/index.ts"
+      ],
       "@expensesreport/guards": ["libs/core/guards/index.ts"],
       "@expensesreport/icons": ["libs/ui/shared/components/icons/index.ts"],
       "@expensesreport/login-page": ["libs/ui/module/login-page/src/index.ts"],
