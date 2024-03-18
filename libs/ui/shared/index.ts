@@ -15,6 +15,7 @@ export * from './components/toast/toast.component';
 export * from './components/page-title/page-title.component';
 export * from './components/tag/tag.component';
 export * from './components/table/table.component';
+export * from './components/text-area/text-area.component';
 
 export * from './modules/address/address.component';
 export * from './modules/password/password.component';
