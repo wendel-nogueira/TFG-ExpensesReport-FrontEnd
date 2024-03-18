@@ -1,0 +1,28 @@
+<textarea
+  rows="5"
+  cols="30"
+  pInputTextarea
+  [autoResize]="true"
+  [formControl]="formControl"
+  class="min-h-[42px] max-h-48 border px-3 py-2.5 rounded-lg w-full text-sm {{
+    useError &&
+    formControl.invalid &&
+    errorMessage &&
+    errorMessage.length > 0 &&
+    (formControl.touched || formControl.dirty)
+      ? 'border-red-500'
+      : 'border-gray-300 dark:border-gray-700'
+  }}"
+></textarea>
+<p
+  class="text-red-500 text-xs mt-1"
+  *ngIf="
+    useError &&
+    formControl.invalid &&
+    errorMessage &&
+    errorMessage.length > 0 &&
+    (formControl.touched || formControl.dirty)
+  "
+>
+  {{ errorMessage }}
+</p>

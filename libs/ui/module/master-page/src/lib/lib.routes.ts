@@ -17,6 +17,13 @@ export const masterPageRoutes: Route[] = [
           import('@expensesreport/users-pages').then((m) => m.usersPagesRoutes),
       },
       {
+        path: 'departments',
+        loadChildren: () =>
+          import('@expensesreport/departments-pages').then(
+            (m) => m.departmentsPagesRoutes
+          ),
+      },
+      {
         path: 'settings',
         loadChildren: () =>
           import('@expensesreport/settings-page').then(

@@ -6,34 +6,43 @@
     <p
       class="text-center text-gray-600 dark:text-gray-400 text-sm font-medium mb-6"
     >
-      use the form below to edit the user
+      use the form below to edit the department
     </p>
 
-    <form [formGroup]="userFormGroup" class="w-full flex flex-col gap-3">
+    <form [formGroup]="departmentFormGroup" class="w-full flex flex-col gap-3">
       <expensesreport-form-group>
-        <expensesreport-label [id]="'email'" [label]="'email'" />
+        <expensesreport-label [id]="'name'" [label]="'name'" />
         <expensesreport-input-text
-          [id]="'email'"
-          [type]="'email'"
-          [formControl]="userFormGroup.controls['email']"
+          [id]="'name'"
+          [type]="'name'"
+          [formControl]="departmentFormGroup.controls['name']"
           [useError]="true"
-          [errors]="emailErrors"
+          [errors]="nameErrors"
         />
       </expensesreport-form-group>
-      <expensesreport-form-group class="w-full">
-        <expensesreport-label [label]="'role'" />
-        <expensesreport-select
-          [options]="roles"
-          [placeholder]="'select a role'"
-          [formControl]="userFormGroup.controls['role']"
-          [label]="'role'"
+      <expensesreport-form-group>
+        <expensesreport-label [id]="'acronym'" [label]="'acronym'" />
+        <expensesreport-input-text
+          [id]="'acronym'"
+          [type]="'acronym'"
+          [formControl]="departmentFormGroup.controls['acronym']"
           [useError]="true"
-        ></expensesreport-select>
+          [errors]="acronymErrors"
+        />
+      </expensesreport-form-group>
+      <expensesreport-form-group>
+        <expensesreport-label [id]="'description'" [label]="'description'" />
+        <expensesreport-text-area
+          [id]="'description'"
+          [formControl]="departmentFormGroup.controls['description']"
+          [useError]="true"
+          [errors]="descriptionErrors"
+        />
       </expensesreport-form-group>
 
       <div class="mt-10 flex flex-col gap-6">
         <expensesreport-button
-          [label]="'update user'"
+          [label]="'update department'"
           [type]="'submit'"
           [loading]="loading"
           [disabled]="disabled"
@@ -48,14 +57,14 @@
         />
         <expensesreport-button
           *ngIf="!isDeactivated"
-          [label]="'deactivate user'"
+          [label]="'deactivate department'"
           [type]="'button'"
           [color]="'warning'"
           (onClick)="onDeactivate()"
         />
         <expensesreport-button
           *ngIf="isDeactivated"
-          [label]="'activate user'"
+          [label]="'activate department'"
           [type]="'button'"
           [color]="'success'"
           (onClick)="onActivate()"
