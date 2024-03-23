@@ -197,12 +197,12 @@ const allMenuItems: MenuItems[] = [
       {
         title: 'create',
         enabled: true,
-        href: '/',
+        href: 'projects/create',
       },
       {
         title: 'manage',
         enabled: true,
-        href: '/',
+        href: 'projects',
       },
     ],
   },

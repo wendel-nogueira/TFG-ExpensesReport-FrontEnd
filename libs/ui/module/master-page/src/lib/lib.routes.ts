@@ -24,6 +24,13 @@ export const masterPageRoutes: Route[] = [
           ),
       },
       {
+        path: 'projects',
+        loadChildren: () =>
+          import('@expensesreport/projects-pages').then(
+            (m) => m.projectsPagesRoutes
+          ),
+      },
+      {
         path: 'settings',
         loadChildren: () =>
           import('@expensesreport/settings-page').then(
