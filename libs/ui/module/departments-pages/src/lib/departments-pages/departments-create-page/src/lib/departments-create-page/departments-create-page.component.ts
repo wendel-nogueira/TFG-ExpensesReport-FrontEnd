@@ -61,6 +61,7 @@ export class DepartmentsCreatePageComponent {
     required: 'Acronym is required',
     minlength: 'Acronym must be at least 2 characters',
     maxlength: 'Acronym must be at most 10 characters',
+    exists: 'Acronym already exists',
   };
   descriptionErrors = {
     maxlength: 'Description must be at most 100 characters',
