@@ -1,0 +1,61 @@
+<div class="w-full h-full">
+  <expensesreport-page-content
+    [useShadow]="false"
+    class="w-full flex justify-center max-w-96 m-auto mt-20"
+  >
+    <p
+      class="text-center text-gray-600 dark:text-gray-400 text-sm font-medium mb-6"
+    >
+      use the form below to create a new project
+    </p>
+
+    <form [formGroup]="projectFormGroup" class="w-full flex flex-col gap-3">
+      <expensesreport-form-group>
+        <expensesreport-label [id]="'name'" [label]="'name'" />
+        <expensesreport-input-text
+          [id]="'name'"
+          [type]="'name'"
+          [formControl]="projectFormGroup.controls['name']"
+          [useError]="true"
+          [errors]="nameErrors"
+        />
+      </expensesreport-form-group>
+      <expensesreport-form-group>
+        <expensesreport-label [id]="'code'" [label]="'code'" />
+        <expensesreport-input-text
+          [id]="'code'"
+          [type]="'code'"
+          [formControl]="projectFormGroup.controls['code']"
+          [useError]="true"
+          [errors]="codeErrors"
+        />
+      </expensesreport-form-group>
+      <expensesreport-form-group>
+        <expensesreport-label [id]="'description'" [label]="'description'" />
+        <expensesreport-text-area
+          [id]="'description'"
+          [formControl]="projectFormGroup.controls['description']"
+          [useError]="true"
+          [errors]="descriptionErrors"
+        />
+      </expensesreport-form-group>
+
+      <div class="mt-10 flex flex-col gap-6">
+        <expensesreport-button
+          [label]="'create project'"
+          [type]="'submit'"
+          [loading]="loading"
+          [disabled]="disabled"
+          [color]="'primary'"
+          (onClick)="onSubmit()"
+        />
+        <expensesreport-button
+          [label]="'back'"
+          [type]="'button'"
+          [color]="'danger'"
+          (onClick)="onBack()"
+        />
+      </div>
+    </form>
+  </expensesreport-page-content>
+</div>

@@ -1,0 +1,9 @@
+{
+  "name": "projects-pages",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ui/module/projects-pages/src",
+  "prefix": "expensesreport",
+  "tags": [],
+  "projectType": "library",
+  "targets": {}
+}

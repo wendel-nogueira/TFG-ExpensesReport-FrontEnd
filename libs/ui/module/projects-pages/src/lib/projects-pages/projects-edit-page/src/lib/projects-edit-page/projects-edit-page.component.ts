@@ -19,10 +19,10 @@ import {
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'expensesreport-departments-create-page',
+  selector: 'expensesreport-projects-edit-page',
   standalone: true,
-  templateUrl: './departments-create-page.component.html',
-  styleUrl: './departments-create-page.component.css',
+  templateUrl: './projects-edit-page.component.html',
+  styleUrl: './projects-edit-page.component.css',
   imports: [
     CommonModule,
     PageContentComponent,
@@ -36,16 +36,18 @@ import { Router } from '@angular/router';
     ReactiveFormsModule,
   ],
 })
-export class DepartmentsCreatePageComponent {
+export class ProjectsEditPageComponent {
   loading = false;
   disabled = false;
-  departmentFormGroup = new FormGroup({
+  isDeactivated = false;
+
+  projectFormGroup = new FormGroup({
     name: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
       Validators.maxLength(50),
     ]),
-    acronym: new FormControl('', [
+    code: new FormControl('', [
       Validators.required,
       Validators.minLength(2),
       Validators.maxLength(10),
@@ -57,11 +59,11 @@ export class DepartmentsCreatePageComponent {
     minlength: 'Name must be at least 3 characters',
     maxlength: 'Name must be at most 50 characters',
   };
-  acronymErrors = {
-    required: 'Acronym is required',
-    minlength: 'Acronym must be at least 2 characters',
-    maxlength: 'Acronym must be at most 10 characters',
-    exists: 'Acronym already exists',
+  codeErrors = {
+    required: 'Code is required',
+    minlength: 'Code must be at least 2 characters',
+    maxlength: 'Code must be at most 10 characters',
+    exists: 'Code already exists',
   };
   descriptionErrors = {
     maxlength: 'Description must be at most 100 characters',
@@ -70,9 +72,9 @@ export class DepartmentsCreatePageComponent {
   constructor(private router: Router) {}
 
   onSubmit() {
-    if (this.departmentFormGroup.invalid) {
-      Object.keys(this.departmentFormGroup.controls).forEach((controlName) => {
-        const control = this.departmentFormGroup.get(controlName);
+    if (this.projectFormGroup.invalid) {
+      Object.keys(this.projectFormGroup.controls).forEach((controlName) => {
+        const control = this.projectFormGroup.get(controlName);
 
         if (control) {
           control.markAsTouched();
@@ -83,10 +85,18 @@ export class DepartmentsCreatePageComponent {
       return;
     }
 
-    console.log(this.departmentFormGroup.value);
+    console.log(this.projectFormGroup.value);
   }
 
   onBack() {
-    this.router.navigate(['/departments']);
+    this.router.navigate(['/projects']);
+  }
+
+  onDeactivate() {
+    console.log('Deactivate');
+  }
+
+  onActivate() {
+    console.log('Activate');
   }
 }

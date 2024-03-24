@@ -40,6 +40,18 @@
       "@expensesreport/not-found-page": [
         "libs/ui/module/not-found-page/src/index.ts"
       ],
+      "@expensesreport/projects-create-page": [
+        "libs/ui/module/projects-pages/src/lib/projects-pages/projects-create-page/src/index.ts"
+      ],
+      "@expensesreport/projects-edit-page": [
+        "libs/ui/module/projects-pages/src/lib/projects-pages/projects-edit-page/src/index.ts"
+      ],
+      "@expensesreport/projects-list-page": [
+        "libs/ui/module/projects-pages/src/lib/projects-pages/projects-list-page/src/index.ts"
+      ],
+      "@expensesreport/projects-pages": [
+        "libs/ui/module/projects-pages/src/index.ts"
+      ],
       "@expensesreport/register-page": [
         "libs/ui/module/register-page/src/index.ts"
       ],
