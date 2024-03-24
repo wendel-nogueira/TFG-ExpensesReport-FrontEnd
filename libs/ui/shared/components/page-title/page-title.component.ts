@@ -63,15 +63,15 @@ export class PageTitleComponent implements OnInit {
     } else if (route.includes('departments')) {
       title += 'departments';
       icon = 'department';
+    } else if (route.includes('expense-accounts')) {
+      title += 'accounts';
+      icon = 'account';
+    } else if (route.includes('expense-reports')) {
+      title += 'reports';
+      icon = 'report';
     } else if (route.includes('expenses')) {
       title += 'expenses';
       icon = 'expense';
-    } else if (route.includes('accounts')) {
-      title += 'accounts';
-      icon = 'account';
-    } else if (route.includes('reports')) {
-      title += 'reports';
-      icon = 'report';
     }
 
     if (title !== '') {
