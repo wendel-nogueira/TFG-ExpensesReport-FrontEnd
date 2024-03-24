@@ -6,43 +6,56 @@
     <p
       class="text-center text-gray-600 dark:text-gray-400 text-sm font-medium mb-6"
     >
-      use the form below to create a new department
+      use the form below to create a new expense account
     </p>
 
-    <form [formGroup]="departmentFormGroup" class="w-full flex flex-col gap-3">
+    <form
+      [formGroup]="expenseAccountFormGroup"
+      class="w-full flex flex-col gap-3"
+    >
       <expensesreport-form-group>
         <expensesreport-label [id]="'name'" [label]="'name'" />
         <expensesreport-input-text
           [id]="'name'"
           [type]="'name'"
-          [formControl]="departmentFormGroup.controls['name']"
+          [formControl]="expenseAccountFormGroup.controls['name']"
           [useError]="true"
           [errors]="nameErrors"
         />
       </expensesreport-form-group>
       <expensesreport-form-group>
-        <expensesreport-label [id]="'acronym'" [label]="'acronym'" />
+        <expensesreport-label [id]="'code'" [label]="'code'" />
         <expensesreport-input-text
-          [id]="'acronym'"
-          [type]="'acronym'"
-          [formControl]="departmentFormGroup.controls['acronym']"
+          [id]="'code'"
+          [type]="'code'"
+          [formControl]="expenseAccountFormGroup.controls['code']"
           [useError]="true"
-          [errors]="acronymErrors"
+          [errors]="codeErrors"
         />
       </expensesreport-form-group>
       <expensesreport-form-group>
         <expensesreport-label [id]="'description'" [label]="'description'" />
         <expensesreport-text-area
           [id]="'description'"
-          [formControl]="departmentFormGroup.controls['description']"
+          [formControl]="expenseAccountFormGroup.controls['description']"
           [useError]="true"
           [errors]="descriptionErrors"
         />
       </expensesreport-form-group>
+      <expensesreport-form-group>
+        <expensesreport-label [id]="'type'" [label]="'type'" />
+        <expensesreport-select
+          [options]="types"
+          [placeholder]="'select a type'"
+          [formControl]="expenseAccountFormGroup.controls['type']"
+          [label]="'type'"
+          [useError]="true"
+        ></expensesreport-select>
+      </expensesreport-form-group>
 
       <div class="mt-10 flex flex-col gap-6">
         <expensesreport-button
-          [label]="'create department'"
+          [label]="'create expense account'"
           [type]="'submit'"
           [loading]="loading"
           [disabled]="disabled"

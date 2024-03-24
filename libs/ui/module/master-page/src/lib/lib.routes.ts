@@ -31,6 +31,13 @@ export const masterPageRoutes: Route[] = [
           ),
       },
       {
+        path: 'expense-accounts',
+        loadChildren: () =>
+          import('@expensesreport/expense-accounts-pages').then(
+            (m) => m.expenseAccountsPagesRoutes
+          ),
+      },
+      {
         path: 'settings',
         loadChildren: () =>
           import('@expensesreport/settings-page').then(
