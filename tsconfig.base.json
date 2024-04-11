@@ -45,6 +45,18 @@
       "@expensesreport/expense-accounts-pages": [
         "libs/ui/module/expense-accounts-pages/src/index.ts"
       ],
+      "@expensesreport/expense-reports-create-page": [
+        "libs/ui/module/expense-reports-pages/src/lib/expense-reports-pages/expense-reports-create-page/src/index.ts"
+      ],
+      "@expensesreport/expense-reports-edit-page": [
+        "libs/ui/module/expense-reports-pages/src/lib/expense-reports-pages/expense-reports-edit-page/src/index.ts"
+      ],
+      "@expensesreport/expense-reports-list-page": [
+        "libs/ui/module/expense-reports-pages/src/lib/expense-reports-pages/expense-reports-list-page/src/index.ts"
+      ],
+      "@expensesreport/expense-reports-pages": [
+        "libs/ui/module/expense-reports-pages/src/index.ts"
+      ],
       "@expensesreport/guards": ["libs/core/guards/index.ts"],
       "@expensesreport/icons": ["libs/ui/shared/components/icons/index.ts"],
       "@expensesreport/login-page": ["libs/ui/module/login-page/src/index.ts"],

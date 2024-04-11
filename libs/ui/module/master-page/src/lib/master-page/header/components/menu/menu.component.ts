@@ -235,12 +235,12 @@ const allMenuItems: MenuItems[] = [
       {
         title: 'create',
         enabled: true,
-        href: '/',
+        href: 'expense-reports/create',
       },
       {
         title: 'manage',
         enabled: true,
-        href: '/',
+        href: 'expense-reports',
       },
     ],
   },
