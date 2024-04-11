@@ -1,0 +1,7 @@
+::ng-deep .p-overlaypanel {
+  background: #fff;
+}
+
+::ng-deep .dark .p-overlaypanel {
+  background: #14181f;
+}

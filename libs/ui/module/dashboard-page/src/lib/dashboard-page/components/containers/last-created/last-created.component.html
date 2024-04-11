@@ -1,0 +1,41 @@
+<div class="w-full h-full overflow-hidden flex flex-col gap-6">
+  <h2
+    class="font-semibold text-gray-500 dark:text-gray-400 mt-[4px] text-center"
+  >
+    Last Created
+  </h2>
+  <div
+    id="last-created-container"
+    class="h-full max-h-96 lg:max-h-[280px] overflow-y-auto flex flex-col gap-4 pb-3 pr-2"
+  >
+    <div
+      *ngFor="let item of items.reverse()"
+      class="h-min w-full p-4 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm cursor-pointer"
+    >
+      <div class="flex items-center justify-between">
+        <div class="w-full flex items-center gap-3">
+          <div
+            class="w-10 h-10 bg-gray-50 dark:bg-gray-800 rounded-full flex items-center justify-center border border-gray-200 dark:border-gray-700"
+          >
+            <span class="w-5 h-5 text-blue-500">
+              <expensesreport-file />
+            </span>
+          </div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+              Report #{{ item.id }}
+            </h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400">
+              {{ item.user }}
+            </p>
+          </div>
+          <div class="ml-auto">
+            <p class="text-blue-500 font-semibold text-sm">
+              ${{ item.total }}.00
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -91,7 +91,7 @@ export class MenuComponent implements OnChanges, OnInit {
     },
     expense_reports: {
       create: true,
-      manage: false,
+      manage: true,
     },
   };
 

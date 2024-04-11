@@ -18,6 +18,9 @@
       "@expensesreport/change-password-page": [
         "libs/ui/module/change-password-page/src/index.ts"
       ],
+      "@expensesreport/dashboard-page": [
+        "libs/ui/module/dashboard-page/src/index.ts"
+      ],
       "@expensesreport/departments-create-page": [
         "libs/ui/module/departments-pages/src/lib/departments-pages/departments-create-page/src/index.ts"
       ],
