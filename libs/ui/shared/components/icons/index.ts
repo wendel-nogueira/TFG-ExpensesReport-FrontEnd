@@ -1,3 +1,4 @@
+export * from './add/add.component';
 export * from './arrow-down/arrow-down.component';
 export * from './arrow-left/arrow-left.component';
 export * from './calendar/calendar.component';
@@ -27,3 +28,4 @@ export * from './user-group/user-group.component';
 export * from './view/view.component';
 export * from './warning/warning.component';
 export * from './wallet/wallet.component';
+export * from './tag/tag.component';

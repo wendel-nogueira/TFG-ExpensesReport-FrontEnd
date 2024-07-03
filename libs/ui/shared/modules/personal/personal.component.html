@@ -1,4 +1,4 @@
-<div class="w-full flex gap-3 flex-row max-[576px]:flex-col">
+<div class="w-full grid gap-3 grid-cols-1 min-[576px]:grid-cols-2">
   <expensesreport-form-group class="w-full">
     <expensesreport-label [id]="'firstName'" [label]="'first name'" />
     <expensesreport-input-text
@@ -7,6 +7,7 @@
       [formControl]="personalFormGroupLocal.controls['firstName']"
       [useError]="true"
       [errors]="firstNameErrors"
+      [loading]="loading"
     />
   </expensesreport-form-group>
 
@@ -18,6 +19,7 @@
       [formControl]="personalFormGroupLocal.controls['lastName']"
       [useError]="true"
       [errors]="lastNameErrors"
+      [loading]="loading"
     />
   </expensesreport-form-group>
 </div>

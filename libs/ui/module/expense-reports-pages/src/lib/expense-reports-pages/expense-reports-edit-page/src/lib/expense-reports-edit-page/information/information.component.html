@@ -1,0 +1,334 @@
+<div
+  class="w-full bg-slate-50 dark:bg-slate-900 h-full p-8 rounded-lg shadow-sm"
+>
+  <div class="w-full flex gap-10 flex-col lg:flex-row">
+    <div class="w-full lg:max-w-lg flex flex-col gap-6">
+      <p class="text-lg font-bold font-sans text-slate-700 dark:text-slate-200">
+        Expense Report Information
+      </p>
+
+      <div class="flex flex-col gap-1" *ngIf="expenseReport !== null">
+        <p
+          class="text-base font-sans font-medium text-slate-500 dark:text-slate-400"
+        >
+          <span class="font-semibold">User:</span>
+          {{
+            expenseReport.user !== undefined
+              ? expenseReport.user.firstName + ' ' + expenseReport.user.lastName
+              : expenseReport.userId
+          }}
+        </p>
+        <p
+          class="text-base font-sans font-medium text-slate-500 dark:text-slate-400"
+        >
+          <span class="font-semibold">Status:</span>
+          {{ status }}
+        </p>
+        <p
+          class="text-base font-sans font-medium text-slate-500 dark:text-slate-400"
+        >
+          <span class="font-semibold">Total Amount:</span>
+          {{
+            expenseReport.totalAmount !== null
+              ? (expenseReport.totalAmount | currency)
+              : (0 | currency)
+          }}
+        </p>
+        <p
+          class="text-base font-sans font-medium text-slate-500 dark:text-slate-400"
+        >
+          <span class="font-semibold">Amount Approved:</span>
+          {{
+            expenseReport.amountApproved !== null
+              ? (expenseReport.amountApproved | currency)
+              : (0 | currency)
+          }}
+        </p>
+        <p
+          class="text-base font-sans font-medium text-slate-500 dark:text-slate-400"
+        >
+          <span class="font-semibold">Amount Rejected:</span>
+          {{
+            expenseReport.amountRejected !== null
+              ? (expenseReport.amountRejected | currency)
+              : (0 | currency)
+          }}
+        </p>
+
+        <div
+          class="flex flex-col gap-1 mt-6"
+          *ngIf="expenseReport.status === 4 || expenseReport.status === 5"
+        >
+          <p
+            class="text-lg font-bold font-sans text-slate-700 dark:text-slate-200 mb-4"
+          >
+            Payment Information
+          </p>
+
+          <p class="text-base font-sans text-slate-500 dark:text-slate-400">
+            <span class="font-semibold">Amount Paid:</span>
+            {{
+              expenseReport.amountPaid !== null
+                ? (expenseReport.amountPaid | currency)
+                : (0 | currency)
+            }}
+          </p>
+          <p class="text-base font-sans text-slate-500 dark:text-slate-400">
+            <span class="font-semibold">Paid By:</span>
+            {{
+              expenseReport.paidBy !== undefined
+                ? expenseReport.paidBy.firstName +
+                  ' ' +
+                  expenseReport.paidBy.lastName
+                : expenseReport.paidById
+            }}
+          </p>
+          <p class="text-base font-sans text-slate-500 dark:text-slate-400">
+            <span class="font-semibold">Paid Date:</span>
+            {{ expenseReport.paidDate }}
+          </p>
+          <p class="text-base font-sans text-slate-500 dark:text-slate-400">
+            <span class="font-semibold">Paid Date Time Zone:</span>
+            {{ expenseReport.paidDateTimeZone }}
+          </p>
+          <p class="text-base font-sans text-slate-500 dark:text-slate-400 flex items-center gap-1">
+            <span class="font-semibold">Proof Of Payment:</span>
+            <a
+              class="text-blue-500 dark:text-blue-400"
+              href="{{
+                expenseReport !== null ? expenseReport.proofOfPayment : ''
+              }}"
+              target="_blank"
+            >
+              <span class="w-full flex items-center gap-1">
+                <i class="pi pi-eye" style="font-size: 1rem"></i>
+                view
+              </span>
+            </a>
+          </p>
+          <p class="text-base font-sans text-slate-500 dark:text-slate-400">
+            <span class="font-semibold">Payment Notes:</span>
+            {{ expenseReport.paymentNotes }}
+          </p>
+        </div>
+
+        <p
+          class="text-base font-sans text-slate-500 dark:text-slate-400 mt-6"
+          *ngIf="expenseReport.status === 3 || expenseReport.status === 6"
+        >
+          <span class="font-semibold">Rejection Notes:</span>
+          {{ expenseReport.rejectionNotes }}
+        </p>
+      </div>
+    </div>
+
+    <div class="w-full lg:max-w-lg">
+      <form
+        [formGroup]="expenseReportFormGroup"
+        class="w-full flex flex-col gap-3"
+      >
+        <expensesreport-form-group>
+          <expensesreport-label [id]="'department'" [label]="'department'" />
+          <expensesreport-select
+            [options]="departments"
+            [placeholder]="'select a department'"
+            [formControl]="expenseReportFormGroup.controls['department']"
+            [label]="'department'"
+            [useError]="true"
+            [loading]="loading"
+            [disabled]="disabled"
+            (valueChange)="onDepartmentChange($event)"
+          ></expensesreport-select>
+        </expensesreport-form-group>
+        <expensesreport-form-group>
+          <expensesreport-label [id]="'project'" [label]="'project'" />
+          <expensesreport-select
+            [options]="projects"
+            [placeholder]="'select a project'"
+            [formControl]="expenseReportFormGroup.controls['project']"
+            [label]="'project'"
+            [useError]="true"
+            [disabled]="disabled"
+            [loading]="loading"
+          ></expensesreport-select>
+        </expensesreport-form-group>
+      </form>
+    </div>
+  </div>
+
+  <div
+    class="w-full mt-8 flex flex-wrap items-center justify-center gap-4"
+    *ngIf="expenseReport !== null"
+  >
+    <expensesreport-button
+      class="w-36"
+      [label]="'update'"
+      [type]="'submit'"
+      [loading]="loading"
+      [disabled]="disabled"
+      [color]="'primary'"
+      (onClick)="onSubmit()"
+      *ngIf="buttons.update"
+    />
+    <expensesreport-button
+      class="w-36"
+      [label]="'approve'"
+      [type]="'submit'"
+      [loading]="loading"
+      [disabled]="disabled"
+      [color]="'success'"
+      (onClick)="approve()"
+      *ngIf="buttons.approve"
+    />
+    <expensesreport-button
+      class="w-36"
+      [label]="'reject'"
+      [type]="'submit'"
+      [loading]="loading"
+      [disabled]="disabled"
+      [color]="'danger'"
+      (onClick)="reject()"
+      *ngIf="buttons.reject"
+    />
+    <expensesreport-button
+      class="w-36"
+      [label]="'pay'"
+      [type]="'submit'"
+      [loading]="loading"
+      [disabled]="disabled"
+      [color]="'success'"
+      (onClick)="type = 'pay'; showModal = true"
+      *ngIf="buttons.pay"
+    />
+    <expensesreport-button
+      class="w-36"
+      [label]="'reject payment'"
+      [type]="'button'"
+      [color]="'danger'"
+      (onClick)="type = 'reject'; showModal = true"
+      *ngIf="buttons.rejectPayment"
+    />
+    <expensesreport-button
+      class="w-36"
+      [label]="'cancel report'"
+      [type]="'button'"
+      [color]="'danger'"
+      (onClick)="changeStatus(7)"
+      *ngIf="buttons.cancel"
+    />
+    <expensesreport-button
+      class="w-36"
+      [label]="'export'"
+      [type]="'button'"
+      [color]="'primary'"
+      (onClick)="onExport()"
+    />
+    <expensesreport-button
+      class="w-36"
+      [label]="'back'"
+      [type]="'button'"
+      [color]="'danger'"
+      (onClick)="onBack()"
+    />
+  </div>
+</div>
+
+<p-dialog
+  [(visible)]="showModal"
+  [modal]="true"
+  position="center"
+  [draggable]="false"
+  [style]="{ width: '100%', maxWidth: '45rem', height: 'auto' }"
+  [breakpoints]="{ '1199px': '50rem', '575px': '90vw' }"
+  [resizable]="true"
+  [baseZIndex]="10000"
+  [closeOnEscape]="false"
+  [dismissableMask]="false"
+  [showHeader]="true"
+  [blockScroll]="true"
+  (onHide)="showModal = false; type = null"
+>
+  <ng-template pTemplate="header">
+    <h1 class="text-2xl font-bold text-gray-600 dark:text-gray-300">
+      {{ type === 'pay' ? 'Pay' : type === 'reject' ? 'Reject Payment' : '' }}
+    </h1>
+  </ng-template>
+
+  <div class="w-full" *ngIf="type !== null">
+    <div class="w-full mb-6">
+      <p class="text-base font-sans text-slate-500 dark:text-slate-400">
+        {{
+          type === 'pay'
+            ? 'Are you sure you want to pay this expense report?'
+            : type === 'reject'
+            ? 'Are you sure you want to reject the payment of this expense report?'
+            : ''
+        }}
+      </p>
+    </div>
+
+    <div class="w-full flex flex-col items-center gap-6" *ngIf="type === 'pay'">
+      <div class="w-full max-w-96 flex flex-col gap-2">
+        <expensesreport-form-group>
+          <expensesreport-label
+            [id]="'paymentNotes'"
+            [label]="'Payment Notes'"
+          />
+          <expensesreport-text-area
+            [id]="'paymentNotes'"
+            [formControl]="paymentNotes"
+            [useError]="true"
+            [errors]="paymentNotesErrors"
+            [loading]="loading"
+          />
+
+          <expensesreport-upload
+            [formControl]="proofOfPayment"
+            [useError]="true"
+            [loading]="loading"
+          />
+        </expensesreport-form-group>
+      </div>
+
+      <expensesreport-button
+        class="w-full max-w-96"
+        [label]="'pay'"
+        [type]="'submit'"
+        [loading]="loading"
+        [disabled]="disabled"
+        [color]="'success'"
+        (onClick)="onPay()"
+      />
+    </div>
+    <div
+      class="w-full flex flex-col items-center gap-6"
+      *ngIf="type === 'reject'"
+    >
+      <div class="w-full max-w-96">
+        <expensesreport-form-group>
+          <expensesreport-label
+            [id]="'rejectionNotes'"
+            [label]="'Rejection Notes'"
+          />
+          <expensesreport-text-area
+            [id]="'rejectionNotes'"
+            [formControl]="rejectionNotes"
+            [useError]="true"
+            [errors]="rejectionNotesErrors"
+            [loading]="loading"
+          />
+        </expensesreport-form-group>
+      </div>
+
+      <expensesreport-button
+        class="w-full max-w-96"
+        [label]="'reject'"
+        [type]="'submit'"
+        [loading]="loading"
+        [disabled]="disabled"
+        [color]="'danger'"
+        (onClick)="onReject()"
+      />
+    </div>
+  </div>
+</p-dialog>

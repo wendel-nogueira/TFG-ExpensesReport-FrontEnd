@@ -1,0 +1,75 @@
+<div class="w-full h-full">
+  <expensesreport-page-content
+    [useShadow]="false"
+    class="w-full flex justify-center max-w-2xl m-auto mt-18"
+  >
+    <p
+      class="text-center text-gray-600 dark:text-gray-400 text-sm font-medium mb-6"
+    >
+      use the form below to {{ editMode ? 'edit' : 'create a new' }} expense
+    </p>
+
+    <form [formGroup]="expenseFormGroup" class="w-full flex flex-col gap-3">
+      <expensesreport-form-group>
+        <expensesreport-label [id]="'account'" [label]="'account'" />
+        <expensesreport-select
+          [options]="expenseAccounts"
+          [placeholder]="'select a account'"
+          [formControl]="expenseFormGroup.controls['expenseAccount']"
+          [label]="'account'"
+          [useError]="true"
+          [loading]="loading"
+        ></expensesreport-select>
+      </expensesreport-form-group>
+      <expensesreport-form-group>
+        <expensesreport-label [id]="'amount'" [label]="'amount'" />
+        <expensesreport-input-text
+          [id]="'amount'"
+          [type]="'amount'"
+          [formControl]="expenseFormGroup.controls['amount']"
+          [useError]="true"
+          [errors]="amountErrors"
+          [loading]="loading"
+        />
+      </expensesreport-form-group>
+      <expensesreport-form-group>
+        <expensesreport-label [id]="'dateIncurred'" [label]="'date incurred'" />
+        <expensesreport-calendar
+          [id]="'dateIncurred'"
+          [formControl]="expenseFormGroup.controls['dateIncurred']"
+          [useError]="true"
+          [errors]="dateIncurredErrors"
+          [loading]="loading"
+        />
+      </expensesreport-form-group>
+      <expensesreport-form-group>
+        <expensesreport-label [id]="'explanation'" [label]="'explanation'" />
+        <expensesreport-text-area
+          [id]="'explanation'"
+          [formControl]="expenseFormGroup.controls['explanation']"
+          [useError]="true"
+          [errors]="explanationErrors"
+          [loading]="loading"
+        />
+      </expensesreport-form-group>
+      <expensesreport-upload />
+
+      <div class="mt-10 flex flex-col gap-6">
+        <expensesreport-button
+          [label]="editMode ? 'edit expense' : 'create expense'"
+          [type]="'submit'"
+          [loading]="loading"
+          [disabled]="disabled"
+          [color]="'primary'"
+          (onClick)="onSubmit()"
+        />
+        <expensesreport-button
+          [label]="'back'"
+          [type]="'button'"
+          [color]="'danger'"
+          (onClick)="onBack()"
+        />
+      </div>
+    </form>
+  </expensesreport-page-content>
+</div>

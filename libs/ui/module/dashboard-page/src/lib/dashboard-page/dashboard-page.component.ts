@@ -61,9 +61,6 @@ export class DashboardPageComponent implements OnInit {
   }
 
   onFilterClick() {
-    console.log('filter');
-    console.log(this.dateFormGroup.value);
-
     this.dateOverlay.hide();
     this.selectedDate =
       dateOptions.find(

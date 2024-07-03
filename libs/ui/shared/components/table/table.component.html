@@ -2,12 +2,35 @@
   class="w-full flex max-[419px]:flex-col justify-between min-[420px]:items-center gap-2 mb-8"
 >
   <div class="flex gap-2">
-    <expensesreport-button [type]="'export'" />
-    <expensesreport-button [type]="'filter'" (onClick)="openFilter()" />
-    <expensesreport-button [type]="'sort'" (onClick)="openSort()" />
+    <expensesreport-button
+      [type]="'add'"
+      *ngIf="showAddButton"
+      (onClick)="onAddClick()"
+    />
+    <expensesreport-button
+      [type]="'export'"
+      [loading]="loadingExport"
+      *ngIf="showExportButton"
+      (onClick)="export()"
+    />
+    <expensesreport-button
+      [type]="'filter'"
+      (onClick)="openFilter()"
+      *ngIf="showFilterButton"
+    />
+    <expensesreport-button
+      [type]="'sort'"
+      (onClick)="openSort()"
+      *ngIf="showSortButton"
+    />
+    <expensesreport-button
+      [type]="'remove'"
+      (onClick)="onRemoveClick()"
+      *ngIf="showCheckbox && selectedItems.length > 0"
+    />
   </div>
 
-  <div>
+  <div *ngIf="showSearchInput">
     <expensesreport-input-search [table]="table" />
   </div>
 </div>
@@ -32,20 +55,34 @@
   </div>
   <p-table
     #table
-    [value]="data"
-    [paginator]="true"
-    [rows]="numberOfRows"
-    [showCurrentPageReport]="true"
-    [tableStyle]="{ 'min-width': '36.5rem' }"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     styleClass="p-datatable-striped"
     class="table-custom w-full h-full {{
       data.length === 0 ? 'empty' : ''
     }} transition-all duration-300 ease-in-out"
     [globalFilterFields]="['name', 'date', 'company', 'status']"
+    [value]="data"
+    [paginator]="true"
+    [rows]="numberOfRows"
+    [showCurrentPageReport]="true"
+    [tableStyle]="{ 'min-width': '36.5rem' }"
+    [(selection)]="selectedItems"
+    (onPage)="onPage($event)"
   >
     <ng-template pTemplate="header">
       <tr class="bg-gray-100 dark:bg-gray-700">
+        <th
+          *ngIf="showCheckbox"
+          [style]="{ width: '2%' }"
+          class="px-4 py-3 text-sm font-semibold text-gray-500 dark:text-gray-300 text-left"
+        >
+          <div
+            class="w-min border border-gray-300 dark:border-gray-700 rounded-lg"
+          >
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </div>
+        </th>
+
         <ng-container *ngFor="let column of columns">
           <th
             *ngIf="
@@ -54,7 +91,13 @@
               column.field !== 'isActive' &&
               column.field !== 'isDeleted' &&
               column.field !== 'status' &&
-              column.field !== 'date'
+              column.field !== 'date' &&
+              column.field !== 'code' &&
+              column.field !== 'role' &&
+              column.field !== 'acronym' &&
+              !column.field.toLowerCase().includes('quantity') &&
+              !column.field.toLowerCase().includes('total') &&
+              !column.field.toLowerCase().includes('amount')
             "
             [style]="{ width: defaultSize + '%' }"
             class="px-4 py-3 text-sm font-semibold text-gray-500 dark:text-gray-300 text-left"
@@ -69,10 +112,30 @@
             {{ column.header }}
           </th>
           <th
+            *ngIf="column.field.toLowerCase().includes('quantity')"
+            [style]="{ width: sizeOfQuantity + '%' }"
+            class="px-4 py-3 text-sm font-semibold text-gray-500 dark:text-gray-300 text-left"
+          >
+            {{ column.header }}
+          </th>
+          <th
+            *ngIf="
+              column.field.toLowerCase().includes('total') ||
+              column.field.toLowerCase().includes('amount')
+            "
+            [style]="{ width: sizeOfTotal + '%' }"
+            class="px-4 py-3 text-sm font-semibold text-gray-500 dark:text-gray-300 text-left"
+          >
+            {{ column.header }}
+          </th>
+          <th
             *ngIf="
               column.field === 'isActive' ||
               column.field === 'isDeleted' ||
-              column.field === 'status'
+              column.field === 'status' ||
+              column.field === 'code' ||
+              column.field === 'role' ||
+              column.field === 'acronym'
             "
             [style]="{ width: sizeOfTags + '%' }"
             class="px-4 py-3 text-sm font-semibold text-gray-500 dark:text-gray-300 text-left"
@@ -90,6 +153,16 @@
 
     <ng-template pTemplate="body" let-data>
       <tr>
+        <td
+          *ngIf="showCheckbox"
+          class="px-4 py-3 text-sm font-medium text-gray-400 dark:text-gray-300"
+        >
+          <div
+            class="w-min border border-gray-300 dark:border-gray-700 rounded-lg"
+          >
+            <p-tableCheckbox [value]="data"></p-tableCheckbox>
+          </div>
+        </td>
         <ng-container *ngFor="let column of columns">
           <td
             *ngIf="
@@ -97,12 +170,52 @@
               column.field !== 'more' &&
               column.field !== 'isActive' &&
               column.field !== 'isDeleted' &&
-              column.field !== 'status'
+              column.field !== 'status' &&
+              column.field !== 'date' &&
+              column.field !== 'code' &&
+              column.field !== 'role' &&
+              column.field !== 'acronym' &&
+              !column.field.toLowerCase().includes('quantity') &&
+              !column.field.toLowerCase().includes('total') &&
+              !column.field.toLowerCase().includes('amount')
             "
             class="px-4 py-3 text-sm font-medium text-gray-400 dark:text-gray-300"
           >
+            <span class="w-full h-6 break-all">
+              {{
+                data[column.field].length > 80
+                  ? data[column.field].substring(0, 80) + '...'
+                  : data[column.field]
+              }}
+            </span>
+          </td>
+
+          <td *ngIf="column.field === 'date'">
+            <span class="w-full h-6">
+              {{ data[column.field] | date : 'MM/dd/yyyy' }}
+            </span>
+          </td>
+
+          <td *ngIf="column.field === 'code' || column.field === 'acronym'">
             <span class="w-full h-6">
               {{ data[column.field] }}
+            </span>
+          </td>
+
+          <td *ngIf="column.field.toLowerCase().includes('quantity')">
+            <span class="w-full h-6">
+              {{ data[column.field] | number }}
+            </span>
+          </td>
+
+          <td
+            *ngIf="
+              column.field.toLowerCase().includes('total') ||
+              column.field.toLowerCase().includes('amount')
+            "
+          >
+            <span class="w-full h-6">
+              {{ data[column.field] | currency : 'USD' : 'symbol' }}
             </span>
           </td>
 
@@ -110,7 +223,8 @@
             *ngIf="
               column.field === 'isActive' ||
               column.field === 'isDeleted' ||
-              column.field === 'status'
+              column.field === 'status' ||
+              column.field === 'role'
             "
             class="px-4 py-3 text-sm font-medium text-gray-400 dark:text-gray-300"
           >
@@ -139,29 +253,42 @@
       </tr>
     </ng-template>
 
+    <ng-template pTemplate="footer" class="w-full">
+      <div *ngIf="currentPage === numberOfPages - 1" class="w-full">
+        <div
+          class="w-full h-14"
+          *ngFor="let i of [].constructor(rowsToComplete)"
+        ></div>
+      </div>
+    </ng-template>
+
     <ng-template pTemplate="emptymessage">
       <ng-container *ngIf="!loading">
         <tr>
-          <td
-            class="px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-300"
-            colspan="10"
-          >
-            <span class="w-full h-6"> No records found </span>
+          <td class="w-full h-14" colspan="10">
+            <p
+              class="px-4 text-sm font-medium text-gray-400 dark:text-gray-300"
+            >
+              No data found
+            </p>
           </td>
         </tr>
         <tr *ngFor="let i of [].constructor(numberOfRows - 1)">
-          <td class="h-12" colspan="10"></td>
+          <td class="h-14"></td>
+          <td
+            *ngFor="let j of [].constructor(columnsToComplete)"
+            class="h-14"
+          ></td>
         </tr>
       </ng-container>
 
       <ng-container *ngIf="loading">
         <tr *ngFor="let i of [].constructor(numberOfRows)">
-          <td *ngFor="let column of columns" class="px-3 py-3">
+          <td *ngFor="let column of columns" class="px-3" class="h-14">
             <span class="w-full h-6 block items-center">
               <p-skeleton
                 height="1.5rem"
                 borderRadius="0.375rem"
-                class="h-6"
                 *ngIf="column.field !== 'actions' && column.field !== 'more'"
               />
             </span>

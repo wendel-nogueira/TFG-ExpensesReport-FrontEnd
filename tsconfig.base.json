@@ -15,6 +15,18 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@expensesreport/categories-create-page": [
+        "libs/ui/module/categories-pages/src/lib/categories-pages/categories-create-page/src/index.ts"
+      ],
+      "@expensesreport/categories-edit-page": [
+        "libs/ui/module/categories-pages/src/lib/categories-pages/categories-edit-page/src/index.ts"
+      ],
+      "@expensesreport/categories-list-page": [
+        "libs/ui/module/categories-pages/src/lib/categories-pages/categories-list-page/src/index.ts"
+      ],
+      "@expensesreport/categories-pages": [
+        "libs/ui/module/categories-pages/src/index.ts"
+      ],
       "@expensesreport/change-password-page": [
         "libs/ui/module/change-password-page/src/index.ts"
       ],
@@ -32,6 +44,10 @@
       ],
       "@expensesreport/departments-pages": [
         "libs/ui/module/departments-pages/src/index.ts"
+      ],
+      "@expensesreport/enums": ["libs/core/enums/index.ts"],
+      "@expensesreport/environments": [
+        "apps/expensesreport/src/environments/environments.ts"
       ],
       "@expensesreport/expense-accounts-create-page": [
         "libs/ui/module/expense-accounts-pages/src/lib/expense-accounts-pages/expense-accounts-create-page/src/index.ts"
@@ -59,6 +75,7 @@
       ],
       "@expensesreport/guards": ["libs/core/guards/index.ts"],
       "@expensesreport/icons": ["libs/ui/shared/components/icons/index.ts"],
+      "@expensesreport/interceptors": ["libs/core/interceptors/index.ts"],
       "@expensesreport/login-page": ["libs/ui/module/login-page/src/index.ts"],
       "@expensesreport/master-page": [
         "libs/ui/module/master-page/src/index.ts"
@@ -81,6 +98,18 @@
       ],
       "@expensesreport/register-page": [
         "libs/ui/module/register-page/src/index.ts"
+      ],
+      "@expensesreport/seasons-create-page": [
+        "libs/ui/module/seasons-pages/src/lib/seasons-pages/seasons-create-page/src/index.ts"
+      ],
+      "@expensesreport/seasons-edit-page": [
+        "libs/ui/module/seasons-pages/src/lib/seasons-pages/seasons-edit-page/src/index.ts"
+      ],
+      "@expensesreport/seasons-list-page": [
+        "libs/ui/module/seasons-pages/src/lib/seasons-pages/seasons-list-page/src/index.ts"
+      ],
+      "@expensesreport/seasons-pages": [
+        "libs/ui/module/seasons-pages/src/index.ts"
       ],
       "@expensesreport/services": ["libs/core/services/index.ts"],
       "@expensesreport/settings-page": [

@@ -31,11 +31,7 @@
   background: rgb(31 41 55);
 }
 
-::ng-deep
-  .table-custom:not(.empty)
-  .p-datatable
-  .p-datatable-tbody
-  > tr:hover,
+::ng-deep .table-custom:not(.empty) .p-datatable .p-datatable-tbody > tr:hover,
 ::ng-deep
   .table-custom:not(.empty)
   .p-datatable.p-datatable-striped
@@ -70,4 +66,20 @@
 ::ng-deep .dark .table-custom .p-paginator,
 ::ng-deep .dark .table-custom .p-paginator .p-paginator-current {
   color: rgb(209 213 219) !important;
+}
+
+::ng-deep .p-overlaypanel {
+  border: 1px solid var(--border-color);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+  transform: translateX(-50%) !important;
+}
+
+::ng-deep .p-overlaypanel .p-overlaypanel-content {
+  padding: 0rem;
+  border-radius: 0.5rem;
+  background: var(--background-secondary);
+}
+
+::ng-deep .dark .p-overlaypanel .p-overlaypanel-content {
+  background: var(--background-dark);
 }

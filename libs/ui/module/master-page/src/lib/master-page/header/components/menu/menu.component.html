@@ -26,8 +26,10 @@
             <expensesreport-department *ngIf="menuItem.icon === 'department'" />
             <expensesreport-file *ngIf="menuItem.icon === 'file'" />
             <expensesreport-project *ngIf="menuItem.icon === 'project'" />
+            <expensesreport-calendar *ngIf="menuItem.icon === 'calendar'" />
             <expensesreport-user-group *ngIf="menuItem.icon === 'user-group'" />
             <expensesreport-wallet *ngIf="menuItem.icon === 'wallet'" />
+            <expensesreport-tag *ngIf="menuItem.icon === 'category'" />
           </expensesreport-icon>
           <expensesreport-menu-text
             [menuOpen]="menuOpen"

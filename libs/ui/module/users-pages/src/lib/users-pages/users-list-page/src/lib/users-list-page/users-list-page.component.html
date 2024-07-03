@@ -3,12 +3,14 @@
     [columns]="columns"
     [data]="users"
     [loading]="loading"
-    (onClick)="onclickMore($event, op)"
+    [totalRecords]="totalRecords"
+    (onClick)="onClickMore($event, op)"
   >
     <p-overlayPanel #op>
       <ng-template pTemplate>
         <div
           class="w-full h-full px-2 py-2 flex items-center justify-center gap-1"
+          *ngIf="showOverlayPanel"
         >
           <a
             *ngIf="dataClicked"

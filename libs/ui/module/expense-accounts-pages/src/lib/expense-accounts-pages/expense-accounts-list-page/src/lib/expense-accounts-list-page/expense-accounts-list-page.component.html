@@ -3,6 +3,7 @@
     [columns]="columns"
     [data]="expenseAccounts"
     [loading]="loading"
+    [totalRecords]="totalRecords"
     (onClick)="onclickMore($event, op)"
   >
     <p-overlayPanel #op>
@@ -12,7 +13,7 @@
         >
           <a
             *ngIf="dataClicked"
-            [routerLink]="['/expenseAccounts/edit/', dataClicked.id]"
+            [routerLink]="['/expense-accounts/edit/', dataClicked.id]"
           >
             <button
               class="h-7 w-7 p-1 cursor-pointer bg-[--background-secondary] dark:bg-[--background-secondary] rounded-md transition-colors duration-300 hover:text-blue-500 border border-gray-300 dark:border-gray-700"

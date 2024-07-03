@@ -240,7 +240,7 @@ export const countries = [
   { label: 'Uruguay', value: 'UY' },
   { label: 'Uzbekistan', value: 'UZ' },
   { label: 'Vanuatu', value: 'VU' },
-  { label: 'Vatican City', value: 'VA' },
+  { label: 'Vatican', value: 'VA' },
   { label: 'Venezuela', value: 'VE' },
   { label: 'Vietnam', value: 'VN' },
   { label: 'Wallis and Futuna', value: 'WF' },

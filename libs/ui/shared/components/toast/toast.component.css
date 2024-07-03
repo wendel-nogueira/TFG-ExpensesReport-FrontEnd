@@ -1,0 +1,7 @@
+::ng-deep .p-toast {
+  pointer-events: none;
+}
+
+::ng-deep .p-toast-icon-close {
+  display: none;
+}

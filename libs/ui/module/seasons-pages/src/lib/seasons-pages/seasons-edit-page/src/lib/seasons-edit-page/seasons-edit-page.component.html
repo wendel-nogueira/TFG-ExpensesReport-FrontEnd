@@ -1,0 +1,32 @@
+<div class="w-full h-full">
+  <expensesreport-tab-menu
+    [items]="items"
+    [activeItem]="activeItem"
+    (onTabChange)="activeItemChange($event)"
+  />
+  <div class="w-full mt-1 h-full">
+    <div
+      class="w-full mt-10"
+      *ngIf="activeItem && items && activeItem === items[0]"
+    >
+      <expensesreport-edit [id]="id" [season]="season" [loading]="loading" />
+    </div>
+    <div class="w-full mt-2">
+      <expensesreport-table-page
+        [addTitle]="'Add project'"
+        [addDescription]="'Add a project to this season'"
+        [addPlaceholder]="'Select a project'"
+        [addButtonLabel]="'Add project'"
+        [viewIconLink]="'/projects/edit/'"
+        [columns]="columns"
+        [rows]="rows"
+        [totalRecords]="totalRecords"
+        [items]="allItems"
+        [loading]="loading"
+        (add)="addProjects($event)"
+        (remove)="removeProjects($event)"
+        *ngIf="activeItem && items && activeItem === items[1]"
+      />
+    </div>
+  </div>
+</div>

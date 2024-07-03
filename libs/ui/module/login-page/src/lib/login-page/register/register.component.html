@@ -1,0 +1,48 @@
+<p-dialog
+  [(visible)]="createAccount"
+  [modal]="true"
+  position="center"
+  [draggable]="false"
+  [style]="{ width: '100%', maxWidth: '24rem', height: 'auto' }"
+  [breakpoints]="{ '1199px': '50rem', '575px': '90vw' }"
+  [resizable]="true"
+  [baseZIndex]="10000"
+  [closeOnEscape]="true"
+  [dismissableMask]="true"
+  [showHeader]="true"
+  (onHide)="close()"
+>
+  <ng-template pTemplate="header">
+    <h1 class="text-2xl font-bold text-gray-600 dark:text-gray-300">
+      Create Account
+    </h1>
+  </ng-template>
+  <p class="mb-8 text-gray-500 dark:text-gray-400 mt-4">
+    Please enter your email to get a link to create your account.
+  </p>
+  <div class="w-full mt-4">
+    <form
+      [formGroup]="createAccountFormGroup"
+      class="w-full flex flex-col gap-3"
+    >
+      <expensesreport-form-group>
+        <expensesreport-label [id]="'email'" [label]="'email'" />
+        <expensesreport-input-text
+          [id]="'email'"
+          [type]="'email'"
+          [formControl]="createAccountFormGroup.controls['email']"
+          [useError]="true"
+          [errors]="emailErrors"
+        />
+      </expensesreport-form-group>
+
+      <expensesreport-button
+        [label]="'send email'"
+        [type]="'submit'"
+        [loading]="loadingCreateAccount"
+        [color]="'primary'"
+        (onClick)="forgotPassword()"
+      />
+    </form>
+  </div>
+</p-dialog>

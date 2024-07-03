@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChange,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormGroupComponent,
@@ -28,8 +36,10 @@ import { Name } from '../../../../core/models/Name';
     LabelComponent,
   ],
 })
-export class PersonalComponent implements OnInit {
+export class PersonalComponent implements OnInit, OnChanges {
   @Input() name: Name | null = null;
+  @Input() loading = false;
+  @Input() disabled = false;
   @Output() personalFormGroup = new EventEmitter<FormGroup>();
 
   personalFormGroupLocal = new FormGroup({
@@ -55,12 +65,20 @@ export class PersonalComponent implements OnInit {
     maxlength: 'Last Name must be at most 50 characters long',
   };
 
+  ngOnChanges(changes: { disabled: SimpleChange }) {
+    if (changes.disabled) {
+      this.disabled
+        ? this.personalFormGroupLocal.disable()
+        : this.personalFormGroupLocal.enable();
+    }
+  }
+
   ngOnInit() {
     if (this.name) {
       this.personalFormGroupLocal.patchValue(this.name);
     }
 
-    this.personalFormGroupLocal.statusChanges.subscribe(() => {
+    this.personalFormGroupLocal.statusChanges.subscribe((e) => {
       if (this.personalFormGroupLocal.errors) {
         this.personalFormGroupLocal.setErrors(null);
 

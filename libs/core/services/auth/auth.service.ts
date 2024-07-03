@@ -2,32 +2,65 @@ import { Injectable } from '@angular/core';
 import { RequestService } from '../request/request.service';
 import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { TokenData } from '../../models/index';
+import { Auth, TokenData } from '../../models/index';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService extends RequestService {
-  login(email: string, password: string): Observable<any> {
+  login(email: string, password: string): Observable<Auth> {
     const body = {
       email,
       password,
     };
 
     return this.httpClient
-      .post<{
-        token: string;
-      }>(`${this.identityApiURL}/login`, JSON.stringify(body), this.httpOptions)
+      .post<Auth>(
+        `${this.authenticationApiURL}/login`,
+        JSON.stringify(body),
+        this.httpOptions
+      )
+      .pipe(catchError(this.handleError.bind(this)));
+  }
+
+  loginWithGoogle(token: string): Observable<Auth> {
+    return this.httpClient
+      .post<Auth>(
+        `${this.authenticationApiURL}/login/google`,
+        JSON.stringify({ token: token }),
+        this.httpOptions
+      )
       .pipe(catchError(this.handleError.bind(this)));
   }
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
     this.router.navigate(['/login']);
   }
 
-  createSession(token: string) {
-    localStorage.setItem('token', token);
+  refreshToken(): Observable<Auth> {
+    const refreshToken = localStorage.getItem('refreshToken');
+
+    if (!refreshToken) {
+      this.logout();
+    }
+
+    return this.httpClient
+      .post<Auth>(
+        `${this.authenticationApiURL}/refresh-token?refreshToken=${refreshToken}`,
+        null,
+        this.httpOptions
+      )
+      .pipe(catchError(this.handleError.bind(this)));
+  }
+
+  createSession(auth: Auth) {
+    localStorage.setItem('token', auth.token);
+
+    if (auth.refreshToken && auth.refreshToken !== '') {
+      localStorage.setItem('refreshToken', auth.refreshToken);
+    }
   }
 
   getSession(redirect = true): string | null {
@@ -38,6 +71,7 @@ export class AuthService extends RequestService {
     }
 
     localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
 
     if (redirect) {
       this.router.navigate(['/login']);
@@ -46,20 +80,33 @@ export class AuthService extends RequestService {
     return null;
   }
 
+  decodeToken(token: string): TokenData | null {
+    const tokenData = this.jwtHelper.decodeToken(token);
+
+    if (tokenData) {
+      return tokenData as TokenData;
+    }
+
+    return null;
+  }
+
+  isExpired(token: string): boolean {
+    return this.jwtHelper.isTokenExpired(token);
+  }
+
   getSessionData(): TokenData | null {
     const token = this.getSession();
 
     if (token) {
-      const tokenData = token.split('.')[1];
-      const decodedTokenData = window.atob(tokenData);
-      const tokenDataObject = JSON.parse(decodedTokenData) as TokenData;
+      const tokenData = this.decodeToken(token);
 
-      if (new Date(tokenDataObject.exp * 1000) < new Date()) {
-        this.logout();
-        return null;
+      if (tokenData) {
+        return tokenData;
       }
 
-      return JSON.parse(decodedTokenData) as TokenData;
+      this.refreshToken().subscribe((auth) => {
+        this.createSession(auth);
+      });
     }
 
     return null;

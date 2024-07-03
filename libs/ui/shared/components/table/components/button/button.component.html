@@ -1,12 +1,29 @@
 <button
-  class="flex gap-2 items-center text-gray-500 dark:text-gray-400 px-2 py-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-gray-50 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300 ease-in-out"
+  class="w-full h-full flex gap-2 items-center text-gray-500 dark:text-gray-400 px-2 py-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-gray-50 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300 ease-in-out"
   (click)="onClick.emit($event)"
+  [disabled]="loading"
 >
-  <expensesreport-export class="w-5 h-5" *ngIf="type === 'export'" />
-  <expensesreport-filter class="w-5 h-5" *ngIf="type === 'filter'" />
-  <expensesreport-sort-icon class="w-5 h-5" *ngIf="type === 'sort'" />
+  <span *ngIf="!loading" class="flex items-center">
+    <expensesreport-export class="w-5 h-5" *ngIf="type === 'export'" />
+    <expensesreport-filter class="w-5 h-5" *ngIf="type === 'filter'" />
+    <expensesreport-sort-icon class="w-5 h-5" *ngIf="type === 'sort'" />
+    <expensesreport-add class="w-5 h-5" *ngIf="type === 'add'" />
+    <expensesreport-delete class="w-5 h-5" *ngIf="type === 'remove'" />
+  </span>
+
+  <span *ngIf="loading" class="flex items-center justify-center w-5 h-5">
+    <i class="pi pi-spin pi-spinner" style="font-size: 16px"></i>
+  </span>
 
   <span class="text-sm font-medium hidden min-[550px]:block">{{
-    type === 'export' ? 'Export' : type === 'filter' ? 'Filter' : 'Sort'
+    type === 'export'
+      ? 'Export'
+      : type === 'filter'
+      ? 'Filter'
+      : type === 'add'
+      ? 'Add'
+      : type === 'remove'
+      ? 'Remove'
+      : 'Sort'
   }}</span>
 </button>

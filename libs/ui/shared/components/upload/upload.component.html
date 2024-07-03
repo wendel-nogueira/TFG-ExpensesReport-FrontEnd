@@ -1,0 +1,105 @@
+<div class="w-full h-full" *ngIf="!loading">
+  <div
+    class="w-full h-full min-h-48 rounded-lg border-2 border-dashed  flex justify-center items-center cursor-pointer transition-colors duration-300
+    {{
+      useError &&
+      formControl.invalid &&
+      errorMessage &&
+      errorMessage.length > 0 &&
+      (formControl.touched || formControl.dirty)
+        ? 'border-red-500'
+        : 'border-gray-300 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-500 '
+    }}"
+  >
+    <p-fileUpload
+      name="inputFile"
+      url="https://api-file.yelluh.xyz/v1/files"
+      id="fileUpload"
+      class="w-full h-full"
+      [multiple]="false"
+      [maxFileSize]="10000000"
+      [chooseLabel]="fileToUpload || uploadedFile ? 'Change' : 'Choose'"
+      [uploadLabel]="fileToUpload || uploadedFile ? 'Upload' : 'Upload'"
+      [cancelLabel]="fileToUpload || uploadedFile ? 'Cancel' : 'Cancel'"
+      [disabled]="loading || disabled"
+      (onSelect)="onSelect($event)"
+      (onUpload)="onUpload($event)"
+      (onClear)="onClear()"
+    >
+      <ng-template pTemplate="content">
+        <div
+          class="flex flex-col items-center justify-center gap-2 text-gray-400 dark:text-gray-500"
+          *ngIf="!fileToUpload && !uploadedFile"
+        >
+          <i class="pi pi-upload text-3xl"></i>
+          <p class="text-sm">Drop files to upload</p>
+        </div>
+        <div
+          class="flex flex-col items-center justify-center gap-2 text-gray-400 dark:text-gray-500"
+          *ngIf="fileToUpload"
+        >
+          <a
+            href="{{ fileToUploadUrl }}"
+            target="_blank"
+            class="flex items-center gap-2 w-full text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-500 transition-colors duration-300"
+          >
+            <i class="pi pi-file" style="font-size: 2rem"></i>
+            <p class="text-sm font-medium flex flex-col">
+              <span class="w-40 truncate">
+                {{ fileToUpload.name }}
+              </span>
+              <span class="text-xs ml-2 text-blue-500">
+                {{ fileToUpload.size / 1000 }} KB
+              </span>
+            </p>
+            <expensesreport-tag [text]="'pending'" class="ml-auto">
+              upload pending
+            </expensesreport-tag>
+          </a>
+        </div>
+        <div
+          class="flex flex-col items-center justify-center gap-2 text-gray-400 dark:text-gray-500"
+          *ngIf="uploadedFile && !fileToUpload"
+        >
+          <a
+            href="{{ this.formControl.value }}"
+            target="_blank"
+            class="flex items-center gap-2 w-full text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-500 transition-colors duration-300"
+          >
+            <i class="pi pi-file" style="font-size: 2rem"></i>
+            <p class="text-sm font-medium flex flex-col">
+              <span class="w-40 truncate">
+                {{ uploadedFile.name }}
+              </span>
+              <span class="text-xs ml-2 text-blue-500">
+                {{ uploadedFile.size / 1000 }} KB
+              </span>
+            </p>
+            <expensesreport-tag [text]="'uploaded'" class="ml-auto">
+              uploaded
+            </expensesreport-tag>
+          </a>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="file"> </ng-template>
+    </p-fileUpload>
+  </div>
+  <p
+    class="text-red-500 text-xs mt-1"
+    *ngIf="
+      useError &&
+      formControl.invalid &&
+      errorMessage &&
+      errorMessage.length > 0 &&
+      (formControl.touched || formControl.dirty)
+    "
+  >
+    {{ errorMessage }}
+  </p>
+</div>
+<p-skeleton
+  *ngIf="loading"
+  height="192px"
+  borderRadius="0.375rem"
+  class="h-6"
+/>

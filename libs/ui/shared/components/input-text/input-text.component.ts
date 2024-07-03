@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import {
@@ -9,6 +9,7 @@ import {
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'expensesreport-input-text',
@@ -21,6 +22,7 @@ import { CommonModule } from '@angular/common';
     ReactiveFormsModule,
     InputTextModule,
     KeyFilterModule,
+    SkeletonModule,
   ],
   providers: [
     {
@@ -33,9 +35,11 @@ import { CommonModule } from '@angular/common';
 export class InputTextComponent implements ControlValueAccessor, OnInit {
   @Input() id = '';
   @Input() type = 'text';
+  @Input() loading = false;
   @Input() formControl = new FormControl('');
   @Input() useError = false;
   @Input() errors: any = null;
+  @Output() valueChange = new EventEmitter<any>();
 
   value: string | null = null;
   onChange: any = () => {};
@@ -56,10 +60,17 @@ export class InputTextComponent implements ControlValueAccessor, OnInit {
     }
 
     this.formControl.statusChanges.subscribe(() => {
-      if (this.formControl.errors && this.formControl.touched) {
+      if (this.formControl.errors) {
         this.checkErrors();
       }
     });
+  }
+
+  changeValue(event: any) {
+    this.value = event.target.value;
+    this.onChange(this.value);
+    this.onTouch(this.value);
+    this.valueChange.emit(this.value);
   }
 
   writeValue(value: string): void {

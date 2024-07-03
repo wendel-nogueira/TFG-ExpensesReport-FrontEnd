@@ -1,1 +1,91 @@
-<p>expense-reports-create-page works!</p>
+<div class="w-full h-full">
+  <div class="w-full flex items-center justify-between gap-2">
+    <expensesreport-tab-menu
+      [items]="items"
+      [activeItem]="activeItem"
+      (onTabChange)="activeItemChange($event)"
+    />
+
+    <div>
+      <p
+        class="text-center text-gray-600 dark:text-gray-400 text-base font-medium"
+      >
+        total expenses: {{ total | currency : 'USD' }}
+      </p>
+    </div>
+  </div>
+  <div class="w-full mt-1 h-full">
+    <div
+      class="w-full mt-10"
+      *ngIf="activeItem && items && activeItem === items[0]"
+    >
+      <div class="w-full h-full">
+        <expensesreport-page-content
+          [useShadow]="false"
+          class="w-full flex justify-center max-w-96 m-auto mt-18"
+        >
+          <p
+            class="text-center text-gray-600 dark:text-gray-400 text-sm font-medium mb-6"
+          >
+            use the form below to create a new expense report
+          </p>
+
+          <form
+            [formGroup]="expenseReportFormGroup"
+            class="w-full flex flex-col gap-3"
+          >
+            <expensesreport-form-group>
+              <expensesreport-label
+                [id]="'department'"
+                [label]="'department'"
+              />
+              <expensesreport-select
+                [options]="departments"
+                [placeholder]="'select a department'"
+                [formControl]="expenseReportFormGroup.controls['department']"
+                [label]="'department'"
+                [useError]="true"
+                [loading]="loading"
+                (valueChange)="onDepartmentChange($event)"
+              ></expensesreport-select>
+            </expensesreport-form-group>
+            <expensesreport-form-group>
+              <expensesreport-label [id]="'project'" [label]="'project'" />
+              <expensesreport-select
+                [options]="projects"
+                [placeholder]="'select a project'"
+                [formControl]="expenseReportFormGroup.controls['project']"
+                [label]="'project'"
+                [useError]="true"
+                [loading]="loading"
+                (valueChange)="onProjectChange($event)"
+              ></expensesreport-select>
+            </expensesreport-form-group>
+
+            <div class="mt-10 flex flex-col gap-6">
+              <expensesreport-button
+                [label]="'create expense report'"
+                [type]="'submit'"
+                [loading]="loading"
+                [disabled]="disabled"
+                [color]="'primary'"
+                (onClick)="onSubmit()"
+              />
+              <expensesreport-button
+                [label]="'back'"
+                [type]="'button'"
+                [color]="'danger'"
+                (onClick)="onBack()"
+              />
+            </div>
+          </form>
+        </expensesreport-page-content>
+      </div>
+    </div>
+    <div class="w-full mt-2">
+      <expensesreport-expenses
+        *ngIf="activeItem && items && activeItem === items[1]"
+      />
+    </div>
+  </div>
+</div>

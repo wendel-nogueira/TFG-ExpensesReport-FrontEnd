@@ -1,12 +1,11 @@
 export interface TokenData {
   aud: string;
+  email: string;
   exp: number;
   iat: number;
   iss: string;
-  nbf?: number;
-  subject?: string;
   nameid: string;
-  name: string;
-  email: string;
+  nbf: number;
   role: string;
+  unique_name: string;
 }

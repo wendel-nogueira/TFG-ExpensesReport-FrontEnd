@@ -1,66 +1,47 @@
 <div class="w-full h-full">
-  <expensesreport-page-content
-    [useShadow]="false"
-    class="w-full flex justify-center max-w-96 m-auto mt-18"
-  >
-    <p
-      class="text-center text-gray-600 dark:text-gray-400 text-sm font-medium mb-6"
+  <expensesreport-tab-menu
+    [items]="items"
+    [activeItem]="activeItem"
+    (onTabChange)="activeItemChange($event)"
+  />
+  <div class="w-full mt-1 h-full">
+    <div
+      class="w-full mt-10"
+      *ngIf="activeItem && items && activeItem === items[0]"
     >
-      use the form below to edit the user
-    </p>
-
-    <form [formGroup]="userFormGroup" class="w-full flex flex-col gap-3">
-      <expensesreport-form-group>
-        <expensesreport-label [id]="'email'" [label]="'email'" />
-        <expensesreport-input-text
-          [id]="'email'"
-          [type]="'email'"
-          [formControl]="userFormGroup.controls['email']"
-          [useError]="true"
-          [errors]="emailErrors"
-        />
-      </expensesreport-form-group>
-      <expensesreport-form-group class="w-full">
-        <expensesreport-label [label]="'role'" />
-        <expensesreport-select
-          [options]="roles"
-          [placeholder]="'select a role'"
-          [formControl]="userFormGroup.controls['role']"
-          [label]="'role'"
-          [useError]="true"
-        ></expensesreport-select>
-      </expensesreport-form-group>
-
-      <div class="mt-10 flex flex-col gap-6">
-        <expensesreport-button
-          [label]="'update user'"
-          [type]="'submit'"
-          [loading]="loading"
-          [disabled]="disabled"
-          [color]="'primary'"
-          (onClick)="onSubmit()"
-        />
-        <expensesreport-button
-          [label]="'back'"
-          [type]="'button'"
-          [color]="'danger'"
-          (onClick)="onBack()"
-        />
-        <expensesreport-button
-          *ngIf="!isDeactivated"
-          [label]="'deactivate user'"
-          [type]="'button'"
-          [color]="'warning'"
-          (onClick)="onDeactivate()"
-        />
-        <expensesreport-button
-          *ngIf="isDeactivated"
-          [label]="'activate user'"
-          [type]="'button'"
-          [color]="'success'"
-          (onClick)="onActivate()"
-        />
-      </div>
-    </form>
-  </expensesreport-page-content>
+      <expensesreport-edit [id]="id" [user]="user" [loading]="loading" />
+    </div>
+    <div class="w-full mt-2">
+      <expensesreport-table-page
+        [addTitle]="'Add supervisor'"
+        [addDescription]="'Add a supervisor to this user'"
+        [addPlaceholder]="'Select a supervisor'"
+        [addButtonLabel]="'Add supervisor'"
+        [viewIconLink]="'/users/edit/'"
+        [columns]="columns"
+        [rows]="supervisorsRows"
+        [totalRecords]="totalSupervisorsRecords"
+        [items]="supervisorsItems"
+        [loading]="loading"
+        (add)="addSupervisors($event)"
+        (remove)="removeSupervisors($event)"
+        *ngIf="activeItem && items && activeItem === items[1]"
+      />
+      <expensesreport-table-page
+        [addTitle]="'Add supervised'"
+        [addDescription]="'Add a supervised to this user'"
+        [addPlaceholder]="'Select a supervised'"
+        [addButtonLabel]="'Add supervised'"
+        [viewIconLink]="'/users/edit/'"
+        [columns]="columns"
+        [rows]="supervisedRows"
+        [totalRecords]="totalSupervisedRecords"
+        [items]="supervisedItems"
+        [loading]="loading"
+        (add)="addSupervised($event)"
+        (remove)="removeSupervised($event)"
+        *ngIf="activeItem && items && activeItem === items[2]"
+      />
+    </div>
+  </div>
 </div>

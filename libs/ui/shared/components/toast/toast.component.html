@@ -2,8 +2,9 @@
   [breakpoints]="{
     '576px': { width: '100%', right: '0', bottom: '0' },
   }"
-  [showTransitionOptions]="'200ms'"
-  [hideTransitionOptions]="'500ms'"
+  [life]="2000"
+  [showTransitionOptions]="'200ms ease-in'"
+  [hideTransitionOptions]="'300ms ease-out'"
 >
   <ng-template let-message pTemplate="message">
     <div class="flex flex-row items-center justify-center gap-5 w-full">

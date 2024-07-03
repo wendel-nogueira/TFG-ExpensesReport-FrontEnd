@@ -17,6 +17,7 @@
           [type]="'name'"
           [formControl]="departmentFormGroup.controls['name']"
           [useError]="true"
+          [loading]="loading"
           [errors]="nameErrors"
         />
       </expensesreport-form-group>
@@ -28,6 +29,8 @@
           [formControl]="departmentFormGroup.controls['acronym']"
           [useError]="true"
           [errors]="acronymErrors"
+          [loading]="loading"
+          (change)="onAcronymChange($event)"
         />
       </expensesreport-form-group>
       <expensesreport-form-group>
@@ -37,6 +40,7 @@
           [formControl]="departmentFormGroup.controls['description']"
           [useError]="true"
           [errors]="descriptionErrors"
+          [loading]="loading"
         />
       </expensesreport-form-group>
 

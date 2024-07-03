@@ -1,0 +1,28 @@
+<div id="tabmenu">
+  <p-tabMenu
+    [model]="items"
+    [activeItem]="activeItem"
+    (activeItemChange)="activeItemChange($event)"
+  >
+    <ng-template pTemplate="header" let-item>
+      <div
+        class="px-4 py-1 flex items-center justify-center gap-2 cursor-pointer text-gray-500 dark:text-gray-400
+        hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300 border-b
+         {{
+          item === activeItem
+            ? 'text-blue-500 dark:text-blue-400 border-blue-500 dark:border-blue-400'
+            : 'border-transparent'
+        }}"
+      >
+        <div class="w-5 h-5">
+          <i
+            [ngClass]="item.icon ? item.icon : 'pi pi-home'"
+            class="text-base font-base"
+          ></i>
+        </div>
+
+        <span class="text-base font-base">{{ item.label }}</span>
+      </div>
+    </ng-template>
+  </p-tabMenu>
+</div>

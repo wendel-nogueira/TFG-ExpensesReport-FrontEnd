@@ -8,6 +8,7 @@ import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'expensesreport-text-area',
@@ -19,6 +20,7 @@ import {
     FormsModule,
     ReactiveFormsModule,
     InputTextareaModule,
+    SkeletonModule,
   ],
   providers: [
     {
@@ -33,6 +35,7 @@ export class TextAreaComponent implements ControlValueAccessor, OnInit {
   @Input() formControl = new FormControl('');
   @Input() useError = false;
   @Input() errors: any = null;
+  @Input() loading = false;
 
   value: string | null = null;
   onChange: any = () => {};

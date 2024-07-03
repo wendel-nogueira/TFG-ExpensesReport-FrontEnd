@@ -1,0 +1,40 @@
+::ng-deep .multiselect-custom {
+  width: 100%;
+}
+
+::ng-deep .multiselect-custom .p-multiselect-panel .p-multiselect-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+::ng-deep .multiselect-custom .p-multiselect-panel .p-checkbox .p-checkbox-box {
+  border: 1px solid rgb(209 213 219);
+}
+
+::ng-deep .multiselect-custom .p-multiselect-panel .p-multiselect-filter {
+  border: 1px solid #c8c8c8;
+  padding: 0.5rem;
+}
+
+::ng-deep .multiselect-custom .p-multiselect {
+  background: transparent;
+  border: 1px;
+  border-radius: 0.5rem;
+  border-color: rgb(209 213 219);
+  border-style: solid;
+  width: 100%;
+}
+
+::ng-deep .multiselect-custom .p-placeholder {
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+  font-size: 0.875rem;
+  color: #4b5563;
+  font-weight: 500;
+}
+
+::ng-deep .multiselect-custom.invalid .p-multiselect {
+  border-color: rgb(239 68 68);
+}

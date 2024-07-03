@@ -10,12 +10,16 @@
       <div>
         <expensesreport-personal
           [name]="name"
+          [disabled]="disabled"
+          [loading]="loading"
           (personalFormGroup)="personalFormGroup = $event"
         />
         <expensesreport-divider />
 
         <expensesreport-address
           [address]="address"
+          [disabled]="disabled"
+          [loading]="loading"
           (addressFormGroup)="addressFormGroup = $event"
         />
       </div>
