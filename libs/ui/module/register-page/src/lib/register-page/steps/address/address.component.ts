@@ -5,7 +5,7 @@ import {
   ButtonComponent,
 } from '@expensesreport/ui';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RegisterServiceService } from '../../services/register-service.service';
 import { Address } from '@expensesreport/models';
 
@@ -27,6 +27,7 @@ export class AddressComponent implements OnInit {
   });
 
   constructor(
+    private activatedRoute: ActivatedRoute,
     private router: Router,
     public registerService: RegisterServiceService
   ) {}
@@ -52,7 +53,15 @@ export class AddressComponent implements OnInit {
       address: this.addressFormGroup.value.address || '',
     };
 
-    this.router.navigate(['register/password']);
+    this.activatedRoute.queryParams.subscribe((params) => {
+      const token = params['token'];
+
+      if (token) {
+        this.router.navigate(['register/password'], {
+          queryParams: { token: token },
+        });
+      }
+    });
   }
 
   previousPage() {
@@ -64,6 +73,14 @@ export class AddressComponent implements OnInit {
       address: this.addressFormGroup.value.address || '',
     };
 
-    this.router.navigate(['register/personal']);
+    this.activatedRoute.queryParams.subscribe((params) => {
+      const token = params['token'];
+
+      if (token) {
+        this.router.navigate(['register/personal'], {
+          queryParams: { token: token },
+        });
+      }
+    });
   }
 }

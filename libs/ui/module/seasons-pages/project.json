@@ -1,0 +1,9 @@
+{
+  "name": "seasons-pages",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ui/module/seasons-pages/src",
+  "prefix": "expensesreport",
+  "tags": [],
+  "projectType": "library",
+  "targets": {}
+}

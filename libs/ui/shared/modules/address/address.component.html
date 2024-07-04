@@ -1,5 +1,5 @@
 <div class="w-full flex gap-3 flex-col">
-  <div class="w-full flex gap-3 flex-row max-[576px]:flex-col">
+  <div class="w-full grid gap-3 grid-cols-1 lg:grid-cols-2">
     <expensesreport-form-group class="w-full">
       <expensesreport-label [id]="'zip'" [label]="'zip'" />
       <expensesreport-input-text
@@ -8,6 +8,8 @@
         [formControl]="addressFormGroupLocal.controls['zip']"
         [useError]="true"
         [errors]="zipErrors"
+        [loading]="loading"
+        (valueChange)="onZipChange($event)"
       />
     </expensesreport-form-group>
 
@@ -18,12 +20,13 @@
         [placeholder]="'select a country'"
         [formControl]="addressFormGroupLocal.controls['country']"
         [label]="'country'"
-        [selectedValue]="country"
         [useError]="true"
+        [loading]="loading || loadingCountries"
+        (valueChange)="onCountryChange($event)"
       ></expensesreport-select>
     </expensesreport-form-group>
   </div>
-  <div class="w-full flex gap-3 flex-row max-[576px]:flex-col">
+  <div class="w-full grid gap-3 grid-cols-1 lg:grid-cols-2">
     <expensesreport-form-group class="w-full">
       <expensesreport-label [label]="'state'" />
       <expensesreport-select
@@ -31,8 +34,9 @@
         [placeholder]="'select a state'"
         [formControl]="addressFormGroupLocal.controls['state']"
         [label]="'state'"
-        [selectedValue]="state"
         [useError]="true"
+        [loading]="loading || loadingStates"
+        (valueChange)="onStateChange($event)"
       ></expensesreport-select>
     </expensesreport-form-group>
     <expensesreport-form-group class="w-full">
@@ -42,8 +46,8 @@
         [placeholder]="'select a city'"
         [formControl]="addressFormGroupLocal.controls['city']"
         [label]="'city'"
-        [selectedValue]="city"
         [useError]="true"
+        [loading]="loading || loadingCities"
       ></expensesreport-select>
     </expensesreport-form-group>
   </div>
@@ -56,6 +60,7 @@
       [formControl]="addressFormGroupLocal.controls['address']"
       [useError]="true"
       [errors]="addressErrors"
+      [loading]="loading || loadingAddress"
     />
   </expensesreport-form-group>
 </div>

@@ -18,6 +18,7 @@
           [formControl]="userFormGroup.controls['email']"
           [useError]="true"
           [errors]="emailErrors"
+          (change)="onEmailChange($event)"
         />
       </expensesreport-form-group>
       <expensesreport-form-group class="w-full">
@@ -28,6 +29,7 @@
           [formControl]="userFormGroup.controls['role']"
           [label]="'role'"
           [useError]="true"
+          [disabled]="!isRoot"
         ></expensesreport-select>
       </expensesreport-form-group>
 

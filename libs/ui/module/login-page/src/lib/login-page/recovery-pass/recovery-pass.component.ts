@@ -14,7 +14,7 @@ import {
   ButtonComponent,
 } from '@expensesreport/ui';
 import { DialogModule } from 'primeng/dialog';
-import { IdentityService } from '@expensesreport/services';
+import { IdentityService, ToastService } from '@expensesreport/services';
 
 @Component({
   selector: 'expensesreport-recovery-pass',
@@ -22,7 +22,6 @@ import { IdentityService } from '@expensesreport/services';
   templateUrl: './recovery-pass.component.html',
   styleUrl: './recovery-pass.component.css',
   imports: [
-    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     FormGroupComponent,
@@ -35,7 +34,6 @@ import { IdentityService } from '@expensesreport/services';
 export class RecoveryPassComponent {
   @Input() recoveryPass = false;
   @Output() closeRecoveryPass = new EventEmitter();
-  @Output() emailSent = new EventEmitter();
 
   loadingRecoveryPass = false;
   recoveryPassFormGroup = new FormGroup({
@@ -45,7 +43,10 @@ export class RecoveryPassComponent {
     email: 'Email is invalid',
   };
 
-  constructor(private identityService: IdentityService) {}
+  constructor(
+    private identityService: IdentityService,
+    private toastService: ToastService
+  ) {}
 
   forgotPassword() {
     if (this.recoveryPassFormGroup.invalid) {
@@ -62,12 +63,12 @@ export class RecoveryPassComponent {
     this.identityService.sendResetPasswordEmail(email).subscribe(
       () => {
         this.loadingRecoveryPass = false;
-        this.emailSent.emit(true);
+        this.toastService.showSuccess('Email sent');
         this.close();
       },
       () => {
         this.loadingRecoveryPass = false;
-        this.emailSent.emit(false);
+        this.toastService.showError('Error sending email');
         this.close();
       }
     );

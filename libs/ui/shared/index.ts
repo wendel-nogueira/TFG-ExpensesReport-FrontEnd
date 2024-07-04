@@ -16,6 +16,11 @@ export * from './components/page-title/page-title.component';
 export * from './components/tag/tag.component';
 export * from './components/table/table.component';
 export * from './components/text-area/text-area.component';
+export * from './components/dialog/dialog.component';
+export * from './components/tab-menu/tab-menu.component';
+export * from './components/table-page/table-page.component';
+export * from './components/upload/upload.component';
+export * from './components/calendar/calendar.component';
 
 export * from './modules/address/address.component';
 export * from './modules/password/password.component';

@@ -22,7 +22,11 @@ import {
   ProjectComponent,
   UserGroupComponent,
   WalletComponent,
+  CalendarComponent,
+  TagComponent,
 } from '@expensesreport/icons';
+import { User } from '@expensesreport/models';
+import { UserRoles } from '@expensesreport/enums';
 
 export interface MenuItems {
   label: string;
@@ -63,6 +67,8 @@ export interface Permissions {
     ProjectComponent,
     UserGroupComponent,
     WalletComponent,
+    CalendarComponent,
+    TagComponent,
   ],
 })
 export class MenuComponent implements OnChanges, OnInit {
@@ -85,13 +91,21 @@ export class MenuComponent implements OnChanges, OnInit {
       create: true,
       manage: true,
     },
+    seasons: {
+      create: true,
+      manage: true,
+    },
+    categories: {
+      create: true,
+      manage: true,
+    },
     expense_accounts: {
       create: true,
       manage: true,
     },
     expense_reports: {
       create: true,
-      manage: false,
+      manage: true,
     },
   };
 
@@ -109,6 +123,66 @@ export class MenuComponent implements OnChanges, OnInit {
   }
 
   ngOnInit() {
+    const user = localStorage.getItem('user') || '{}';
+    const userInfo = (JSON.parse(user) as User) || {};
+
+    const isRoot =
+      userInfo.identity?.role === UserRoles.Accountant ||
+      userInfo.identity?.role === UserRoles.Admin;
+
+    if (!isRoot) {
+      if (userInfo.identity?.role === UserRoles.FieldStaff) {
+        this.menuItems = this.menuItems.filter(
+          (menu) =>
+            menu.label === 'departments' ||
+            menu.label === 'projects' ||
+            menu.label === 'expense_reports'
+        );
+
+        this.permissions = {
+          departments: {
+            create: false,
+            manage: true,
+          },
+          projects: {
+            create: true,
+            manage: true,
+          },
+          expense_reports: {
+            create: true,
+            manage: true,
+          },
+        };
+      } else {
+        this.menuItems = this.menuItems.filter(
+          (menu) =>
+            menu.label === 'users' ||
+            menu.label === 'departments' ||
+            menu.label === 'projects' ||
+            menu.label === 'expense_reports'
+        );
+
+        this.permissions = {
+          users: {
+            create: true,
+            manage: true,
+          },
+          departments: {
+            create: true,
+            manage: true,
+          },
+          projects: {
+            create: true,
+            manage: true,
+          },
+          expense_reports: {
+            create: true,
+            manage: true,
+          },
+        };
+      }
+    }
+
     this.loadMenus();
   }
 
@@ -207,6 +281,25 @@ const allMenuItems: MenuItems[] = [
     ],
   },
   {
+    label: 'seasons',
+    title: 'seasons',
+    icon: 'calendar',
+    enabled: true,
+    itemsQuantity: 2,
+    items: [
+      {
+        title: 'create',
+        enabled: true,
+        href: 'seasons/create',
+      },
+      {
+        title: 'manage',
+        enabled: true,
+        href: 'seasons',
+      },
+    ],
+  },
+  {
     label: 'expense_accounts',
     title: 'expense accounts',
     icon: 'wallet',
@@ -235,12 +328,31 @@ const allMenuItems: MenuItems[] = [
       {
         title: 'create',
         enabled: true,
-        href: '/',
+        href: 'expense-reports/create',
       },
       {
         title: 'manage',
         enabled: true,
-        href: '/',
+        href: 'expense-reports',
+      },
+    ],
+  },
+  {
+    label: 'categories',
+    title: 'categories',
+    icon: 'category',
+    enabled: true,
+    itemsQuantity: 2,
+    items: [
+      {
+        title: 'create',
+        enabled: true,
+        href: 'categories/create',
+      },
+      {
+        title: 'manage',
+        enabled: true,
+        href: 'categories',
       },
     ],
   },

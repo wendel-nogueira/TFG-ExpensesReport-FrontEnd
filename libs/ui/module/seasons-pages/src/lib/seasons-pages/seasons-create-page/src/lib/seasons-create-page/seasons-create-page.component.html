@@ -1,0 +1,55 @@
+<div class="w-full h-full">
+  <expensesreport-page-content
+    [useShadow]="false"
+    class="w-full flex justify-center max-w-96 m-auto mt-18"
+  >
+    <p
+      class="text-center text-gray-600 dark:text-gray-400 text-sm font-medium mb-6"
+    >
+      use the form below to create a new season
+    </p>
+
+    <form [formGroup]="seasonFormGroup" class="w-full flex flex-col gap-3">
+      <expensesreport-form-group>
+        <expensesreport-label [id]="'name'" [label]="'name'" />
+        <expensesreport-input-text
+          [id]="'name'"
+          [type]="'name'"
+          [formControl]="seasonFormGroup.controls['name']"
+          [useError]="true"
+          [errors]="nameErrors"
+          [loading]="loading"
+        />
+      </expensesreport-form-group>
+      <expensesreport-form-group>
+        <expensesreport-label [id]="'code'" [label]="'code'" />
+        <expensesreport-input-text
+          [id]="'code'"
+          [type]="'code'"
+          [formControl]="seasonFormGroup.controls['code']"
+          [useError]="true"
+          [errors]="codeErrors"
+          [loading]="loading"
+          (change)="onCodeChange($event)"
+        />
+      </expensesreport-form-group>
+
+      <div class="mt-10 flex flex-col gap-6">
+        <expensesreport-button
+          [label]="'create season'"
+          [type]="'submit'"
+          [loading]="loading"
+          [disabled]="disabled"
+          [color]="'primary'"
+          (onClick)="onSubmit()"
+        />
+        <expensesreport-button
+          [label]="'back'"
+          [type]="'button'"
+          [color]="'danger'"
+          (onClick)="onBack()"
+        />
+      </div>
+    </form>
+  </expensesreport-page-content>
+</div>

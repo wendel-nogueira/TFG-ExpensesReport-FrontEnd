@@ -18,6 +18,7 @@
           [formControl]="projectFormGroup.controls['name']"
           [useError]="true"
           [errors]="nameErrors"
+          [loading]="loading"
         />
       </expensesreport-form-group>
       <expensesreport-form-group>
@@ -28,7 +29,73 @@
           [formControl]="projectFormGroup.controls['code']"
           [useError]="true"
           [errors]="codeErrors"
+          [loading]="loading"
+          (change)="onCodeChange($event)"
         />
+      </expensesreport-form-group>
+      <expensesreport-form-group>
+        <expensesreport-label [id]="'seasons'" [label]="'seasons'" />
+        <div class="w-full">
+          <p-multiSelect
+            optionLabel="label"
+            class="multiselect-custom-virtual-scroll multiselect-custom {{
+              projectFormGroup.controls['seasons'].errors &&
+              projectFormGroup.controls['seasons'].touched
+                ? 'invalid'
+                : ''
+            }}"
+            [placeholder]="'Select a season'"
+            [formControl]="projectFormGroup.controls['seasons']"
+            [options]="itemsSeasons"
+            [showToggleAll]="true"
+            [selectAll]="selectAllSeasons"
+            [virtualScroll]="true"
+            [virtualScrollItemSize]="43"
+            (onSelectAllChange)="onSelectAllSeasonsChange($event)"
+            #msSeasons
+          />
+          <p
+            class="text-red-500 text-xs mt-1"
+            *ngIf="
+              projectFormGroup.controls['seasons'].errors &&
+              projectFormGroup.controls['seasons'].touched
+            "
+          >
+            {{ seasonsErrors['required'] }}
+          </p>
+        </div>
+      </expensesreport-form-group>
+      <expensesreport-form-group>
+        <expensesreport-label [id]="'departments'" [label]="'departments'" />
+        <div class="w-full">
+          <p-multiSelect
+            optionLabel="label"
+            class="multiselect-custom-virtual-scroll multiselect-custom {{
+              projectFormGroup.controls['departments'].errors &&
+              projectFormGroup.controls['departments'].touched
+                ? 'invalid'
+                : ''
+            }}"
+            [placeholder]="'Select a department'"
+            [formControl]="projectFormGroup.controls['departments']"
+            [options]="itemsDepartments"
+            [showToggleAll]="true"
+            [selectAll]="selectAllDepartments"
+            [virtualScroll]="true"
+            [virtualScrollItemSize]="43"
+            (onSelectAllChange)="onSelectAllDepartmentsChange($event)"
+            #msDepartments
+          />
+          <p
+            class="text-red-500 text-xs mt-1"
+            *ngIf="
+              projectFormGroup.controls['departments'].errors &&
+              projectFormGroup.controls['departments'].touched
+            "
+          >
+            {{ departmentsErrors['required'] }}
+          </p>
+        </div>
       </expensesreport-form-group>
       <expensesreport-form-group>
         <expensesreport-label [id]="'description'" [label]="'description'" />
@@ -37,6 +104,7 @@
           [formControl]="projectFormGroup.controls['description']"
           [useError]="true"
           [errors]="descriptionErrors"
+          [loading]="loading"
         />
       </expensesreport-form-group>
 

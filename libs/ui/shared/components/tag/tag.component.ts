@@ -13,31 +13,19 @@ export class TagComponent implements OnInit {
 
   class = '';
   classes = {
-    'blue': [
-      'paid',
-      'fieldstaff',
-      'asset',
-    ],
-    'green': [
-      'approvedbysupervisor',
-      'active',
-      'manager',
-      'approved',
-    ],
-    'red': [
-      'rejectedbysupervisor',
-      'deactivate',
-      'rejected',
-    ],
-    'orange': [
-      'submitted',
-    ],
-    'purple': [
-      'paymentrejected',
+    blue: ['fieldstaff', 'supervisor', 'approvedbysupervisor', 'partiallypaid'],
+    green: [
       'accountant',
-      'expense',
+      'active',
+      'paid',
+      'approved',
+      'uploaded',
+      'completed',
     ],
-  }
+    red: ['deleted', 'rejectedbysupervisor', 'paymentrejected', 'rejected'],
+    orange: ['manager', 'inactive', 'pending', 'submittedforapproval'],
+    purple: ['admin', 'voidcancelled', 'cancelled'],
+  };
 
   ngOnInit(): void {
     this.class = this.getClass();
@@ -45,7 +33,11 @@ export class TagComponent implements OnInit {
 
   getClass(): string {
     for (const key in this.classes) {
-      if (this.classes[key as keyof typeof this.classes].includes(this.text)) {
+      if (
+        this.classes[key as keyof typeof this.classes].includes(
+          this.text.toLowerCase().replace(/\s/g, '')
+        )
+      ) {
         return key;
       }
     }

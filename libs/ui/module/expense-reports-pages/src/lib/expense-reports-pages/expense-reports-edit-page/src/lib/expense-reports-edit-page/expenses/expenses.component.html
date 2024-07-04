@@ -1,0 +1,178 @@
+<div class="w-full px-4">
+  <expensesreport-table
+    [columns]="columns"
+    [data]="rows"
+    [loading]="loading"
+    [totalRecords]="totalRecords"
+    [showAddButton]="false"
+    [showExportButton]="false"
+    [showCheckbox]="false"
+    (onClick)="onClickMore($event, op)"
+    (onClickAdd)="onClickAdd()"
+    (onClickRemove)="onRemove($event)"
+  >
+    <p-overlayPanel #op>
+      <ng-template pTemplate>
+        <div
+          class="w-full h-full px-2 py-2 flex items-center justify-center gap-1"
+        >
+          <button
+            class="h-7 w-7 p-1 cursor-pointer bg-[--background-secondary] dark:bg-[--background-secondary] rounded-md transition-colors duration-300 hover:text-blue-500 border border-gray-300 dark:border-gray-700"
+            (click)="onClickEdit()"
+          >
+            <expensesreport-view />
+          </button>
+        </div>
+      </ng-template>
+    </p-overlayPanel>
+  </expensesreport-table>
+</div>
+
+<p-dialog
+  [(visible)]="showModal"
+  [modal]="true"
+  position="center"
+  [draggable]="false"
+  [style]="{ width: '100%', maxWidth: '45rem', height: 'auto' }"
+  [breakpoints]="{ '1199px': '50rem', '575px': '90vw' }"
+  [resizable]="true"
+  [baseZIndex]="10000"
+  [closeOnEscape]="false"
+  [dismissableMask]="false"
+  [showHeader]="true"
+  [blockScroll]="true"
+  (onHide)="showModal = false; dataClicked = undefined"
+>
+  <ng-template pTemplate="header">
+    <h1 class="text-2xl font-bold text-gray-600 dark:text-gray-300">expense</h1>
+  </ng-template>
+
+  <div class="flex flex-col gap-2" *ngIf="dataClicked !== undefined">
+    <table
+      class="w-full border-separate border-spacing-1"
+      *ngIf="dataClicked !== undefined"
+    >
+      <tr>
+        <th class="w-36"></th>
+        <th class="w-auto"></th>
+      </tr>
+      <tr>
+        <td class="font-semibold text-right mr-10">Account:</td>
+        <td>{{ dataClicked.expenseAccount }}</td>
+      </tr>
+      <tr>
+        <td class="font-semibold text-right mr-10">Amount:</td>
+        <td>{{ dataClicked.amount | currency }}</td>
+      </tr>
+      <tr>
+        <td class="font-semibold text-right mr-10">Date Incurred:</td>
+        <td>{{ dataClicked.dateIncurredDate }}</td>
+      </tr>
+      <tr>
+        <td class="font-semibold text-right mr-10">Time Zone:</td>
+        <td>{{ dataClicked.dateIncurredTimeZone }}</td>
+      </tr>
+      <tr>
+        <td class="font-semibold text-right mr-10">Receipt:</td>
+        <td>
+          <a
+            class="text-blue-500 dark:text-blue-400"
+            href="{{ dataClicked.receipt }}"
+            target="_blank"
+          >
+            <span class="w-full flex items-center gap-2">
+              <i class="pi pi-eye" style="font-size: 1rem"></i>
+              view receipt
+            </span>
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td class="font-semibold align-top text-right mr-10">Explanation:</td>
+        <td
+          class="text-justify bg-slate-50 p-2 rounded-md border border-slate-200 dark:border-slate-700"
+        >
+          {{ dataClicked.explanation }}
+        </td>
+      </tr>
+    </table>
+
+    <span
+      class="w-3/4 border-b border-slate-200 dark:border-slate-700 mx-auto my-2"
+    ></span>
+
+    <table
+      class="w-full border-separate border-spacing-1"
+      *ngIf="dataClicked.status !== 'Pending'"
+    >
+      <tr>
+        <th class="w-36"></th>
+        <th class="w-auto"></th>
+      </tr>
+      <tr>
+        <td class="font-semibold text-right mr-10">Status:</td>
+        <td>{{ dataClicked.status }}</td>
+      </tr>
+      <tr>
+        <td class="font-semibold text-right mr-10">Action:</td>
+        <td>
+          {{
+            dataClicked.actionBy !== undefined
+              ? dataClicked.actionBy.firstName +
+                ' ' +
+                dataClicked.actionBy.lastName
+              : dataClicked.actionById
+          }}
+        </td>
+      </tr>
+      <tr>
+        <td class="font-semibold text-right mr-10">Action Date:</td>
+        <td>{{ dataClicked.actionDate }}</td>
+      </tr>
+      <tr>
+        <td class="font-semibold text-right mr-10">Action Time Zone:</td>
+        <td>{{ dataClicked.actionDateTimeZone }}</td>
+      </tr>
+      <tr>
+        <td class="font-semibold align-top text-right mr-10">Notes:</td>
+        <td
+          class="text-justify bg-slate-50 p-2 rounded-md border border-slate-200 dark:border-slate-700"
+        >
+          {{ dataClicked.accountingNotes }}
+        </td>
+      </tr>
+    </table>
+
+    <div class="w-full max-w-96 mx-auto" *ngIf="dataClicked.status === 'Pending' && showButtons">
+      <expensesreport-form-group>
+        <expensesreport-label [id]="'notes'" [label]="'notes'" />
+        <expensesreport-text-area
+          [id]="'notes'"
+          [formControl]="notes"
+          [useError]="true"
+          [errors]="notesErrors"
+          [loading]="loading"
+        />
+      </expensesreport-form-group>
+
+      <div class="w-full mt-8 flex items-center justify-center gap-4">
+        <expensesreport-button
+          class="w-36"
+          [label]="'approve'"
+          [type]="'submit'"
+          [loading]="loading"
+          [color]="'success'"
+          (onClick)="changeStatus(0, dataClicked.id)"
+        />
+        <expensesreport-button
+          class="w-36"
+          [label]="'reject'"
+          [type]="'submit'"
+          [loading]="loading"
+          [color]="'danger'"
+          (onClick)="changeStatus(1, dataClicked.id)"
+        />
+      </div>
+    </div>
+  </div>
+</p-dialog>

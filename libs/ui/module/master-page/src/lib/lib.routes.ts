@@ -9,8 +9,15 @@ export const masterPageRoutes: Route[] = [
         (m) => m.MasterPageComponent
       ),
     canActivate: [IsAuthGuard],
-    data: { rolesAllowed: ['FieldStaff', 'Manager', 'Accountant'] },
+    data: { rolesAllowed: ['FieldStaff', 'Manager', 'Accountant', 'Admin'] },
     children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('@expensesreport/dashboard-page').then(
+            (m) => m.dashboardPageRoutes
+          ),
+      },
       {
         path: 'users',
         loadChildren: () =>
@@ -31,10 +38,31 @@ export const masterPageRoutes: Route[] = [
           ),
       },
       {
+        path: 'seasons',
+        loadChildren: () =>
+          import('@expensesreport/seasons-pages').then(
+            (m) => m.seasonsPagesRoutes
+          ),
+      },
+      {
         path: 'expense-accounts',
         loadChildren: () =>
           import('@expensesreport/expense-accounts-pages').then(
             (m) => m.expenseAccountsPagesRoutes
+          ),
+      },
+      {
+        path: 'expense-reports',
+        loadChildren: () =>
+          import('@expensesreport/expense-reports-pages').then(
+            (m) => m.expenseReportsPagesRoutes
+          ),
+      },
+      {
+        path: 'categories',
+        loadChildren: () =>
+          import('@expensesreport/categories-pages').then(
+            (m) => m.categoriesPagesRoutes
           ),
       },
       {

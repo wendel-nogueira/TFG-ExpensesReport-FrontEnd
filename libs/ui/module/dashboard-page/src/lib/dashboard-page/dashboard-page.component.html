@@ -1,0 +1,63 @@
+<!-- <div class="pt-14 h-full flex flex-col gap-4">
+  <div class="flex gap-2">
+    <expensesreport-button [type]="'reload'" (buttonClick)="onReloadClick()" />
+    <expensesreport-button
+      [type]="'date'"
+      [label]="selectedDate.label || 'select date'"
+      (buttonClick)="onDateClick($event)"
+    />
+  </div>
+  <div
+    class="w-full h-full grid items-center justify-center place-items-center grid-cols-6 grid-rows-2 gap-6 [&>*]:w-full [&>*]:h-full"
+  >
+    <expensesreport-container class="col-span-6 lg:col-span-3">
+      <expensesreport-amount-total [date]="selectedDate"/>
+    </expensesreport-container>
+    <expensesreport-container class="col-span-6 lg:col-span-3">
+      <expensesreport-amount-by-department [date]="selectedDate"/>
+    </expensesreport-container>
+    <expensesreport-container class="col-span-6 sm:col-span-3 lg:col-span-2">
+      <expensesreport-total-by-status [date]="selectedDate"/>
+    </expensesreport-container>
+    <expensesreport-container class="col-span-6 sm:col-span-3 lg:col-span-2">
+      <expensesreport-total-by-type [date]="selectedDate"/>
+    </expensesreport-container>
+    <expensesreport-container class="col-span-6 lg:col-span-2">
+      <expensesreport-last-created />
+    </expensesreport-container>
+  </div>
+</div>
+<p-overlayPanel #dateOverlay class="date-overlay">
+  <ng-template pTemplate>
+    <div class="w-full h-full flex flex-col justify-center gap-4 min-w-48">
+      <h2 class="text-sm text-gray-600 dark:text-gray-400 font-semibold">
+        Filter by date
+      </h2>
+
+      <expensesreport-form-group class="w-full">
+        <expensesreport-label [label]="'date'" />
+        <expensesreport-select
+          [options]="dateOptions"
+          [placeholder]="'Select date'"
+          [formControl]="dateFormGroup.controls['date']"
+          [label]="'date'"
+          [selectedValue]="dateFormGroup.controls['date'].value"
+        ></expensesreport-select>
+      </expensesreport-form-group>
+
+      <button
+        class="w-full px-2 py-2 rounded-md border border-gray-300 dark:border-gray-700 text-sm font-medium text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 ease-in-out bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700"
+        (click)="onFilterClick()"
+      >
+        filter
+      </button>
+    </div>
+  </ng-template>
+</p-overlayPanel> -->
+
+
+<div class="w-full h-full flex items-center justify-center">
+  <h1 class="text-3xl font-bold text-center text-gray-600 dark:text-gray-200">
+    Welcome to the expenses report dashboard
+  </h1>
+</div>

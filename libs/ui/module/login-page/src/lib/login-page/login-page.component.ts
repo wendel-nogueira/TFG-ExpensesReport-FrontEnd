@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { environments } from '@expensesreport/environments';
 import {
   FormControl,
   FormGroup,
@@ -18,12 +18,13 @@ import {
   LabelComponent,
   CheckboxComponent,
   ButtonComponent,
-  ToastComponent,
 } from '@expensesreport/ui';
-import { AuthService } from '@expensesreport/services';
+import { AuthService, UserService } from '@expensesreport/services';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
 import { RecoveryPassComponent } from './recovery-pass/recovery-pass.component';
+import { CredentialResponse } from 'google-one-tap';
+import { ToastService } from '@expensesreport/services';
+import { RegisterComponent } from './register/register.component';
 
 @Component({
   selector: 'expensesreport-login-page',
@@ -31,7 +32,6 @@ import { RecoveryPassComponent } from './recovery-pass/recovery-pass.component';
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css',
   imports: [
-    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     PageComponent,
@@ -44,12 +44,12 @@ import { RecoveryPassComponent } from './recovery-pass/recovery-pass.component';
     LabelComponent,
     CheckboxComponent,
     ButtonComponent,
-    ToastComponent,
     RecoveryPassComponent,
+    RegisterComponent,
   ],
-  providers: [MessageService],
+  providers: [],
 })
-export class LoginPageComponent implements OnInit {
+export class LoginPageComponent implements OnInit, AfterViewInit {
   loading = false;
   disabled = false;
   loginFormGroup = new FormGroup({
@@ -61,11 +61,13 @@ export class LoginPageComponent implements OnInit {
     email: 'Email is invalid',
   };
   recoveryPass = false;
+  createAccount = false;
 
   constructor(
     private authService: AuthService,
+    private userService: UserService,
     private router: Router,
-    private messageService: MessageService
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -76,16 +78,62 @@ export class LoginPageComponent implements OnInit {
         email,
         rememberMe: true,
       });
+    }
+  }
 
-      this.loginFormGroup.controls.email.markAsTouched();
-      this.loginFormGroup.controls.email.updateValueAndValidity();
+  ngAfterViewInit() {
+    window.google.accounts.id.initialize({
+      log_level: environments.production ? 'warn' : 'debug',
+      client_id: environments.googleClientId,
+      callback: this.handleCredentialResponse.bind(this),
+    });
+
+    const button = document.getElementById('loginWithGoogle');
+
+    if (!button) {
+      return;
     }
 
-    const session = this.authService.getSession(false);
+    window.google.accounts.id.renderButton(button, {
+      theme: 'filled_blue',
+      locale: 'en',
+      size: 'large',
+      text: 'continue_with',
+      shape: 'rectangular',
+      type: 'standard',
+      logo_alignment: 'left',
+      width: 240,
+    });
+  }
 
-    if (session) {
-      this.router.navigate(['/']);
+  handleCredentialResponse(response: CredentialResponse): void {
+    if (!response.credential) {
+      this.toastService.showError('Error logging in with Google');
+      return;
     }
+
+    this.loginWithGoogle(response.credential);
+  }
+
+  loginWithGoogle(token: string): void {
+    this.authService.loginWithGoogle(token).subscribe(
+      (response) => {
+        if (response.refreshToken === null || response.token === null)
+          throw new Error('Invalid response');
+
+        this.toastService.showSuccess('Login success!');
+
+        this.authService.createSession(response);
+        this.router.navigate(['/']);
+      },
+      (error) => {
+        console.error('Error:', error);
+
+        if (error.code && error.code === 400)
+          this.toastService.showError('Invalid email or password');
+        else this.toastService.showError('Error logging in, try again!');
+      }
+    );
   }
 
   onSubmit() {
@@ -115,17 +163,40 @@ export class LoginPageComponent implements OnInit {
           localStorage.removeItem('email');
         }
 
-        this.authService.createSession(response.token);
-        this.router.navigate(['/']);
-        this.loading = false;
+        if (response.refreshToken === null || response.token === null)
+          throw new Error('Invalid response');
+
+        this.authService.createSession(response);
+
+        this.userService.getUserByIdentity(response.userId).subscribe(
+          (user) => {
+            localStorage.setItem('user', JSON.stringify(user));
+
+            console.log('User:', user);
+
+            this.toastService.showSuccess('Login success!');
+            this.router.navigate(['/']);
+            this.loading = false;
+          },
+          (error) => {
+            console.error('Error:', error);
+
+            this.toastService.showError('Error logging in, try again!');
+
+            localStorage.removeItem('token');
+            localStorage.removeItem('refreshToken');
+            localStorage.removeItem('user');
+            this.loading = false;
+          }
+        );
       },
       (error) => {
         console.error('Error:', error);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Login',
-          detail: 'Login failed - Invalid email or password',
-        });
+
+        if (error.code && error.code === 400)
+          this.toastService.showError('Invalid email or password');
+        else this.toastService.showError('Error logging in, try again!');
+
         this.loading = false;
       }
     );
@@ -139,19 +210,11 @@ export class LoginPageComponent implements OnInit {
     this.recoveryPass = false;
   }
 
-  emailSent(event: boolean) {
-    if (event) {
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Recovery password',
-        detail: 'Recovery password email sent',
-      });
-    } else {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Recovery password',
-        detail: 'Error sending recovery password email',
-      });
-    }
+  showCreateAccount() {
+    this.createAccount = true;
+  }
+
+  closeCreateAccount() {
+    this.createAccount = false;
   }
 }

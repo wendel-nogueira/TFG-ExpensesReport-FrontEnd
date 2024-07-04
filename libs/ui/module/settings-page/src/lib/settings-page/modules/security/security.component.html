@@ -21,6 +21,8 @@
             [formControl]="emailFormGroup.controls['email']"
             [useError]="true"
             [errors]="emailErrors"
+            [loading]="loading"
+            (change)="onEmailChange($event)"
           />
         </expensesreport-form-group>
         <expensesreport-form-group class="w-full">
@@ -34,12 +36,13 @@
             [formControl]="emailFormGroup.controls['repeatEmail']"
             [useError]="true"
             [errors]="emailErrors"
+            [loading]="loading"
           />
         </expensesreport-form-group>
       </div>
       <div class="w-full max-w-60 ml-auto mt-14 mb-4">
         <expensesreport-button
-          [label]="'save changes'"
+          [label]="'send confirmation email'"
           [type]="'submit'"
           [loading]="loading"
           [disabled]="disabled"
@@ -75,3 +78,52 @@
     </div>
   </expensesreport-container>
 </expensesreport-page>
+<p-dialog
+  [(visible)]="showConfirmationCode"
+  [modal]="true"
+  position="center"
+  [draggable]="false"
+  [style]="{ width: '100%', maxWidth: '24rem', height: 'auto' }"
+  [breakpoints]="{ '1199px': '50rem', '575px': '90vw' }"
+  [resizable]="true"
+  [baseZIndex]="10000"
+  [closeOnEscape]="false"
+  [dismissableMask]="false"
+  [showHeader]="true"
+  [closable]="false"
+  (onHide)="showConfirmationCode = false"
+>
+  <ng-template pTemplate="header">
+    <h1 class="text-2xl font-bold text-gray-600 dark:text-gray-300">
+      Confirmation code
+    </h1>
+  </ng-template>
+  <p class="mb-8 text-gray-500 dark:text-gray-400 mt-4">
+    Please enter the confirmation code sent to your email!
+  </p>
+  <div class="w-full mt-4">
+    <form
+      [formGroup]="confirmationCodeFormGroup"
+      class="w-full flex flex-col gap-3"
+    >
+      <expensesreport-form-group>
+        <expensesreport-label [id]="'code'" [label]="'code'" />
+        <expensesreport-input-text
+          [id]="'code'"
+          [type]="'text'"
+          [formControl]="confirmationCodeFormGroup.controls['code']"
+          [useError]="true"
+          [errors]="codeErrors"
+        />
+      </expensesreport-form-group>
+
+      <expensesreport-button
+        [label]="'confirm'"
+        [type]="'submit'"
+        [loading]="loadingConfirmationCode"
+        [color]="'primary'"
+        (click)="confirmCode()"
+      />
+    </form>
+  </div>
+</p-dialog>

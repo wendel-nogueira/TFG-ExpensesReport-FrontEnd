@@ -55,7 +55,7 @@ export class HeaderComponent implements OnInit {
     const tokenData = this.authService.getSessionData();
 
     if (tokenData) {
-      this.name = tokenData.name;
+      this.name = tokenData.unique_name;
       this.roleName = tokenData.role;
     }
   }

@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { DropdownModule } from 'primeng/dropdown';
 import {
   FormControl,
@@ -7,13 +14,21 @@ import {
   NG_VALUE_ACCESSOR,
   FormsModule,
 } from '@angular/forms';
+import { SkeletonModule } from 'primeng/skeleton';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'expensesreport-select',
   standalone: true,
   templateUrl: './select.component.html',
   styleUrl: './select.component.css',
-  imports: [CommonModule, DropdownModule, FormsModule],
+  imports: [
+    CommonModule,
+    DropdownModule,
+    FormsModule,
+    SkeletonModule,
+    NgOptimizedImage,
+  ],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -22,7 +37,9 @@ import {
     },
   ],
 })
-export class SelectComponent implements ControlValueAccessor, OnInit {
+export class SelectComponent
+  implements ControlValueAccessor, OnInit, OnChanges
+{
   @Input() placeholder = '';
   @Input() label = '';
   @Input() formControl = new FormControl('');
@@ -30,6 +47,11 @@ export class SelectComponent implements ControlValueAccessor, OnInit {
   @Input() options: any[] = [];
   @Input() selectedValue: string | null = null;
   @Input() errors: any = null;
+  @Input() loading = false;
+  @Input() disabled = false;
+  @Output() valueChange = new EventEmitter<any>();
+
+  isDisabled = false;
 
   ngOnInit() {
     if (this.errors) {
@@ -58,6 +80,26 @@ export class SelectComponent implements ControlValueAccessor, OnInit {
     });
   }
 
+  ngOnChanges(changes: any) {
+    if (changes.options) {
+      this.options = changes.options.currentValue;
+
+      if (this.formControl.value) {
+        const option = this.options.find(
+          (option) => option.value === this.formControl.value
+        );
+
+        if (option) {
+          this.value = option;
+        }
+      }
+    }
+
+    if (changes.disabled) {
+      this.isDisabled = changes.disabled.currentValue;
+    }
+  }
+
   value: {
     label: string;
     value: string;
@@ -78,7 +120,13 @@ export class SelectComponent implements ControlValueAccessor, OnInit {
       if (option) {
         this.value = option;
       }
+
+      this.onChange(value);
+
+      return;
     }
+
+    this.value = null;
   }
 
   registerOnChange(fn: any): void {
@@ -90,6 +138,8 @@ export class SelectComponent implements ControlValueAccessor, OnInit {
   }
 
   onSelectionChange(event: any) {
+    this.valueChange.emit(event.value);
+
     if (event.value === null) {
       this.value = null;
       this.onChange(null);
@@ -103,6 +153,16 @@ export class SelectComponent implements ControlValueAccessor, OnInit {
     };
     this.onChange(event.value.value);
     this.onTouch();
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    if (isDisabled) {
+      this.formControl.disable();
+      this.disabled = true;
+    } else {
+      this.formControl.enable();
+      this.disabled = false;
+    }
   }
 
   checkErrors() {

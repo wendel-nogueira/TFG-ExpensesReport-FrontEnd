@@ -3,7 +3,8 @@
     [columns]="columns"
     [data]="projects"
     [loading]="loading"
-    (onClick)="onclickMore($event, op)"
+    [totalRecords]="totalRecords"
+    (onClick)="onClickMore($event, op)"
   >
     <p-overlayPanel #op>
       <ng-template pTemplate>

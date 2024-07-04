@@ -1,9 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableComponent, TableColumn } from '@expensesreport/ui';
 import { OverlayPanelModule, OverlayPanel } from 'primeng/overlaypanel';
 import { ViewComponent } from '@expensesreport/icons';
 import { RouterModule } from '@angular/router';
+import {
+  DepartmentService,
+  ProjectService,
+  ToastService,
+} from '@expensesreport/services';
+import { ProjectStatus, UserRoles } from '@expensesreport/enums';
+import { Project, User } from '@expensesreport/models';
 
 @Component({
   selector: 'expensesreport-projects-list-page',
@@ -18,16 +25,135 @@ import { RouterModule } from '@angular/router';
     ViewComponent,
   ],
 })
-export class ProjectsListPageComponent {
-  columns: TableColumn[] = [];
-  projects: any[] = [];
+export class ProjectsListPageComponent implements OnInit {
+  columns: TableColumn[] = columns;
+  projects: TableRows[] = [];
+  totalRecords = 0;
   loading = false;
 
-  dataClicked: any | null = null;
+  dataClicked: TableRows | null = null;
 
-  onclickMore(event: { event: PointerEvent; data: any }, op: OverlayPanel) {
+  constructor(
+    private projectService: ProjectService,
+    private departmentService: DepartmentService,
+    private toastService: ToastService
+  ) {}
+
+  ngOnInit(): void {
+    this.loading = true;
+
+    const user = localStorage.getItem('user') || '{}';
+    const userInfo = (JSON.parse(user) as User) || {};
+
+    const isRoot =
+      userInfo.identity?.role === UserRoles.Admin ||
+      userInfo.identity?.role === UserRoles.Accountant;
+
+    this.projectService.getAll().subscribe(
+      (projects) => {
+        console.log(projects);
+
+        if (isRoot) {
+          this.projects = projects.map((project) => {
+            return {
+              id: project.id!,
+              code: project.code!,
+              name: project.name!,
+              description: project.description!,
+              status: ProjectStatus[project.status!],
+            };
+          });
+          this.totalRecords = this.projects.length;
+          this.loading = false;
+          return;
+        }
+
+        const allProjects: Project[] = [];
+
+        for (let i = 0; i < projects.length; i++) {
+          const projectDeps = projects[i].departments || [];
+
+          for (let j = 0; j < projectDeps.length; j++) {
+            this.departmentService.get(projectDeps[j]).subscribe(
+              (department) => {
+                const isRelated =
+                  department.managers!.includes(userInfo.id!) ||
+                  department.employees!.includes(userInfo.id!);
+
+                if (isRelated) {
+                  allProjects.push(projects[i]);
+                }
+
+                if (i === projects.length - 1 && j === projectDeps.length - 1) {
+                  this.projects = allProjects.map((project) => {
+                    return {
+                      id: project.id!,
+                      code: project.code!,
+                      name: project.name!,
+                      description: project.description!,
+                      status: ProjectStatus[project.status!],
+                    };
+                  });
+                  this.totalRecords = this.projects.length;
+                  this.loading = false;
+                }
+              },
+              (error) => {
+                console.error(error);
+              }
+            );
+          }
+
+          if (i === projects.length - 1 && projectDeps.length === 0) {
+            this.projects = allProjects.map((project) => {
+              return {
+                id: project.id!,
+                code: project.code!,
+                name: project.name!,
+                description: project.description!,
+                status: ProjectStatus[project.status!],
+              };
+            });
+            this.totalRecords = this.projects.length;
+            this.loading = false;
+          }
+        }
+      },
+      (error) => {
+        console.error(error);
+        this.toastService.showError('An error occurred');
+        this.loading = false;
+      }
+    );
+  }
+
+  onClickMore(
+    event: { event: PointerEvent; data: TableRows },
+    op: OverlayPanel
+  ) {
     this.dataClicked = event.data;
-
     op.toggle(event.event);
   }
+}
+
+const columns: TableColumn[] = [
+  { field: 'code', header: 'code', sortable: true },
+  { field: 'name', header: 'name', sortable: true },
+  { field: 'description', header: 'description' },
+  {
+    field: 'status',
+    header: 'status',
+    sortable: true,
+    filter: true,
+    filterValues: ['Active', 'Inactive', 'Deleted'],
+  },
+  { field: 'actions', header: 'actions' },
+];
+
+interface TableRows {
+  id: string;
+  name: string;
+  code: string;
+  description: string;
+  status: string;
 }

@@ -8,6 +8,8 @@ import {
   ProjectComponent,
   FileComponent,
   WalletComponent,
+  CalendarComponent,
+  TagComponent,
 } from '../icons/index';
 
 @Component({
@@ -23,6 +25,8 @@ import {
     ProjectComponent,
     FileComponent,
     WalletComponent,
+    CalendarComponent,
+    TagComponent,
   ],
 })
 export class PageTitleComponent implements OnInit {
@@ -46,41 +50,47 @@ export class PageTitleComponent implements OnInit {
     let title = '';
     let icon = '';
 
-    if (route.includes('create')) {
-      title = 'create ';
-    } else if (route.includes('edit')) {
-      title = 'edit ';
-    } else if (route.length === 2) {
+    const actionMappings = {
+      create: 'create ',
+      edit: 'edit ',
+    };
+
+    const entityMappings = {
+      users: { title: 'users', icon: 'user' },
+      projects: { title: 'projects', icon: 'project' },
+      departments: { title: 'departments', icon: 'department' },
+      'expense-accounts': { title: 'accounts', icon: 'account' },
+      'expense-reports': { title: 'reports', icon: 'report' },
+      expenses: { title: 'expenses', icon: 'expense' },
+      categories: { title: 'categories', icon: 'tag' },
+      seasons: { title: 'seasons', icon: 'calendar' },
+    };
+
+    for (const action in actionMappings) {
+      if (route.includes(action)) {
+        title = actionMappings[action as keyof typeof actionMappings];
+        break;
+      }
+    }
+
+    if (title === '' && route.length === 2) {
       title = 'manage ';
     }
 
-    if (route.includes('users')) {
-      title += 'users';
-      icon = 'user';
-    } else if (route.includes('projects')) {
-      title += 'projects';
-      icon = 'project';
-    } else if (route.includes('departments')) {
-      title += 'departments';
-      icon = 'department';
-    } else if (route.includes('expense-accounts')) {
-      title += 'accounts';
-      icon = 'account';
-    } else if (route.includes('expense-reports')) {
-      title += 'reports';
-      icon = 'report';
-    } else if (route.includes('expenses')) {
-      title += 'expenses';
-      icon = 'expense';
+    for (const entity in entityMappings) {
+      if (route.includes(entity)) {
+        title += entityMappings[entity as keyof typeof entityMappings].title;
+        icon = entityMappings[entity as keyof typeof entityMappings].icon;
+        break;
+      }
     }
 
     if (title !== '') {
       this.title = title;
       this.icon = icon;
-      return;
+    } else {
+      this.title = 'home';
+      this.icon = 'home';
     }
-
-    this.title = 'home';
-    this.icon = 'home';
   }
 }

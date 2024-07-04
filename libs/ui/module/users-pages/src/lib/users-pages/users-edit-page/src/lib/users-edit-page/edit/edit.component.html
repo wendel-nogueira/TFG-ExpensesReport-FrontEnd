@@ -1,0 +1,59 @@
+<expensesreport-page-content
+  [useShadow]="false"
+  class="w-full flex justify-center max-w-96 m-auto mt-18"
+>
+  <p
+    class="text-center text-gray-600 dark:text-gray-400 text-sm font-medium mb-6"
+  >
+    use the form below to edit the user
+  </p>
+
+  <form [formGroup]="userFormGroup" class="w-full flex flex-col gap-3">
+    <expensesreport-form-group>
+      <expensesreport-label [id]="'email'" [label]="'email'" />
+      <expensesreport-input-text
+        [id]="'email'"
+        [type]="'email'"
+        [formControl]="userFormGroup.controls['email']"
+        [useError]="true"
+        [errors]="emailErrors"
+        [loading]="loading"
+      />
+    </expensesreport-form-group>
+    <expensesreport-form-group class="w-full">
+      <expensesreport-label [label]="'role'" />
+      <expensesreport-select
+        [options]="roles"
+        [placeholder]="'select a role'"
+        [formControl]="userFormGroup.controls['role']"
+        [label]="'role'"
+        [useError]="true"
+        [loading]="loading"
+      ></expensesreport-select>
+    </expensesreport-form-group>
+
+    <div class="mt-10 flex flex-col gap-6">
+      <expensesreport-button
+        [label]="'update user'"
+        [type]="'submit'"
+        [loading]="loading"
+        [disabled]="disabled"
+        [color]="'primary'"
+        (onClick)="onSubmit()"
+      />
+      <expensesreport-button
+        [label]="'back'"
+        [type]="'button'"
+        [color]="'danger'"
+        (onClick)="onBack()"
+      />
+      <expensesreport-button
+        [label]="!isDeleted ? 'delete user' : 'restore user'"
+        [type]="'button'"
+        [color]="!isDeleted ? 'danger' : 'success'"
+        [loading]="loading || loadingState"
+        (onClick)="onChangeStatus()"
+      />
+    </div>
+  </form>
+</expensesreport-page-content>

@@ -1,0 +1,9 @@
+{
+  "name": "categories-list-page",
+  "$schema": "../../../../../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ui/module/categories-pages/src/lib/categories-pages/categories-list-page/src",
+  "prefix": "expensesreport",
+  "tags": [],
+  "projectType": "library",
+  "targets": {}
+}

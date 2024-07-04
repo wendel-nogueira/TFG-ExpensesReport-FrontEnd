@@ -31,16 +31,18 @@
           [formControl]="expenseAccountFormGroup.controls['code']"
           [useError]="true"
           [errors]="codeErrors"
+          (change)="onCodeChange($event)"
         />
       </expensesreport-form-group>
       <expensesreport-form-group>
-        <expensesreport-label [id]="'description'" [label]="'description'" />
-        <expensesreport-text-area
-          [id]="'description'"
-          [formControl]="expenseAccountFormGroup.controls['description']"
+        <expensesreport-label [id]="'category'" [label]="'category'" />
+        <expensesreport-select
+          [options]="categories"
+          [placeholder]="'select a category'"
+          [formControl]="expenseAccountFormGroup.controls['category']"
+          [label]="'category'"
           [useError]="true"
-          [errors]="descriptionErrors"
-        />
+        ></expensesreport-select>
       </expensesreport-form-group>
       <expensesreport-form-group>
         <expensesreport-label [id]="'type'" [label]="'type'" />
@@ -51,6 +53,15 @@
           [label]="'type'"
           [useError]="true"
         ></expensesreport-select>
+      </expensesreport-form-group>
+      <expensesreport-form-group>
+        <expensesreport-label [id]="'description'" [label]="'description'" />
+        <expensesreport-text-area
+          [id]="'description'"
+          [formControl]="expenseAccountFormGroup.controls['description']"
+          [useError]="true"
+          [errors]="descriptionErrors"
+        />
       </expensesreport-form-group>
 
       <div class="mt-10 flex flex-col gap-6">

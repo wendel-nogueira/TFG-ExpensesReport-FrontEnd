@@ -5,7 +5,7 @@ import {
 } from '@expensesreport/ui';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RegisterServiceService } from '../../services/register-service.service';
 import { Name } from '@expensesreport/models';
 
@@ -24,6 +24,7 @@ export class PersonalComponent implements OnInit {
   });
 
   constructor(
+    private activatedRoute: ActivatedRoute,
     private router: Router,
     public registerService: RegisterServiceService
   ) {}
@@ -45,6 +46,15 @@ export class PersonalComponent implements OnInit {
       firstName: this.personalFormGroup.value.firstName || '',
       lastName: this.personalFormGroup.value.lastName || '',
     };
-    this.router.navigate(['register/address']);
+
+    this.activatedRoute.queryParams.subscribe((params) => {
+      const token = params['token'];
+
+      if (token) {
+        this.router.navigate(['register/address'], {
+          queryParams: { token: token },
+        });
+      }
+    });
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CheckboxModule } from 'primeng/checkbox';
 import {
   FormsModule,
@@ -27,6 +27,7 @@ export class CheckboxComponent implements ControlValueAccessor {
   @Input() value = false;
   @Input() binary = false;
   @Input() formControl = new FormControl(false);
+  @Output() valueChange = new EventEmitter<boolean>();
 
   checked = false;
   onChange: any = () => {};

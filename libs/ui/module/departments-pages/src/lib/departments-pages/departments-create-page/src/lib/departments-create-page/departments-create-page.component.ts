@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import {
   PageContentComponent,
   InputTextComponent,
-  SelectComponent,
   FormGroupComponent,
   LabelComponent,
   ButtonComponent,
@@ -17,6 +16,8 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DepartmentService, ToastService } from '@expensesreport/services';
+import { Department } from '@expensesreport/models';
 
 @Component({
   selector: 'expensesreport-departments-create-page',
@@ -27,7 +28,6 @@ import { Router } from '@angular/router';
     CommonModule,
     PageContentComponent,
     InputTextComponent,
-    SelectComponent,
     FormGroupComponent,
     LabelComponent,
     ButtonComponent,
@@ -50,7 +50,7 @@ export class DepartmentsCreatePageComponent {
       Validators.minLength(2),
       Validators.maxLength(10),
     ]),
-    description: new FormControl('', [Validators.maxLength(100)]),
+    description: new FormControl('', [Validators.maxLength(2000)]),
   });
   nameErrors = {
     required: 'Name is required',
@@ -64,26 +64,73 @@ export class DepartmentsCreatePageComponent {
     exists: 'Acronym already exists',
   };
   descriptionErrors = {
-    maxlength: 'Description must be at most 100 characters',
+    maxlength: 'Description must be at most 2000 characters',
   };
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private departmentService: DepartmentService,
+    private toastService: ToastService
+  ) {}
 
-  onSubmit() {
-    if (this.departmentFormGroup.invalid) {
-      Object.keys(this.departmentFormGroup.controls).forEach((controlName) => {
-        const control = this.departmentFormGroup.get(controlName);
+  onAcronymChange(event: Event) {
+    const acronym = (event.target as HTMLInputElement).value;
 
-        if (control) {
-          control.markAsTouched();
-          control.updateValueAndValidity();
-        }
-      });
+    if (this.departmentFormGroup.controls.acronym.invalid) {
+      this.departmentFormGroup.controls.acronym.markAllAsTouched();
+      this.departmentFormGroup.controls.acronym.updateValueAndValidity();
 
       return;
     }
 
-    console.log(this.departmentFormGroup.value);
+    if (acronym && acronym !== '') {
+      this.departmentService.checkIfAcronymExists(acronym).subscribe(
+        (response) => {
+          if (response) {
+            this.departmentFormGroup.controls.acronym.setErrors({
+              exists: true,
+            });
+          }
+        },
+        () => {
+          this.toastService.showError('Error checking acronym');
+        }
+      );
+    }
+  }
+
+  onSubmit() {
+    if (this.departmentFormGroup.invalid) {
+      this.departmentFormGroup.controls.name.markAllAsTouched();
+      this.departmentFormGroup.controls.name.updateValueAndValidity();
+      this.departmentFormGroup.controls.acronym.markAllAsTouched();
+      this.departmentFormGroup.controls.description.markAllAsTouched();
+      this.departmentFormGroup.controls.description.updateValueAndValidity();
+
+      this.toastService.showError('Invalid form');
+      return;
+    }
+
+    this.loading = true;
+
+    const department: Department = {
+      name: this.departmentFormGroup.controls.name.value as string,
+      acronym: this.departmentFormGroup.controls.acronym.value as string,
+      description: this.departmentFormGroup.controls.description
+        .value as string,
+    };
+
+    this.departmentService.create(department).subscribe(
+      () => {
+        this.toastService.showSuccess('Department created');
+        this.router.navigate(['/departments']);
+      },
+      (error) => {
+        console.error(error);
+        this.toastService.showError('An error occurred');
+        this.loading = false;
+      }
+    );
   }
 
   onBack() {

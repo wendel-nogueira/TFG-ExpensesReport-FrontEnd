@@ -1,0 +1,28 @@
+::ng-deep #calendar-input {
+  display: flex;
+}
+
+::ng-deep #calendar-input span {
+  width: 100%;
+}
+
+::ng-deep #calendar-input input {
+  border: 1px solid rgb(209 213 219);
+  border-radius: 0.5rem;
+  padding: 0.625rem 0.75rem;
+  width: 100%;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: #111827;
+  width: 100%;
+}
+
+::ng-deep #calendar-input.error input {
+  border-color: #ef4444;
+}
+
+::ng-deep #calendar-input .p-calendar .p-datepicker {
+  min-width: auto;
+  width: 100%;
+  max-width: 450px;
+}

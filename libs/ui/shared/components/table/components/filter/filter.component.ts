@@ -29,7 +29,6 @@ export class FilterComponent {
           values: column.filterValues,
           activeFilter: null,
         });
-        console.log('filterableColumns', this.filterableColumns);
       }
     });
   }

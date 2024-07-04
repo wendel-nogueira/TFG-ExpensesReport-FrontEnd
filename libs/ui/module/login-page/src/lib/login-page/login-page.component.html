@@ -24,21 +24,33 @@
       </expensesreport-form-group>
 
       <div class="w-full flex justify-between items-center mt-2 mb-4">
-        <expensesreport-form-group [useColumn]="false">
+        <expensesreport-form-group [useColumn]="false" class="w-full mb-auto">
           <expensesreport-checkbox
             [id]="'rememberMe'"
             [value]="true"
             [formControl]="loginFormGroup.controls['rememberMe']"
             [binary]="true"
           />
-          <expensesreport-label [id]="'rememberMe'" [label]="'remember me'" />
+          <expensesreport-label
+            [id]="'rememberMe'"
+            [label]="'remember me'"
+            class="mr-auto"
+          />
         </expensesreport-form-group>
-        <p
-          class="text-gray-600 dark:text-gray-400 text-sm cursor-pointer transition-colors hover:text-blue-500 dark:hover:text-blue-300"
-          (click)="showRecoveryPass()"
-        >
-          forgot password?
-        </p>
+        <div class="w-full flex flex-col items-end gap-2">
+          <p
+            class="text-gray-600 dark:text-gray-400 text-sm cursor-pointer transition-colors hover:text-blue-500 dark:hover:text-blue-300"
+            (click)="showRecoveryPass()"
+          >
+            forgot password?
+          </p>
+          <p
+            class="text-gray-600 dark:text-gray-400 text-sm cursor-pointer transition-colors hover:text-blue-500 dark:hover:text-blue-300"
+            (click)="showCreateAccount()"
+          >
+            create account
+          </p>
+        </div>
       </div>
 
       <expensesreport-button
@@ -48,27 +60,22 @@
         [disabled]="disabled"
         [color]="'primary'"
         (onClick)="onSubmit()"
+        class="w-full"
       />
     </form>
 
     <expensesreport-divider [text]="'or'" />
 
-    <div class="w-full flex flex-col gap-3">
-      <expensesreport-button
-        [label]="'log in with google'"
-        [type]="'submit'"
-        [loading]="loading"
-        [disabled]="disabled"
-        [color]="'other'"
-      >
-        <img src="assets/images/google.svg" alt="google" class="w-5 h-5" />
-      </expensesreport-button>
+    <div class="w-full flex justify-center">
+      <button id="loginWithGoogle">log in with google</button>
     </div>
   </expensesreport-page-content>
 </expensesreport-page>
-<expensesreport-toast />
 <expensesreport-recovery-pass
   [recoveryPass]="recoveryPass"
   (closeRecoveryPass)="closeRecoveryPass()"
-  (emailSent)="emailSent($event)"
+/>
+<expensesreport-register
+  [createAccount]="createAccount"
+  (closeCreateAccount)="closeCreateAccount()"
 />
