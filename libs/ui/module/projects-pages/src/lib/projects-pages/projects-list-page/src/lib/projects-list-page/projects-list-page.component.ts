@@ -45,11 +45,29 @@ export class ProjectsListPageComponent implements OnInit {
     const user = localStorage.getItem('user') || '{}';
     const userInfo = (JSON.parse(user) as User) || {};
 
-    console.log(userInfo);
+    const isRoot =
+      userInfo.identity?.role === UserRoles.Admin ||
+      userInfo.identity?.role === UserRoles.Accountant;
 
     this.projectService.getAll().subscribe(
       (projects) => {
         console.log(projects);
+
+        if (isRoot) {
+          this.projects = projects.map((project) => {
+            return {
+              id: project.id!,
+              code: project.code!,
+              name: project.name!,
+              description: project.description!,
+              status: ProjectStatus[project.status!],
+            };
+          });
+          this.totalRecords = this.projects.length;
+          this.loading = false;
+          return;
+        }
+
         const allProjects: Project[] = [];
 
         for (let i = 0; i < projects.length; i++) {

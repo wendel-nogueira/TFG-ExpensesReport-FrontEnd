@@ -22,7 +22,7 @@ WORKDIR /app
 
 COPY --from=build /app/dist/apps/expensesreport /app/dist/apps/expensesreport
 
-EXPOSE 4200
+EXPOSE 80
 RUN npm install -g serve
 
 CMD ["serve", "-s", "dist/apps/expensesreport/browser", "--listen", "tcp://0.0.0.0:80"]

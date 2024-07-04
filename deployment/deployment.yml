@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-expensesreport-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-expensesreport
+  template:
+    metadata:
+      labels:
+        app: app-expensesreport
+    spec:
+      containers:
+        - name: app-expensesreport
+          image: hulley/expensesreport:app
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              memory: "256Mi" # Limite de memória
+              cpu: "200m" # Limite de CPU
+            requests:
+              memory: "128Mi" # Solicitação de memória
+              cpu: "100m" # Solicitação de CPU
