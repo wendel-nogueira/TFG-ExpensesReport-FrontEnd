@@ -35,7 +35,7 @@ export class AddressService extends RequestService {
   getInfoByZip(zip: string): Observable<ZipResponse> {
     return this.httpClient
       .get<ZipResponse>(
-        `${environments.zipApiExternal}/search?apikey=${environments.zipApiKey}&codes=${zip}`,
+        `${environments.zipApiExternal}/search?apikey=${environments.zipApiKey}&codes=${zip}&country=US`,
         this.httpOptions
       )
       .pipe(catchError(this.handleError.bind(this)));

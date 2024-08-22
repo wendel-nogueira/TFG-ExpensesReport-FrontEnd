@@ -60,7 +60,7 @@ export class AddressComponent implements OnInit, OnChanges {
       Validators.minLength(5),
       Validators.maxLength(10),
     ]),
-    country: new FormControl('', [Validators.required]),
+    country: new FormControl('US', [Validators.required]),
     state: new FormControl('', [Validators.required]),
     city: new FormControl('', [Validators.required]),
     address: new FormControl('', [
@@ -116,20 +116,32 @@ export class AddressComponent implements OnInit, OnChanges {
 
     this.addressFormGroup.emit(this.addressFormGroupLocal);
 
-    this.addressFormGroupLocal.controls.country.valueChanges.subscribe(
-      (value) => {
-        const country = this.countries.find(
-          (country) => country.value === value || country.label === value
-        );
-        const state =
-          this.addressFormGroupLocal.controls.state.value || undefined;
-        const city =
-          this.addressFormGroupLocal.controls.city.value || undefined;
+    // this.addressFormGroupLocal.controls.country.valueChanges.subscribe(
+    //   (value) => {
+    //     const country = this.countries.find(
+    //       (country) => country.value === value || country.label === value
+    //     );
+    //     const state =
+    //       this.addressFormGroupLocal.controls.state.value || undefined;
+    //     const city =
+    //       this.addressFormGroupLocal.controls.city.value || undefined;
 
-        if (country) {
-          this.onCountryChange(country, state, city);
-        }
-      }
+    //     if (country) {
+    //       this.onCountryChange(country, state, city);
+    //     }
+    //   }
+    // );
+
+    this.addressFormGroupLocal.controls.country.disable();
+    this.addressFormGroupLocal.controls.country.setValue('US');
+
+    this.onCountryChange(
+      {
+        label: 'United States',
+        value: 'US',
+      },
+      this.addressFormGroupLocal.controls.state.value || undefined,
+      this.addressFormGroupLocal.controls.city.value || undefined
     );
   }
 
@@ -144,8 +156,8 @@ export class AddressComponent implements OnInit, OnChanges {
     this.states = [];
     this.cities = [];
 
-    this.addressFormGroupLocal.get('state')?.setValue(null);
-    this.addressFormGroupLocal.get('city')?.setValue(null);
+    // this.addressFormGroupLocal.get('state')?.setValue(null);
+    // this.addressFormGroupLocal.get('city')?.setValue(null);
 
     if (!event || !event.label) {
       this.loadingStates = false;
@@ -207,7 +219,7 @@ export class AddressComponent implements OnInit, OnChanges {
     this.loadingCities = true;
 
     this.cities = [];
-    this.addressFormGroupLocal.get('city')?.setValue(null);
+    // this.addressFormGroupLocal.get('city')?.setValue(null);
 
     const country = this.countries.find(
       (country) =>
@@ -231,6 +243,8 @@ export class AddressComponent implements OnInit, OnChanges {
           }));
 
           let city = null;
+
+          console.log(this.addressFormGroupLocal.controls.city.value);
 
           if (cityName) {
             city = this.cities.find(
@@ -269,7 +283,7 @@ export class AddressComponent implements OnInit, OnChanges {
     this.loadingCities = true;
     this.loadingAddress = true;
 
-    this.addressFormGroupLocal.get('country')?.setValue(null);
+    // this.addressFormGroupLocal.get('country')?.setValue(null);
     this.addressFormGroupLocal.get('state')?.setValue(null);
     this.addressFormGroupLocal.get('city')?.setValue(null);
 
@@ -281,15 +295,26 @@ export class AddressComponent implements OnInit, OnChanges {
           response.results[value].length > 0
         ) {
           const zipInfo = response.results[value][0];
+
+          if (zipInfo.country_code !== 'US') {
+            this.loadingCountries = false;
+            this.loadingStates = false;
+            this.loadingCities = false;
+            this.loadingAddress = false;
+            return;
+          }
+
           const country = this.countries.find(
             (country) => country.value === zipInfo.country_code
           );
+          console.log('zipInfo:', zipInfo);
 
           if (country) {
-            this.addressFormGroupLocal.get('country')?.setValue(country.value);
-            this.addressFormGroupLocal.get('state')?.setValue(zipInfo.state);
+            this.addressFormGroupLocal.get('address')?.setValue(zipInfo.province);
             this.addressFormGroupLocal.get('city')?.setValue(zipInfo.city);
-            this.addressFormGroupLocal.get('address')?.setValue(zipInfo.city);
+            console.log('zipInfo.city:', zipInfo.city, this.addressFormGroupLocal.get('city')?.value);
+            this.addressFormGroupLocal.get('state')?.setValue(zipInfo.state);
+            this.addressFormGroupLocal.get('country')?.setValue(country.value);
 
             this.onCountryChange(country, zipInfo.state_en, zipInfo.province);
 

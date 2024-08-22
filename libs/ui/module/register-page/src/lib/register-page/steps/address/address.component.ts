@@ -20,7 +20,7 @@ export class AddressComponent implements OnInit {
   address: Address | null = null;
   addressFormGroup = new FormGroup({
     zip: new FormControl(''),
-    country: new FormControl(''),
+    country: new FormControl('US'),
     state: new FormControl(''),
     city: new FormControl(''),
     address: new FormControl(''),
@@ -47,7 +47,7 @@ export class AddressComponent implements OnInit {
 
     this.registerService.register.address = {
       zip: this.addressFormGroup.value.zip || '',
-      country: this.addressFormGroup.value.country || '',
+      country: 'US',
       state: this.addressFormGroup.value.state || '',
       city: this.addressFormGroup.value.city || '',
       address: this.addressFormGroup.value.address || '',

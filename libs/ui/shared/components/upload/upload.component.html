@@ -13,9 +13,10 @@
   >
     <p-fileUpload
       name="inputFile"
-      url="https://api-file.yelluh.xyz/v1/files"
+      url="http://48.217.59.48:8086/v1/files"
       id="fileUpload"
       class="w-full h-full"
+      [auto]="true"
       [multiple]="false"
       [maxFileSize]="10000000"
       [chooseLabel]="fileToUpload || uploadedFile ? 'Change' : 'Choose'"
