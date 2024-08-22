@@ -93,45 +93,6 @@ export class ExpenseReportsCreatePageComponent implements OnInit {
     this.loading = true;
 
     this.getDepartments();
-    // this.departmentService.getAll().subscribe(
-    //   (departments) => {
-    //     this.departments = departments.map((department) => ({
-    //       label: department.name,
-    //       value: department.id as string,
-    //     }));
-
-    //     if (this.expenseService.getRegister().department) {
-    //       this.expenseReportFormGroup
-    //         .get('department')
-    //         ?.setValue(this.expenseService.getRegister().department);
-    //     }
-
-    //     if (this.expenseService.getRegister().project) {
-    //       this.expenseReportFormGroup
-    //         .get('project')
-    //         ?.setValue(this.expenseService.getRegister().project);
-
-    //       this.projectService
-    //         .getByDepartment(this.expenseService.getRegister().department)
-    //         .subscribe((projects) => {
-    //           this.projects = projects.map((project) => ({
-    //             label: `#${project.code}: ${project.name}`,
-    //             value: project.id as string,
-    //           }));
-    //         });
-    //     }
-
-    //     this.total = this.expenseService
-    //       .getRegister()
-    //       .expenses.reduce((acc, expense) => acc + expense.amount, 0);
-
-    //     this.loading = false;
-    //   },
-    //   () => {
-    //     this.toastService.showError('Error loading departments');
-    //     this.loading = false;
-    //   }
-    // );
   }
 
   onDepartmentChange(event: { value: string }) {
@@ -224,8 +185,10 @@ export class ExpenseReportsCreatePageComponent implements OnInit {
     this.departmentService.getAll().subscribe(
       (departments) => {
         const allDepartments: Department[] = [];
+        const tempDepartments: Department[] = [];
 
-        console.log(departments);
+        this.departments = [];
+        this.loading = true;
 
         for (let i = 0; i < departments.length; i++) {
           if (
@@ -240,9 +203,8 @@ export class ExpenseReportsCreatePageComponent implements OnInit {
             (department) => {
               allDepartments.push(department);
 
-              if (departments.length === allDepartments.length) {
+              if (departments.length - 1 === i) {
                 this.departments = [];
-                const tempDepartments: Department[] = [];
 
                 for (let j = 0; j < allDepartments.length; j++) {
                   console.log(allDepartments[j]);
@@ -270,7 +232,6 @@ export class ExpenseReportsCreatePageComponent implements OnInit {
                   value: department.id as string,
                 }));
 
-                console.log(this.departments);
                 this.loading = false;
               }
             },

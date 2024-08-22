@@ -7,18 +7,18 @@ export const environments: Environments = {
   zipApiKey: '7ad4eaf0-10a4-11ef-8bb3-dff82ca1359e',
 
   jwtToken: 'uNNtAoquY3kUMt1BsvLcUqf51rovyv2e',
-  jwtDomain: 'https://api-auth.yelluh.xyz/',
-  authenticationApiURL: 'https://api-auth.yelluh.xyz/v1/auth',
-  usersApiURL: 'https://api-user.yelluh.xyz/v1/users',
-  departmentsApiURL: 'https://api-department.yelluh.xyz/v1/departments',
-  projectsApiURL: 'https://api-project.yelluh.xyz/v1/projects',
-  seasonsApiURL: 'https://api-project.yelluh.xyz/v1/seasons',
-  expensesApiURL: 'https://api-expense.yelluh.xyz/v1/expense',
-  expenseReportsApiURL: 'https://api-expense.yelluh.xyz/v1/expense-report',
-  expenseAccountsApiURL: 'https://api-expense.yelluh.xyz/v1/expense-account',
+  jwtDomain: 'http://localhost:5200/',
+  authenticationApiURL: 'http://48.217.59.48:8081/v1/auth',
+  usersApiURL: 'http://48.217.59.48:8082/v1/users',
+  departmentsApiURL: 'http://48.217.59.48:8083/v1/departments',
+  projectsApiURL: 'http://48.217.59.48:8084/v1/projects',
+  seasonsApiURL: 'http://48.217.59.48:8084/v1/seasons',
+  expensesApiURL: 'http://48.217.59.48:8085/v1/expense',
+  expenseReportsApiURL: 'http://48.217.59.48:8085/v1/expense-report',
+  expenseAccountsApiURL: 'http://48.217.59.48:8085/v1/expense-account',
   expenseAccountCategoriesApiURL:
-    'https://api-expense.yelluh.xyz/v1/expense-account-category',
-  filesApiURL: 'https://api-file.yelluh.xyz/v1/files',
+    'http://48.217.59.48:8085/v1/expense-account-category',
+  filesApiURL: 'http://48.217.59.48:8086/v1/files',
 };
 
 export interface Environments {
